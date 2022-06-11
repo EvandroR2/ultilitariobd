@@ -1,0 +1,11 @@
+C:\Users\SRV-EVANDROR2\source\repos\bancozerado\bancozerado\bin\Debug\bancozerado.exe.config
+C:\Users\SRV-EVANDROR2\source\repos\bancozerado\bancozerado\bin\Debug\bancozerado.exe
+C:\Users\SRV-EVANDROR2\source\repos\bancozerado\bancozerado\bin\Debug\bancozerado.pdb
+C:\Users\SRV-EVANDROR2\source\repos\bancozerado\bancozerado\obj\Debug\bancozerado.csproj.AssemblyReference.cache
+C:\Users\SRV-EVANDROR2\source\repos\bancozerado\bancozerado\obj\Debug\bancozerado.frmPrincipal.resources
+C:\Users\SRV-EVANDROR2\source\repos\bancozerado\bancozerado\obj\Debug\bancozerado.Properties.Resources.resources
+C:\Users\SRV-EVANDROR2\source\repos\bancozerado\bancozerado\obj\Debug\bancozerado.csproj.GenerateResource.cache
+C:\Users\SRV-EVANDROR2\source\repos\bancozerado\bancozerado\obj\Debug\bancozerado.csproj.CoreCompileInputs.cache
+C:\Users\SRV-EVANDROR2\source\repos\bancozerado\bancozerado\obj\Debug\bancozerado.exe
+C:\Users\SRV-EVANDROR2\source\repos\bancozerado\bancozerado\obj\Debug\bancozerado.pdb
+C:\Users\SRV-EVANDROR2\source\repos\bancozerado\bancozerado\obj\Debug\bancozerado.frmLogin.resources
