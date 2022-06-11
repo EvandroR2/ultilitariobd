@@ -20,7 +20,7 @@ namespace bancozerado
             InitializeComponent();
         }
 
-
+        #region frm_superior
         //Chama o Formulario de login
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
@@ -46,7 +46,7 @@ namespace bancozerado
         //Mensagem sobre versao
         private void sobreToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Desenvolvedor: Evandro  \n" + "Contato: Implantacao  \n" + "Versão 0.0.1");
+            MessageBox.Show("Desenvolvedor: Evandro  \n" + "Contato: Implantacao  \n" + "Versão 0.1.2");
         }
 
         //BUSCANDO INFORMAÇÕES DO BANCO DE DADOS
@@ -87,36 +87,7 @@ namespace bancozerado
         }
 
 
-        private void btnConectar_Click(object sender, EventArgs e)
-        {
-            //if (cmbBanco.Text != "")
-            //{
-            //    try
-            //    {
-            //        clsapoio.stringBDBD();
-            //        lblResultado.Text = "Conectado";
-
-
-
-            //    }
-
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show(ex.ToString(), "Encontro Inicial", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //        lblResultado.Text = "ERRO ! \n" + ex;
-
-            //    }
-            //    finally
-            //    {
-            //        clsapoio.desconectarBD();
-            //        lblResultado.Text = "Conectado";
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Preencha o banco de dados");
-            //}
-        }
+        
         private void btnSair_Click(object sender, EventArgs e)
         {
             Close();
@@ -127,7 +98,6 @@ namespace bancozerado
         {
             carregaBanco();
         }
-
 
         #region Botao_radio
         private void RbtnLocal_CheckedChanged(object sender, EventArgs e)
@@ -170,69 +140,13 @@ namespace bancozerado
             cmbBanco.Enabled = true;
         }
 
+
         #endregion
 
+        #endregion
 
-        //instalacao de banco zero
+        #region page_restaurarbd
 
-        private void checkBoxFranquia_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxFranquia.Checked)
-            {
-                lblCodigoMatrizFranquia.Enabled = true;
-                lblCodigoMatrizFranquia.Visible = true;
-                txtCodigoMatrizFranquia.Enabled = true;
-                txtCodigoMatrizFranquia.Visible = true;
-                lblInfTabTributo.Enabled = true;
-                lblInfTabTributo.Visible = true;
-                lblCodTabTributo.Enabled = true;
-                lblCodTabTributo.Visible = true;
-                lblDescTabTributo.Enabled = true;
-                lblDescTabTributo.Visible = true;
-                lblTriPercTabTributo.Enabled = true;
-                lblTriPercTabTributo.Visible = true;
-                txtCodTabTributo.Enabled = true;
-                txtCodTabTributo.Visible = true;
-                txtDescTabTributo.Enabled = true;
-                txtDescTabTributo.Visible = true;
-                txtTriPercTabTributo.Enabled = true;
-                txtTriPercTabTributo.Visible = true;
-
-            }
-            else
-            {
-                lblCodigoMatrizFranquia.Enabled = false;
-                lblCodigoMatrizFranquia.Visible = false;
-                txtCodigoMatrizFranquia.Enabled = false;
-                txtCodigoMatrizFranquia.Visible = false;
-                lblInfTabTributo.Enabled = false;
-                lblInfTabTributo.Visible = false;
-                lblCodTabTributo.Enabled = false;
-                lblCodTabTributo.Visible = false;
-                lblDescTabTributo.Enabled = false;
-                lblDescTabTributo.Visible = false;
-                lblTriPercTabTributo.Enabled = false;
-                lblTriPercTabTributo.Visible = false;
-                txtCodTabTributo.Enabled = false;
-                txtCodTabTributo.Visible = false;
-                txtDescTabTributo.Enabled = false;
-                txtDescTabTributo.Visible = false;
-                txtTriPercTabTributo.Enabled = false;
-                txtTriPercTabTributo.Visible = false;
-            }
-        }
-
-        private void checkBoxInstZeroousembackup_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxInstZeroousembackup.Checked)
-            {
-                groupBoxInstBancoZero.Visible = true;
-            }
-            else
-            {
-                groupBoxInstBancoZero.Visible = false;
-            }
-        }
 
         private void btnRestaurar_Click(object sender, EventArgs e)
         {
@@ -690,7 +604,197 @@ namespace bancozerado
                 txtDiretorio.Text = fbd1.SelectedPath;
             }
         }
+        private void btnArquivo_Click(object sender, EventArgs e)
+        {
 
+
+            if (rbtnPontoBak.Checked)
+            {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Title = "Abrir Arquivo BAK ...";
+                dialog.Filter = "text file|*.bak";
+                DialogResult result = dialog.ShowDialog();
+
+
+                if (result != DialogResult.Cancel && result != DialogResult.Abort)
+                {
+                    if (File.Exists(dialog.FileName))
+                    {
+                        FileInfo file = new FileInfo(dialog.FileName);
+                        Text = Application.ProductName + " - " + file.Name;
+
+                        Gerenciador.FolderPath = file.DirectoryName + "\\";
+                        Gerenciador.FileName = file.Name.Remove(file.Name.LastIndexOf("."));
+                        Gerenciador.FileExt = file.Extension;
+
+                        try
+                        {
+                            txtArquivo.Text = file.Name.Remove(file.Name.LastIndexOf(".")) + file.Extension;
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
+                        }
+                        finally
+                        {
+                            MessageBox.Show("Arquivo adicionado");
+                        }
+
+
+                    }
+                }
+
+            }
+            else
+            {
+                OpenFileDialog dialogmdf = new OpenFileDialog();
+                dialogmdf.Title = "Abrir Arquivo MDF ...";
+                dialogmdf.Filter = "text file|*.mdf";
+                DialogResult resultmdf = dialogmdf.ShowDialog();
+
+
+                if (resultmdf != DialogResult.Cancel && resultmdf != DialogResult.Abort)
+                {
+                    if (File.Exists(dialogmdf.FileName))
+                    {
+                        FileInfo file = new FileInfo(dialogmdf.FileName);
+                        Text = Application.ProductName + " - " + file.Name;
+
+                        Gerenciador.FolderPath = file.DirectoryName + "\\";
+                        Gerenciador.FileName = file.Name.Remove(file.Name.LastIndexOf("."));
+                        Gerenciador.FileExt = file.Extension;
+
+                        try
+                        {
+                            txtArquivo.Text = file.Name.Remove(file.Name.LastIndexOf("."));
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
+                        }
+                        finally
+                        {
+                            MessageBox.Show("Arquivo adicionado");
+                        }
+
+
+                    }
+                }
+            }
+
+        }
+
+        private void btnArquivoAux_Click(object sender, EventArgs e)
+        {
+
+
+
+            if (rbtnPontoBak.Checked)
+            {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Title = "Abrir ...";
+                dialog.Filter = "text file|*.bak";
+                DialogResult result = dialog.ShowDialog();
+
+
+                if (result != DialogResult.Cancel && result != DialogResult.Abort)
+                {
+                    if (File.Exists(dialog.FileName))
+                    {
+                        FileInfo file = new FileInfo(dialog.FileName);
+                        Text = Application.ProductName + " - " + file.Name;
+
+                        Gerenciador.FolderPath = file.DirectoryName + "\\";
+                        Gerenciador.FileName = file.Name.Remove(file.Name.LastIndexOf("."));
+                        Gerenciador.FileExt = file.Extension;
+
+                        try
+                        {
+                            txtArquivoAux.Text = file.Name.Remove(file.Name.LastIndexOf(".")) + file.Extension;
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
+                        }
+                        finally
+                        {
+                            MessageBox.Show("Arquivo adicionado");
+                        }
+
+
+                    }
+                }
+            }
+            else
+            {
+                OpenFileDialog dialogmdf = new OpenFileDialog();
+                dialogmdf.Title = "Abrir ...";
+                dialogmdf.Filter = "text file|*.mdf";
+                DialogResult resultmdf = dialogmdf.ShowDialog();
+
+
+                if (resultmdf != DialogResult.Cancel && resultmdf != DialogResult.Abort)
+                {
+                    if (File.Exists(dialogmdf.FileName))
+                    {
+                        FileInfo file = new FileInfo(dialogmdf.FileName);
+                        Text = Application.ProductName + " - " + file.Name;
+
+                        Gerenciador.FolderPath = file.DirectoryName + "\\";
+                        Gerenciador.FileName = file.Name.Remove(file.Name.LastIndexOf("."));
+                        Gerenciador.FileExt = file.Extension;
+
+                        try
+                        {
+                            txtArquivoAux.Text = file.Name.Remove(file.Name.LastIndexOf("."));
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
+                        }
+                        finally
+                        {
+                            MessageBox.Show("Arquivo adicionado");
+                        }
+
+
+                    }
+                }
+            }
+
+        }
+
+
+        private void rbtnPontoBak_CheckedChanged(object sender, EventArgs e)
+        {
+            lblInforme.Text = "Informe o nome do arquivo \".bak\"";
+            lblInformeAux.Text = "Informe o nome do arquivo Auxiliar \".bak\"";
+            txtArquivo.Text = "Loja_ZeroV1005.bak";
+            txtArquivoAux.Text = "V1005_AUXILIAR.bak";
+            btnRestaurar.Text = "Restaurar";
+            btnDeletar.Text = "Deletar";
+            checkBoxInstZeroousembackup.Visible = true;
+
+        }
+
+        private void rbtnPontoMdf_CheckedChanged(object sender, EventArgs e)
+        {
+            lblInforme.Text = "Informe o nome do arquivo \".mdf\"";
+            lblInformeAux.Text = "Informe o nome do arquivo Auxiliar \".mdf\"";
+            txtArquivo.Text = "";
+            txtArquivoAux.Text = "";
+            btnRestaurar.Text = "Anexar";
+            btnDeletar.Text = "Desanexar";
+            checkBoxInstZeroousembackup.Checked = false;
+            checkBoxInstZeroousembackup.Visible = false;
+
+        }
+
+        //instalacao de banco zero
         private void btnQuerry_Click(object sender, EventArgs e)
         {
             clsapoio.nomeInstancia = txtInstancia.Text;
@@ -714,6 +818,11 @@ namespace bancozerado
                 {
                     MessageBox.Show("Campo Vazio !");
                     cmbBanco.Focus();
+                }
+                if (!RbtnLocal.Checked)
+                {
+                    RbtnLocal.Checked = true;
+                    MessageBox.Show("Função somente para banco local");
                 }
                 else
                 {
@@ -1283,196 +1392,68 @@ namespace bancozerado
             }
 
         }
-
-        private void btnArquivo_Click(object sender, EventArgs e)
+        private void checkBoxFranquia_CheckedChanged(object sender, EventArgs e)
         {
-
-
-            if (rbtnPontoBak.Checked)
+            if (checkBoxFranquia.Checked)
             {
-                OpenFileDialog dialog = new OpenFileDialog();
-                dialog.Title = "Abrir Arquivo BAK ...";
-                dialog.Filter = "text file|*.bak";
-                DialogResult result = dialog.ShowDialog();
-
-
-                if (result != DialogResult.Cancel && result != DialogResult.Abort)
-                {
-                    if (File.Exists(dialog.FileName))
-                    {
-                        FileInfo file = new FileInfo(dialog.FileName);
-                        Text = Application.ProductName + " - " + file.Name;
-
-                        Gerenciador.FolderPath = file.DirectoryName + "\\";
-                        Gerenciador.FileName = file.Name.Remove(file.Name.LastIndexOf("."));
-                        Gerenciador.FileExt = file.Extension;
-
-                        try
-                        {
-                            txtArquivo.Text = file.Name.Remove(file.Name.LastIndexOf(".")) + file.Extension;
-
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
-                        }
-                        finally
-                        {
-                            MessageBox.Show("Arquivo adicionado");
-                        }
-
-
-                    }
-                }
+                lblCodigoMatrizFranquia.Enabled = true;
+                lblCodigoMatrizFranquia.Visible = true;
+                txtCodigoMatrizFranquia.Enabled = true;
+                txtCodigoMatrizFranquia.Visible = true;
+                lblInfTabTributo.Enabled = true;
+                lblInfTabTributo.Visible = true;
+                lblCodTabTributo.Enabled = true;
+                lblCodTabTributo.Visible = true;
+                lblDescTabTributo.Enabled = true;
+                lblDescTabTributo.Visible = true;
+                lblTriPercTabTributo.Enabled = true;
+                lblTriPercTabTributo.Visible = true;
+                txtCodTabTributo.Enabled = true;
+                txtCodTabTributo.Visible = true;
+                txtDescTabTributo.Enabled = true;
+                txtDescTabTributo.Visible = true;
+                txtTriPercTabTributo.Enabled = true;
+                txtTriPercTabTributo.Visible = true;
 
             }
             else
             {
-                OpenFileDialog dialogmdf = new OpenFileDialog();
-                dialogmdf.Title = "Abrir Arquivo MDF ...";
-                dialogmdf.Filter = "text file|*.mdf";
-                DialogResult resultmdf = dialogmdf.ShowDialog();
-
-
-                if (resultmdf != DialogResult.Cancel && resultmdf != DialogResult.Abort)
-                {
-                    if (File.Exists(dialogmdf.FileName))
-                    {
-                        FileInfo file = new FileInfo(dialogmdf.FileName);
-                        Text = Application.ProductName + " - " + file.Name;
-
-                        Gerenciador.FolderPath = file.DirectoryName + "\\";
-                        Gerenciador.FileName = file.Name.Remove(file.Name.LastIndexOf("."));
-                        Gerenciador.FileExt = file.Extension;
-
-                        try
-                        {
-                            txtArquivo.Text = file.Name.Remove(file.Name.LastIndexOf("."));
-
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
-                        }
-                        finally
-                        {
-                            MessageBox.Show("Arquivo adicionado");
-                        }
-
-
-                    }
-                }
+                lblCodigoMatrizFranquia.Enabled = false;
+                lblCodigoMatrizFranquia.Visible = false;
+                txtCodigoMatrizFranquia.Enabled = false;
+                txtCodigoMatrizFranquia.Visible = false;
+                lblInfTabTributo.Enabled = false;
+                lblInfTabTributo.Visible = false;
+                lblCodTabTributo.Enabled = false;
+                lblCodTabTributo.Visible = false;
+                lblDescTabTributo.Enabled = false;
+                lblDescTabTributo.Visible = false;
+                lblTriPercTabTributo.Enabled = false;
+                lblTriPercTabTributo.Visible = false;
+                txtCodTabTributo.Enabled = false;
+                txtCodTabTributo.Visible = false;
+                txtDescTabTributo.Enabled = false;
+                txtDescTabTributo.Visible = false;
+                txtTriPercTabTributo.Enabled = false;
+                txtTriPercTabTributo.Visible = false;
             }
-
         }
 
-        private void btnArquivoAux_Click(object sender, EventArgs e)
+        private void checkBoxInstZeroousembackup_CheckedChanged(object sender, EventArgs e)
         {
-
-
-
-            if (rbtnPontoBak.Checked)
+            if (checkBoxInstZeroousembackup.Checked)
             {
-                OpenFileDialog dialog = new OpenFileDialog();
-                dialog.Title = "Abrir ...";
-                dialog.Filter = "text file|*.bak";
-                DialogResult result = dialog.ShowDialog();
-
-
-                if (result != DialogResult.Cancel && result != DialogResult.Abort)
-                {
-                    if (File.Exists(dialog.FileName))
-                    {
-                        FileInfo file = new FileInfo(dialog.FileName);
-                        Text = Application.ProductName + " - " + file.Name;
-
-                        Gerenciador.FolderPath = file.DirectoryName + "\\";
-                        Gerenciador.FileName = file.Name.Remove(file.Name.LastIndexOf("."));
-                        Gerenciador.FileExt = file.Extension;
-
-                        try
-                        {
-                            txtArquivoAux.Text = file.Name.Remove(file.Name.LastIndexOf(".")) + file.Extension;
-
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
-                        }
-                        finally
-                        {
-                            MessageBox.Show("Arquivo adicionado");
-                        }
-
-
-                    }
-                }
+                groupBoxInstBancoZero.Visible = true;
             }
             else
             {
-                OpenFileDialog dialogmdf = new OpenFileDialog();
-                dialogmdf.Title = "Abrir ...";
-                dialogmdf.Filter = "text file|*.mdf";
-                DialogResult resultmdf = dialogmdf.ShowDialog();
-
-
-                if (resultmdf != DialogResult.Cancel && resultmdf != DialogResult.Abort)
-                {
-                    if (File.Exists(dialogmdf.FileName))
-                    {
-                        FileInfo file = new FileInfo(dialogmdf.FileName);
-                        Text = Application.ProductName + " - " + file.Name;
-
-                        Gerenciador.FolderPath = file.DirectoryName + "\\";
-                        Gerenciador.FileName = file.Name.Remove(file.Name.LastIndexOf("."));
-                        Gerenciador.FileExt = file.Extension;
-
-                        try
-                        {
-                            txtArquivoAux.Text = file.Name.Remove(file.Name.LastIndexOf("."));
-
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
-                        }
-                        finally
-                        {
-                            MessageBox.Show("Arquivo adicionado");
-                        }
-
-
-                    }
-                }
+                groupBoxInstBancoZero.Visible = false;
             }
-
         }
 
-        private void rbtnPontoBak_CheckedChanged(object sender, EventArgs e)
-        {
-            lblInforme.Text = "Informe o nome do arquivo \".bak\"";
-            lblInformeAux.Text = "Informe o nome do arquivo Auxiliar \".bak\"";
-            txtArquivo.Text = "Loja_ZeroV1005.bak";
-            txtArquivoAux.Text = "V1005_AUXILIAR.bak";
-            btnRestaurar.Text = "Restaurar";
-            btnDeletar.Text = "Deletar";
-            checkBoxInstZeroousembackup.Visible = true;
+        #endregion
 
-        }
-
-        private void rbtnPontoMdf_CheckedChanged(object sender, EventArgs e)
-        {
-            lblInforme.Text = "Informe o nome do arquivo \".mdf\"";
-            lblInformeAux.Text = "Informe o nome do arquivo Auxiliar \".mdf\"";
-            txtArquivo.Text = "";
-            txtArquivoAux.Text = "";
-            btnRestaurar.Text = "Anexar";
-            btnDeletar.Text = "Desanexar";
-            checkBoxInstZeroousembackup.Checked = false;
-            checkBoxInstZeroousembackup.Visible = false;
-
-        }
-
+        #region page_consultar_filial
         private void btnConsultarTabela_Click(object sender, EventArgs e)
         {
             clsapoio.nomeInstancia = txtInstancia.Text;
@@ -1484,73 +1465,86 @@ namespace bancozerado
             divTabelaFilial.Rows.Clear();
             divTabelaTributo.Rows.Clear();
             string queryempresa = "select emp_codigo,emp_razao_social from empresas";
-            string queryfilial = "select fil_codigo,fil_razao_social,fil_franquia,fil_codigo_franquia from filial";
+            string queryfilial = "select fil_codigo,fil_razao_social,fil_franquia,fil_codigo_franquia,FIL_TRIBUTACAO from filial";
             string querytributo = "select tat_codigo,tat_descricao,tat_valor from tabelatributo";
-            try
+
+            if (cmbBanco.SelectedItem == null)
             {
-                clsapoio.stringBDBD();
-                DataTable dados = new DataTable();
-                SqlDataAdapter adaptador = new SqlDataAdapter(queryempresa, clsapoio.conn);
-                adaptador.Fill(dados);
-                foreach (DataRow linha in dados.Rows)
+                MessageBox.Show("Campo Vazio !");
+                cmbBanco.Focus();
+            }
+            else
+            {
+                try
                 {
-                    divTabelaEmpresa.Rows.Add(linha.ItemArray);
+                    clsapoio.stringBDBD();
+                    DataTable dados = new DataTable();
+                    SqlDataAdapter adaptador = new SqlDataAdapter(queryempresa, clsapoio.conn);
+                    adaptador.Fill(dados);
+                    foreach (DataRow linha in dados.Rows)
+                    {
+                        divTabelaEmpresa.Rows.Add(linha.ItemArray);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                finally
+                {
+                    clsapoio.desconectarBD();
+
+                }
+                try
+                {
+                    clsapoio.stringBDBD();
+                    DataTable dados = new DataTable();
+                    SqlDataAdapter adaptador = new SqlDataAdapter(queryfilial, clsapoio.conn);
+                    adaptador.Fill(dados);
+                    foreach (DataRow linha in dados.Rows)
+                    {
+                        divTabelaFilial.Rows.Add(linha.ItemArray);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                finally
+                {
+                    clsapoio.desconectarBD();
+
+                }
+                try
+                {
+                    clsapoio.stringBDBD();
+                    DataTable dados = new DataTable();
+                    SqlDataAdapter adaptador = new SqlDataAdapter(querytributo, clsapoio.conn);
+                    adaptador.Fill(dados);
+                    foreach (DataRow linha in dados.Rows)
+                    {
+                        divTabelaTributo.Rows.Add(linha.ItemArray);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                finally
+                {
+                    clsapoio.desconectarBD();
+
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            finally
-            {
-                clsapoio.desconectarBD();
-
-            }
-            try
-            {
-                clsapoio.stringBDBD();
-                DataTable dados = new DataTable();
-                SqlDataAdapter adaptador = new SqlDataAdapter(queryfilial, clsapoio.conn);
-                adaptador.Fill(dados);
-                foreach (DataRow linha in dados.Rows)
-                {
-                    divTabelaFilial.Rows.Add(linha.ItemArray);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            finally
-            {
-                clsapoio.desconectarBD();
-
-            }
-            try
-            {
-                clsapoio.stringBDBD();
-                DataTable dados = new DataTable();
-                SqlDataAdapter adaptador = new SqlDataAdapter(querytributo, clsapoio.conn);
-                adaptador.Fill(dados);
-                foreach (DataRow linha in dados.Rows)
-                {
-                    divTabelaTributo.Rows.Add(linha.ItemArray);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            finally
-            {
-                clsapoio.desconectarBD();
-
-            }
+            
 
 
 
 
         }
+
+
+        #endregion
     }
 }
 

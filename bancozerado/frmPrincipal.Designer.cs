@@ -44,7 +44,6 @@ namespace bancozerado
             this.txtSenha = new System.Windows.Forms.TextBox();
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.txtInstancia = new System.Windows.Forms.TextBox();
-            this.btnConectar = new System.Windows.Forms.Button();
             this.lblMsg = new System.Windows.Forms.Label();
             this.menuArquivo = new System.Windows.Forms.MenuStrip();
             this.sobreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,24 +92,25 @@ namespace bancozerado
             this.label1 = new System.Windows.Forms.Label();
             this.txtnomedoBancoZero = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnConsultarTabela = new System.Windows.Forms.Button();
             this.lblTabelaTributo = new System.Windows.Forms.Label();
             this.lblTabelaFilial = new System.Windows.Forms.Label();
             this.lblTabelaEmpresa = new System.Windows.Forms.Label();
             this.divTabelaTributo = new System.Windows.Forms.DataGridView();
-            this.divTabelaFilial = new System.Windows.Forms.DataGridView();
-            this.divTabelaEmpresa = new System.Windows.Forms.DataGridView();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.btnConsultarTabela = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RAZAO_SOCIAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FILIAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NOME_FANTASIA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FIL_FRANQUIA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FIL_CODIGO_FRANQUIA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COD = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DESCRICAO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PERCENTUAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.divTabelaFilial = new System.Windows.Forms.DataGridView();
+            this.FILIAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.COD_TRIBUTO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NOME_FANTASIA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FIL_FRANQUIA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FIL_CODIGO_FRANQUIA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.divTabelaEmpresa = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RAZAO_SOCIAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox1.SuspendLayout();
             this.menuArquivo.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -141,7 +141,6 @@ namespace bancozerado
             this.groupBox1.Controls.Add(this.rbtnAzure2);
             this.groupBox1.Controls.Add(this.rbtnAzure1);
             this.groupBox1.Controls.Add(this.RbtnLocal);
-            this.groupBox1.Enabled = false;
             this.groupBox1.Location = new System.Drawing.Point(195, 29);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(277, 40);
@@ -263,17 +262,6 @@ namespace bancozerado
             this.txtInstancia.Size = new System.Drawing.Size(213, 20);
             this.txtInstancia.TabIndex = 53;
             this.txtInstancia.Text = ".\\pdvnet";
-            // 
-            // btnConectar
-            // 
-            this.btnConectar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConectar.Location = new System.Drawing.Point(653, 72);
-            this.btnConectar.Name = "btnConectar";
-            this.btnConectar.Size = new System.Drawing.Size(93, 39);
-            this.btnConectar.TabIndex = 52;
-            this.btnConectar.Text = "Consultar";
-            this.btnConectar.UseVisualStyleBackColor = true;
-            this.btnConectar.Click += new System.EventHandler(this.btnConectar_Click);
             // 
             // lblMsg
             // 
@@ -810,6 +798,27 @@ namespace bancozerado
             this.tabPage2.Text = "Consulta Filial";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(491, 12);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(155, 24);
+            this.label2.TabIndex = 75;
+            this.label2.Text = "Consulta Tabelas";
+            // 
+            // btnConsultarTabela
+            // 
+            this.btnConsultarTabela.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConsultarTabela.Location = new System.Drawing.Point(652, 6);
+            this.btnConsultarTabela.Name = "btnConsultarTabela";
+            this.btnConsultarTabela.Size = new System.Drawing.Size(93, 39);
+            this.btnConsultarTabela.TabIndex = 74;
+            this.btnConsultarTabela.Text = "Consultar";
+            this.btnConsultarTabela.UseVisualStyleBackColor = true;
+            this.btnConsultarTabela.Click += new System.EventHandler(this.btnConsultarTabela_Click);
+            // 
             // lblTabelaTributo
             // 
             this.lblTabelaTributo.AutoSize = true;
@@ -852,11 +861,28 @@ namespace bancozerado
             this.divTabelaTributo.Size = new System.Drawing.Size(739, 161);
             this.divTabelaTributo.TabIndex = 2;
             // 
+            // COD
+            // 
+            this.COD.HeaderText = "COD";
+            this.COD.Name = "COD";
+            // 
+            // DESCRICAO
+            // 
+            this.DESCRICAO.HeaderText = "DESCRICAO";
+            this.DESCRICAO.Name = "DESCRICAO";
+            this.DESCRICAO.Width = 150;
+            // 
+            // PERCENTUAL
+            // 
+            this.PERCENTUAL.HeaderText = "PERCENTUAL";
+            this.PERCENTUAL.Name = "PERCENTUAL";
+            // 
             // divTabelaFilial
             // 
             this.divTabelaFilial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.divTabelaFilial.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.FILIAL,
+            this.COD_TRIBUTO,
             this.NOME_FANTASIA,
             this.FIL_FRANQUIA,
             this.FIL_CODIGO_FRANQUIA});
@@ -865,64 +891,16 @@ namespace bancozerado
             this.divTabelaFilial.Size = new System.Drawing.Size(739, 161);
             this.divTabelaFilial.TabIndex = 1;
             // 
-            // divTabelaEmpresa
-            // 
-            this.divTabelaEmpresa.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.divTabelaEmpresa.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ID,
-            this.RAZAO_SOCIAL});
-            this.divTabelaEmpresa.Location = new System.Drawing.Point(7, 31);
-            this.divTabelaEmpresa.Name = "divTabelaEmpresa";
-            this.divTabelaEmpresa.Size = new System.Drawing.Size(396, 127);
-            this.divTabelaEmpresa.TabIndex = 0;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(752, 561);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Troca Cnpj";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // btnConsultarTabela
-            // 
-            this.btnConsultarTabela.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConsultarTabela.Location = new System.Drawing.Point(652, 6);
-            this.btnConsultarTabela.Name = "btnConsultarTabela";
-            this.btnConsultarTabela.Size = new System.Drawing.Size(93, 39);
-            this.btnConsultarTabela.TabIndex = 74;
-            this.btnConsultarTabela.Text = "Consultar";
-            this.btnConsultarTabela.UseVisualStyleBackColor = true;
-            this.btnConsultarTabela.Click += new System.EventHandler(this.btnConsultarTabela_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(491, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(155, 24);
-            this.label2.TabIndex = 75;
-            this.label2.Text = "Consulta Tabelas";
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.Width = 50;
-            // 
-            // RAZAO_SOCIAL
-            // 
-            this.RAZAO_SOCIAL.HeaderText = "RAZAO_SOCIAL";
-            this.RAZAO_SOCIAL.Name = "RAZAO_SOCIAL";
-            this.RAZAO_SOCIAL.Width = 300;
-            // 
             // FILIAL
             // 
             this.FILIAL.HeaderText = "FILIAL";
             this.FILIAL.Name = "FILIAL";
             this.FILIAL.Width = 40;
+            // 
+            // COD_TRIBUTO
+            // 
+            this.COD_TRIBUTO.HeaderText = "COD TRIBUTO";
+            this.COD_TRIBUTO.Name = "COD_TRIBUTO";
             // 
             // NOME_FANTASIA
             // 
@@ -941,21 +919,37 @@ namespace bancozerado
             this.FIL_CODIGO_FRANQUIA.HeaderText = "CODIGO FRANQUIA";
             this.FIL_CODIGO_FRANQUIA.Name = "FIL_CODIGO_FRANQUIA";
             // 
-            // COD
+            // divTabelaEmpresa
             // 
-            this.COD.HeaderText = "COD";
-            this.COD.Name = "COD";
+            this.divTabelaEmpresa.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.divTabelaEmpresa.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID,
+            this.RAZAO_SOCIAL});
+            this.divTabelaEmpresa.Location = new System.Drawing.Point(7, 31);
+            this.divTabelaEmpresa.Name = "divTabelaEmpresa";
+            this.divTabelaEmpresa.Size = new System.Drawing.Size(396, 127);
+            this.divTabelaEmpresa.TabIndex = 0;
             // 
-            // DESCRICAO
+            // ID
             // 
-            this.DESCRICAO.HeaderText = "DESCRICAO";
-            this.DESCRICAO.Name = "DESCRICAO";
-            this.DESCRICAO.Width = 150;
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.Width = 50;
             // 
-            // PERCENTUAL
+            // RAZAO_SOCIAL
             // 
-            this.PERCENTUAL.HeaderText = "PERCENTUAL";
-            this.PERCENTUAL.Name = "PERCENTUAL";
+            this.RAZAO_SOCIAL.HeaderText = "RAZAO_SOCIAL";
+            this.RAZAO_SOCIAL.Name = "RAZAO_SOCIAL";
+            this.RAZAO_SOCIAL.Width = 300;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(752, 561);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Troca Cnpj";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // frmPrincipal
             // 
@@ -973,7 +967,6 @@ namespace bancozerado
             this.Controls.Add(this.txtSenha);
             this.Controls.Add(this.txtUsuario);
             this.Controls.Add(this.txtInstancia);
-            this.Controls.Add(this.btnConectar);
             this.Controls.Add(this.lblMsg);
             this.Controls.Add(this.menuArquivo);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1020,7 +1013,6 @@ namespace bancozerado
         private System.Windows.Forms.TextBox txtSenha;
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.TextBox txtInstancia;
-        private System.Windows.Forms.Button btnConectar;
         private System.Windows.Forms.Label lblMsg;
         private System.Windows.Forms.RadioButton rbtnUolHost;
         private System.Windows.Forms.MenuStrip menuArquivo;
@@ -1085,6 +1077,7 @@ namespace bancozerado
         private System.Windows.Forms.DataGridViewTextBoxColumn DESCRICAO;
         private System.Windows.Forms.DataGridViewTextBoxColumn PERCENTUAL;
         private System.Windows.Forms.DataGridViewTextBoxColumn FILIAL;
+        private System.Windows.Forms.DataGridViewTextBoxColumn COD_TRIBUTO;
         private System.Windows.Forms.DataGridViewTextBoxColumn NOME_FANTASIA;
         private System.Windows.Forms.DataGridViewTextBoxColumn FIL_FRANQUIA;
         private System.Windows.Forms.DataGridViewTextBoxColumn FIL_CODIGO_FRANQUIA;
