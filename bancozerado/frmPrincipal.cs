@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.IO;
+using System.Diagnostics;
 
 namespace bancozerado
 {
@@ -25,6 +26,15 @@ namespace bancozerado
         //Chama o Formulario de login
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
+            Process aProcess = Process.GetCurrentProcess();
+            string aProcName = aProcess.ProcessName;
+
+            if (Process.GetProcessesByName(aProcName).Length > 1)
+            {
+                MessageBox.Show("O programa já está em execução!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+                return;
+            }
 
             frmLogin f = new frmLogin();
 
@@ -43,6 +53,8 @@ namespace bancozerado
             }
 
             Visible = true;
+
+            
         }
         //Mensagem sobre versao
         private void sobreToolStripMenuItem_Click(object sender, EventArgs e)

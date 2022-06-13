@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Data;
 using System.IO;
+using System.Diagnostics;
 
 namespace bancozerado
 {
@@ -105,5 +106,8 @@ namespace bancozerado
             writer.WriteLine(c);
             writer.Close();
         }
+        
     }
+
+
 }
