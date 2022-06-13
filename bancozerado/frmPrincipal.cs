@@ -20,6 +20,7 @@ namespace bancozerado
             InitializeComponent();
         }
 
+
         #region frm_superior
         //Chama o Formulario de login
         private void frmPrincipal_Load(object sender, EventArgs e)
@@ -87,10 +88,12 @@ namespace bancozerado
         }
 
 
-        
+
         private void btnSair_Click(object sender, EventArgs e)
         {
-            Close();
+
+            clsapoio.encerraSistema();
+
         }
 
 
@@ -158,6 +161,7 @@ namespace bancozerado
 
             string nomedobancoZero = txtnomedoBancoZero.Text;
             string path = txtDiretorio.Text;
+            string pathBuscar = txtDiretorioBuscar.Text;
             string file = txtArquivo.Text;
             string fileAux = txtArquivoAux.Text;
             if (txtnomedoBancoZero.Text == "")
@@ -172,7 +176,7 @@ namespace bancozerado
                     try
                     {
                         clsapoio.stringBD();
-                        SqlCommand cmd = new SqlCommand(@"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"] FROM  DISK = N'" + path + @"\" + file + @"' WITH  FILE = 1,  MOVE N'BDLOJA' TO N'C:\BASESQL\" + nomedobancoZero + @".mdf ',  MOVE N'BDLOJA_log' TO N'C:\BASESQL\" + nomedobancoZero + @"_1.ldf',  NOUNLOAD,  STATS = 5", clsapoio.conn);
+                        SqlCommand cmd = new SqlCommand(@"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"] FROM  DISK = N'" + pathBuscar + @"\" + file + @"' WITH  FILE = 1,  MOVE N'BDLOJA' TO N'" + path + @"\" + nomedobancoZero + @".mdf ',  MOVE N'BDLOJA_log' TO N'" + path + @"\" + nomedobancoZero + @"_1.ldf',  NOUNLOAD,  STATS = 5", clsapoio.conn);
                         SqlDataReader dr = cmd.ExecuteReader();
 
                     }
@@ -188,7 +192,7 @@ namespace bancozerado
                     try
                     {
                         clsapoio.stringBD();
-                        SqlCommand cmd = new SqlCommand(@"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"_AUXILIAR] FROM  DISK = N'" + path + @"\" + fileAux + @"' WITH  FILE = 1,  MOVE N'BDREDMTv3_AUXILIAR_DAT' TO N'C:\BaseSQL\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.mdf',  MOVE N'BDREDMTv3_AUXILIAR_LOG' TO N'C:\BaseSQL\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.ldf',  NOUNLOAD,  STATS = 5", clsapoio.conn);
+                        SqlCommand cmd = new SqlCommand(@"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"_AUXILIAR] FROM  DISK = N'" + pathBuscar + @"\" + fileAux + @"' WITH  FILE = 1,  MOVE N'BDREDMTv3_AUXILIAR_DAT' TO N'C:\BaseSQL\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.mdf',  MOVE N'BDREDMTv3_AUXILIAR_LOG' TO N'C:\BaseSQL\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.ldf',  NOUNLOAD,  STATS = 5", clsapoio.conn);
                         SqlDataReader dr = cmd.ExecuteReader();
 
                         MessageBox.Show("Banco de dados restaurado " + nomedobancoZero + "\n" + "Banco de dados restaurado " + nomedobancoZero + "_Auxiliar");
@@ -208,6 +212,10 @@ namespace bancozerado
                 }
                 else
                 {
+                    if (path != pathBuscar)
+                    {
+                        MessageBox.Show("Para Anexar o arquivo MDF o aquivo deve estar na mesma pasta que o diretorio de busca.");
+                    }
                     try
                     {
                         clsapoio.stringBD();
@@ -462,51 +470,59 @@ namespace bancozerado
                 }
                 else
                 {
-                    if (rbtnPontoBak.Checked)
+                    if (!RbtnLocal.Checked)
                     {
-                        try
-                        {
-                            clsapoio.stringBD();
-
-                            SqlCommand cmd1 = new SqlCommand(@"EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'" + nomedobancoZero + "' USE [master] DROP DATABASE [" + nomedobancoZero + "]", clsapoio.conn);
-                            SqlDataReader dr1 = cmd1.ExecuteReader();
-
-                            MessageBox.Show("Banco de dados Deletado " + nomedobancoZero);
-
-                        }
-
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        }
-                        finally
-                        {
-                            clsapoio.desconectarBD();
-                        }
-
-
+                        RbtnLocal.Checked = true;
+                        MessageBox.Show("Função somente para banco local");
                     }
                     else
                     {
-                        try
+                        if (rbtnPontoBak.Checked)
                         {
-                            clsapoio.stringBD();
+                            try
+                            {
+                                clsapoio.stringBD();
 
-                            SqlCommand cmd1 = new SqlCommand(@"USE [master] ALTER DATABASE [" + nomedobancoZero + "] SET  SINGLE_USER WITH ROLLBACK IMMEDIATE USE [master] EXEC master.dbo.sp_detach_db @dbname = N'" + nomedobancoZero + "', @skipchecks = 'false'", clsapoio.conn);
-                            SqlDataReader dr1 = cmd1.ExecuteReader();
+                                SqlCommand cmd1 = new SqlCommand(@"EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'" + nomedobancoZero + "' USE [master] DROP DATABASE [" + nomedobancoZero + "]", clsapoio.conn);
+                                SqlDataReader dr1 = cmd1.ExecuteReader();
 
-                            MessageBox.Show("Banco de dados Desanexado " + nomedobancoZero);
+                                MessageBox.Show("Banco de dados Deletado " + nomedobancoZero);
+
+                            }
+
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            }
+                            finally
+                            {
+                                clsapoio.desconectarBD();
+                            }
+
+
                         }
-
-                        catch (Exception ex)
+                        else
                         {
-                            MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        }
-                        finally
-                        {
-                            clsapoio.desconectarBD();
-                        }
+                            try
+                            {
+                                clsapoio.stringBD();
 
+                                SqlCommand cmd1 = new SqlCommand(@"USE [master] ALTER DATABASE [" + nomedobancoZero + "] SET  SINGLE_USER WITH ROLLBACK IMMEDIATE USE [master] EXEC master.dbo.sp_detach_db @dbname = N'" + nomedobancoZero + "', @skipchecks = 'false'", clsapoio.conn);
+                                SqlDataReader dr1 = cmd1.ExecuteReader();
+
+                                MessageBox.Show("Banco de dados Desanexado " + nomedobancoZero);
+                            }
+
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            }
+                            finally
+                            {
+                                clsapoio.desconectarBD();
+                            }
+
+                        }
                     }
 
                 }
@@ -537,25 +553,33 @@ namespace bancozerado
             }
             else
             {
-                try
+                if (!RbtnLocal.Checked)
                 {
-                    clsapoio.stringBD();
-
-                    SqlCommand cmd1 = new SqlCommand(@"USE [master]; BACKUP DATABASE [" + nomedobancoZero + @"] TO DISK = N'" + pathBackup + @"\" + nomedobancoZero + dtaStr + @".bak' WITH NOFORMAT, NOINIT, NAME = N'" + nomedobancoZero + @" - Full Database Backup', SKIP, NOREWIND, NOUNLOAD, STATS = 10;", clsapoio.conn);
-                    SqlDataReader dr1 = cmd1.ExecuteReader();
-
-                    MessageBox.Show("Feito Backup do Banco de dados " + nomedobancoZero + "\n" + "Diretorio " + pathBackup + @"\" + nomedobancoZero + dtaStr + @".bak");
-
+                    RbtnLocal.Checked = true;
+                    MessageBox.Show("Função somente para banco local");
                 }
-
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-                finally
-                {
-                    clsapoio.desconectarBD();
+                    try
+                    {
+                        clsapoio.stringBD();
 
+                        SqlCommand cmd1 = new SqlCommand(@"USE [master]; BACKUP DATABASE [" + nomedobancoZero + @"] TO DISK = N'" + pathBackup + @"\" + nomedobancoZero + dtaStr + @".bak' WITH NOFORMAT, NOINIT, NAME = N'" + nomedobancoZero + @" - Full Database Backup', SKIP, NOREWIND, NOUNLOAD, STATS = 10;", clsapoio.conn);
+                        SqlDataReader dr1 = cmd1.ExecuteReader();
+
+                        MessageBox.Show("Feito Backup do Banco de dados " + nomedobancoZero + "\n" + "Diretorio " + pathBackup + @"\" + nomedobancoZero + dtaStr + @".bak");
+
+                    }
+
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                    finally
+                    {
+                        clsapoio.desconectarBD();
+
+                    }
                 }
             }
 
@@ -583,6 +607,24 @@ namespace bancozerado
             {
                 //Exibe a pasta selecionada
                 txtDiretorio.Text = fbd1.SelectedPath;
+            }
+        }
+        private void btnDiretorioBuscar_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd1 = new FolderBrowserDialog();
+
+            //Define as propriedades do controle FolderBronserDialog
+            fbd1.Description = "Selecione um diretório";
+            fbd1.RootFolder = Environment.SpecialFolder.MyComputer;
+            fbd1.ShowNewFolderButton = true;
+
+            DialogResult resultado = fbd1.ShowDialog();
+
+            //Exibe a caixa de dialogo
+            if (resultado == DialogResult.OK)
+            {
+                //Exibe a pasta selecionada
+                txtDiretorioBuscar.Text = fbd1.SelectedPath;
             }
         }
 
@@ -778,6 +820,9 @@ namespace bancozerado
             btnRestaurar.Text = "Restaurar";
             btnDeletar.Text = "Deletar";
             checkBoxInstZeroousembackup.Visible = true;
+            lblCaminhoBak.Visible = true;
+            txtDiretorioBuscar.Visible = true;
+            btnDiretorioBuscar.Visible = true;
 
         }
 
@@ -791,7 +836,9 @@ namespace bancozerado
             btnDeletar.Text = "Desanexar";
             checkBoxInstZeroousembackup.Checked = false;
             checkBoxInstZeroousembackup.Visible = false;
-
+            lblCaminhoBak.Visible = false;
+            txtDiretorioBuscar.Visible = false;
+            btnDiretorioBuscar.Visible = false;
         }
 
         //instalacao de banco zero
@@ -1536,7 +1583,7 @@ namespace bancozerado
 
                 }
             }
-            
+
 
 
 
@@ -1544,6 +1591,88 @@ namespace bancozerado
         }
 
 
+
+        #endregion
+
+
+
+
+        // Balao informativo
+        #region balaoinformativo
+        private void txtDiretorio_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.textomensageminformativo(txtDiretorio, "Aqui voce vai colocar o caminho em que o banco vai ser restaurado");
+        }
+
+        private void txtDiretorioBuscar_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.textomensageminformativo(txtDiretorioBuscar, "Aqui voce vai colocar o caminho aonde esta o arquivo a ser restaurado");
+        }
+
+        private void txtArquivo_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.textomensageminformativo(txtArquivo, "Arquivo do banco principal para o sistema Anexar ou restaurar");
+        }
+
+        private void txtArquivoAux_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.textomensageminformativo(txtArquivo, "Arquivo do banco Auxiliar para o sistema Anexar ou restaurar");
+        }
+
+        private void cmbBanco_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.comboboxmensageminformativo(cmbBanco, "Combo Box para selecionar o banco para executar ou fazer consultas");
+        }
+
+        private void txtDiretorioBkp_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.textomensageminformativo(txtDiretorioBkp, "Aqui voce vai colocar o caminho aonde vai ser feito backup");
+        }
+
+        private void txtCodigoEmpresa_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.textomensageminformativo(txtCodigoEmpresa, "Codigo referente a tabela empresa ou tela rede no sistema");
+        }
+
+        private void txtNomeEmpresa_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.textomensageminformativo(txtNomeEmpresa, "descricao referente a tabela empresa ou tela rede no sistema");
+        }
+
+        private void txtCodigoFilial_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.textomensageminformativo(txtCodigoFilial, "Codigo referente a tabela filial, campo fil_codigo");
+        }
+
+        private void txtCodigoMatrizFranquia_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.textomensageminformativo(txtCodigoFilial, "Codigo referente a tabela filial, campo fil_codigo_franquia");
+        }
+
+        private void txtCodTabTributo_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.textomensageminformativo(txtCodTabTributo, "Codigo referente a tabela tributo, campo fit_codigo");
+        }
+
+        private void txtDescTabTributo_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.textomensageminformativo(txtDescTabTributo, "descricao referente a tabela tributo, campo fit_descricao");
+        }
+
+        private void txtTriPercTabTributo_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.textomensageminformativo(txtTriPercTabTributo, "percentual referente a tabela tributo, campo fit_valor");
+        }
+
+        private void checkBoxInstZeroousembackup_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.checkboxmensageminformativo(checkBoxInstZeroousembackup, "Aqui voce vai poder inserir informacao para uma instalação do sistema");
+        }
+
+        private void checkBoxFranquia_MouseMove(object sender, MouseEventArgs e)
+        {
+            clsapoio.checkboxmensageminformativo(checkBoxInstZeroousembackup, "Aqui voce vai poder inserir informacao para uma instalação do sistema de franquia");
+        }
         #endregion
     }
 }

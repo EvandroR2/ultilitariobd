@@ -50,11 +50,46 @@ namespace bancozerado
         //ROTINA PARA ENCERRAR SISTEMA
         public void encerraSistema()
         {
-            if (MessageBox.Show("Deseja encerrar o sistema?", "Encontro Iniciar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Deseja encerrar o sistema?", "Ultilitario BD", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Application.Exit();
             }
         }
+        public void textomensageminformativo(TextBox txt, string c)
+        {
+            ToolTip t_Tip = new ToolTip();
+            t_Tip.Active = true;
+            t_Tip.AutoPopDelay = 4000;
+            t_Tip.InitialDelay = 600;
+            t_Tip.IsBalloon = true;
+            t_Tip.ToolTipIcon = ToolTipIcon.Info;
+            t_Tip.SetToolTip(txt, c);
+
+        }
+        public void checkboxmensageminformativo(CheckBox txt, string c)
+        {
+            ToolTip t_Tip = new ToolTip();
+            t_Tip.Active = true;
+            t_Tip.AutoPopDelay = 4000;
+            t_Tip.InitialDelay = 600;
+            t_Tip.IsBalloon = true;
+            t_Tip.ToolTipIcon = ToolTipIcon.Info;
+            t_Tip.SetToolTip(txt, c);
+
+        }
+
+        public void comboboxmensageminformativo(ComboBox txt, string c)
+        {
+            ToolTip t_Tip = new ToolTip();
+            t_Tip.Active = true;
+            t_Tip.AutoPopDelay = 4000;
+            t_Tip.InitialDelay = 600;
+            t_Tip.IsBalloon = true;
+            t_Tip.ToolTipIcon = ToolTipIcon.Info;
+            t_Tip.SetToolTip(txt, c);
+
+        }
+
 
         public void auditoriaTexto(string c)
         {

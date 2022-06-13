@@ -50,10 +50,13 @@ namespace bancozerado
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBoxInstZero = new System.Windows.Forms.GroupBox();
+            this.txtDiretorioBuscar = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rbtnPontoMdf = new System.Windows.Forms.RadioButton();
             this.rbtnPontoBak = new System.Windows.Forms.RadioButton();
+            this.lblCaminhoBak = new System.Windows.Forms.Label();
             this.btnArquivoAux = new System.Windows.Forms.Button();
+            this.btnDiretorioBuscar = new System.Windows.Forms.Button();
             this.btnArquivo = new System.Windows.Forms.Button();
             this.checkBoxInstZeroousembackup = new System.Windows.Forms.CheckBox();
             this.groupBoxInstBancoZero = new System.Windows.Forms.GroupBox();
@@ -201,6 +204,7 @@ namespace bancozerado
             this.cmbBanco.Size = new System.Drawing.Size(179, 21);
             this.cmbBanco.TabIndex = 60;
             this.cmbBanco.Click += new System.EventHandler(this.cmbBanco_Click);
+            this.cmbBanco.MouseMove += new System.Windows.Forms.MouseEventHandler(this.cmbBanco_MouseMove);
             // 
             // lblNomeBanco
             // 
@@ -314,8 +318,11 @@ namespace bancozerado
             // 
             // groupBoxInstZero
             // 
+            this.groupBoxInstZero.Controls.Add(this.txtDiretorioBuscar);
             this.groupBoxInstZero.Controls.Add(this.groupBox2);
+            this.groupBoxInstZero.Controls.Add(this.lblCaminhoBak);
             this.groupBoxInstZero.Controls.Add(this.btnArquivoAux);
+            this.groupBoxInstZero.Controls.Add(this.btnDiretorioBuscar);
             this.groupBoxInstZero.Controls.Add(this.btnArquivo);
             this.groupBoxInstZero.Controls.Add(this.checkBoxInstZeroousembackup);
             this.groupBoxInstZero.Controls.Add(this.groupBoxInstBancoZero);
@@ -340,6 +347,16 @@ namespace bancozerado
             this.groupBoxInstZero.TabIndex = 68;
             this.groupBoxInstZero.TabStop = false;
             this.groupBoxInstZero.Text = "Restaurar Banco de Dados";
+            // 
+            // txtDiretorioBuscar
+            // 
+            this.txtDiretorioBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDiretorioBuscar.Location = new System.Drawing.Point(14, 44);
+            this.txtDiretorioBuscar.Name = "txtDiretorioBuscar";
+            this.txtDiretorioBuscar.Size = new System.Drawing.Size(290, 26);
+            this.txtDiretorioBuscar.TabIndex = 105;
+            this.txtDiretorioBuscar.Text = "C:\\BaseSQL";
+            this.txtDiretorioBuscar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtDiretorioBuscar_MouseMove);
             // 
             // groupBox2
             // 
@@ -375,6 +392,16 @@ namespace bancozerado
             this.rbtnPontoBak.UseVisualStyleBackColor = true;
             this.rbtnPontoBak.CheckedChanged += new System.EventHandler(this.rbtnPontoBak_CheckedChanged);
             // 
+            // lblCaminhoBak
+            // 
+            this.lblCaminhoBak.AutoSize = true;
+            this.lblCaminhoBak.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCaminhoBak.Location = new System.Drawing.Point(14, 16);
+            this.lblCaminhoBak.Name = "lblCaminhoBak";
+            this.lblCaminhoBak.Size = new System.Drawing.Size(249, 20);
+            this.lblCaminhoBak.TabIndex = 107;
+            this.lblCaminhoBak.Text = "Informe o Diretório Banco do .Bak";
+            // 
             // btnArquivoAux
             // 
             this.btnArquivoAux.Location = new System.Drawing.Point(643, 111);
@@ -384,6 +411,16 @@ namespace bancozerado
             this.btnArquivoAux.Text = "...";
             this.btnArquivoAux.UseVisualStyleBackColor = true;
             this.btnArquivoAux.Click += new System.EventHandler(this.btnArquivoAux_Click);
+            // 
+            // btnDiretorioBuscar
+            // 
+            this.btnDiretorioBuscar.Location = new System.Drawing.Point(310, 45);
+            this.btnDiretorioBuscar.Name = "btnDiretorioBuscar";
+            this.btnDiretorioBuscar.Size = new System.Drawing.Size(27, 26);
+            this.btnDiretorioBuscar.TabIndex = 106;
+            this.btnDiretorioBuscar.Text = "...";
+            this.btnDiretorioBuscar.UseVisualStyleBackColor = true;
+            this.btnDiretorioBuscar.Click += new System.EventHandler(this.btnDiretorioBuscar_Click);
             // 
             // btnArquivo
             // 
@@ -406,6 +443,7 @@ namespace bancozerado
             this.checkBoxInstZeroousembackup.Text = "Instalacao zero ou sem Backup";
             this.checkBoxInstZeroousembackup.UseVisualStyleBackColor = true;
             this.checkBoxInstZeroousembackup.CheckedChanged += new System.EventHandler(this.checkBoxInstZeroousembackup_CheckedChanged);
+            this.checkBoxInstZeroousembackup.MouseMove += new System.Windows.Forms.MouseEventHandler(this.checkBoxInstZeroousembackup_MouseMove);
             // 
             // groupBoxInstBancoZero
             // 
@@ -447,6 +485,7 @@ namespace bancozerado
             this.checkBoxFranquia.Text = "Franquia";
             this.checkBoxFranquia.UseVisualStyleBackColor = true;
             this.checkBoxFranquia.CheckedChanged += new System.EventHandler(this.checkBoxFranquia_CheckedChanged);
+            this.checkBoxFranquia.MouseMove += new System.Windows.Forms.MouseEventHandler(this.checkBoxFranquia_MouseMove);
             // 
             // txtTriPercTabTributo
             // 
@@ -457,6 +496,7 @@ namespace bancozerado
             this.txtTriPercTabTributo.Size = new System.Drawing.Size(85, 21);
             this.txtTriPercTabTributo.TabIndex = 101;
             this.txtTriPercTabTributo.Visible = false;
+            this.txtTriPercTabTributo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtTriPercTabTributo_MouseMove);
             // 
             // txtDescTabTributo
             // 
@@ -467,6 +507,7 @@ namespace bancozerado
             this.txtDescTabTributo.Size = new System.Drawing.Size(85, 21);
             this.txtDescTabTributo.TabIndex = 100;
             this.txtDescTabTributo.Visible = false;
+            this.txtDescTabTributo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtDescTabTributo_MouseMove);
             // 
             // label3
             // 
@@ -551,6 +592,7 @@ namespace bancozerado
             this.txtNomeEmpresa.Name = "txtNomeEmpresa";
             this.txtNomeEmpresa.Size = new System.Drawing.Size(197, 21);
             this.txtNomeEmpresa.TabIndex = 73;
+            this.txtNomeEmpresa.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtNomeEmpresa_MouseMove);
             // 
             // lblCodTabTributo
             // 
@@ -571,6 +613,7 @@ namespace bancozerado
             this.txtCodigoEmpresa.Name = "txtCodigoEmpresa";
             this.txtCodigoEmpresa.Size = new System.Drawing.Size(197, 21);
             this.txtCodigoEmpresa.TabIndex = 71;
+            this.txtCodigoEmpresa.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtCodigoEmpresa_MouseMove);
             // 
             // txtCodigoFilial
             // 
@@ -579,6 +622,7 @@ namespace bancozerado
             this.txtCodigoFilial.Name = "txtCodigoFilial";
             this.txtCodigoFilial.Size = new System.Drawing.Size(197, 21);
             this.txtCodigoFilial.TabIndex = 75;
+            this.txtCodigoFilial.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtCodigoFilial_MouseMove);
             // 
             // txtCodTabTributo
             // 
@@ -589,6 +633,7 @@ namespace bancozerado
             this.txtCodTabTributo.Size = new System.Drawing.Size(85, 21);
             this.txtCodTabTributo.TabIndex = 95;
             this.txtCodTabTributo.Visible = false;
+            this.txtCodTabTributo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtCodTabTributo_MouseMove);
             // 
             // txtcodigoRomaneio
             // 
@@ -609,6 +654,7 @@ namespace bancozerado
             this.txtCodigoMatrizFranquia.Size = new System.Drawing.Size(197, 21);
             this.txtCodigoMatrizFranquia.TabIndex = 77;
             this.txtCodigoMatrizFranquia.Visible = false;
+            this.txtCodigoMatrizFranquia.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtCodigoMatrizFranquia_MouseMove);
             // 
             // lblInfTabTributo
             // 
@@ -651,6 +697,7 @@ namespace bancozerado
             this.txtDiretorioBkp.Size = new System.Drawing.Size(293, 26);
             this.txtDiretorioBkp.TabIndex = 92;
             this.txtDiretorioBkp.Text = "C:\\BaseSQL";
+            this.txtDiretorioBkp.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtDiretorioBkp_MouseMove);
             // 
             // btnDiretorioBkp
             // 
@@ -670,6 +717,7 @@ namespace bancozerado
             this.txtArquivoAux.Size = new System.Drawing.Size(287, 26);
             this.txtArquivoAux.TabIndex = 89;
             this.txtArquivoAux.Text = "V1005_AUXILIAR.bak";
+            this.txtArquivoAux.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtArquivoAux_MouseMove);
             // 
             // lblInformeAux
             // 
@@ -684,11 +732,12 @@ namespace bancozerado
             // txtDiretorio
             // 
             this.txtDiretorio.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDiretorio.Location = new System.Drawing.Point(7, 45);
+            this.txtDiretorio.Location = new System.Drawing.Point(346, 44);
             this.txtDiretorio.Name = "txtDiretorio";
-            this.txtDiretorio.Size = new System.Drawing.Size(630, 26);
+            this.txtDiretorio.Size = new System.Drawing.Size(290, 26);
             this.txtDiretorio.TabIndex = 82;
             this.txtDiretorio.Text = "C:\\BaseSQL";
+            this.txtDiretorio.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtDiretorio_MouseMove);
             // 
             // txtArquivo
             // 
@@ -698,6 +747,7 @@ namespace bancozerado
             this.txtArquivo.Size = new System.Drawing.Size(287, 26);
             this.txtArquivo.TabIndex = 84;
             this.txtArquivo.Text = "Loja_ZeroV1005.bak";
+            this.txtArquivo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtArquivo_MouseMove);
             // 
             // lblInforme
             // 
@@ -713,7 +763,7 @@ namespace bancozerado
             // 
             this.lblDiretorio.AutoSize = true;
             this.lblDiretorio.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDiretorio.Location = new System.Drawing.Point(7, 17);
+            this.lblDiretorio.Location = new System.Drawing.Point(346, 16);
             this.lblDiretorio.Name = "lblDiretorio";
             this.lblDiretorio.Size = new System.Drawing.Size(254, 20);
             this.lblDiretorio.TabIndex = 85;
@@ -721,7 +771,7 @@ namespace bancozerado
             // 
             // btnDiretorio
             // 
-            this.btnDiretorio.Location = new System.Drawing.Point(643, 46);
+            this.btnDiretorio.Location = new System.Drawing.Point(642, 45);
             this.btnDiretorio.Name = "btnDiretorio";
             this.btnDiretorio.Size = new System.Drawing.Size(27, 26);
             this.btnDiretorio.TabIndex = 83;
@@ -1081,6 +1131,9 @@ namespace bancozerado
         private System.Windows.Forms.DataGridViewTextBoxColumn NOME_FANTASIA;
         private System.Windows.Forms.DataGridViewTextBoxColumn FIL_FRANQUIA;
         private System.Windows.Forms.DataGridViewTextBoxColumn FIL_CODIGO_FRANQUIA;
+        private System.Windows.Forms.TextBox txtDiretorioBuscar;
+        private System.Windows.Forms.Label lblCaminhoBak;
+        private System.Windows.Forms.Button btnDiretorioBuscar;
     }
 }
 
