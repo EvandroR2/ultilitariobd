@@ -2115,14 +2115,325 @@ namespace bancozerado
         private void mAjudaConsultaBanco_Click(object sender, EventArgs e)
         {
             //Aqui vou chamar a configuração dos formulario e trabalhar com muitas querry
-            MessageBox.Show("Branches em desenvolvimento");
+            clsapoio.nomeInstancia = txtInstancia.Text;
+            clsapoio.nomeUsuario = txtUsuario.Text;
+            clsapoio.nomeSenha = txtSenha.Text;
+            clsapoio.Bdbanco = cmbBanco.Text;
+
+            Task[] exemplo =
+            {
+                    Task.Factory.StartNew(() =>
+                    {
+                        MessageBox.Show("");
+                        clsapoio.auditoriaTexto("\n\n");
+                    })
+
+                    };
+
+            Task.WaitAll(exemplo);
+
+            Task[] qualTecnico =
+            {
+                    Task.Factory.StartNew(() =>
+                    {
+                        clsapoio.auditoriaTexto("Qual Técnico fez o Encontro Inicial");
+                        frm_perguntaRelatorio frm = new frm_perguntaRelatorio();
+                        frm.ShowDialog();
+                    })
+
+                    };
+
+            Task.WaitAll(qualTecnico);
+
+            Task[] nomeEmpresa =
+            {
+                    Task.Factory.StartNew(() =>
+                    {
+                        try
+            {
+                clsapoio.stringBDBD();
+                SqlCommand Cmd = new SqlCommand("SELECT LEFT (EMP_RAZAO_SOCIAL,15) FROM EMPRESAS", clsapoio.conn);
+                SqlDataReader dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                if (dr.HasRows)
+                {
+                                clsapoio.auditoriaTexto(" \n");
+                    while (dr.Read())
+                    {
+
+                        clsapoio.auditoriaTexto("Nome da Empresa? " + dr.GetString(0).ToString());
+
+                    }
+                    clsapoio.auditoriaTexto(" \n");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            finally
+            {
+                clsapoio.desconectarBD();
+                            MessageBox.Show("Criado Arquivo");
+
+            }
+                    })
+
+                    };
+
+            Task.WaitAll(nomeEmpresa);
+
+
+            Task[] InformacaoFilial =
+            {
+                    Task.Factory.StartNew(() =>
+                    {
+                        try
+            {
+                clsapoio.stringBDBD();
+                SqlCommand Cmd = new SqlCommand("select fil_codigo,rtrim(fil_razao_social),fil_cgc from filial order by FIL_CODIGO", clsapoio.conn);
+                SqlDataReader dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                if (dr.HasRows)
+                {
+                                clsapoio.auditoriaTexto("Quais Filiais estão cadastradas ?");
+                    while (dr.Read())
+                    {
+
+                        clsapoio.auditoriaTexto("FILIAL:" + dr.GetInt16(0).ToString() + "                 NOME FANTASIA: " + dr.GetString(1) + "                   CNPJ OU CPF: " + dr.GetString(2));
+
+                    }
+                    clsapoio.auditoriaTexto("\n\n");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            finally
+            {
+                clsapoio.desconectarBD();
+                            MessageBox.Show("Criado Arquivo");
+
+            }
+                    })
+
+                    };
+
+            Task.WaitAll(InformacaoFilial);
+
+            Task[] entradadeNotas =
+            {
+                    Task.Factory.StartNew(() =>
+                    {
+                        MessageBox.Show("");
+                        clsapoio.auditoriaTexto("\n\n");
+                    })
+
+                    };
+
+            Task.WaitAll(entradadeNotas);
+
+            Task[] regras =
+            {
+                    Task.Factory.StartNew(() =>
+                    {
+                        try
+            {
+                clsapoio.stringBDBD();
+                SqlCommand Cmd = new SqlCommand("SELECT (reg_codigo) as CODIGO, left (REG_DESCRICAO, 40) ,CASE WHEN REG_STATUS = 0 THEN 'VAZIO' WHEN REG_STATUS = 1 THEN 'NAO ATIVA' WHEN REG_STATUS = 2 THEN 'ALERTAR' WHEN REG_STATUS = 4 THEN 'REGRA ATIVA' END FROM REGRAS  WHERE REG_STATUS = 4 ORDER BY REG_CODIGO", clsapoio.conn);
+                SqlDataReader dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                if (dr.HasRows)
+                {
+                                clsapoio.auditoriaTexto("REGRAS ATIVAS");
+                    while (dr.Read())
+                    {
+
+                        clsapoio.auditoriaTexto("Codigo: " + dr.GetInt16(0).ToString()+ "   Descricao:  " +  dr.GetString(1) + "      Status:  " + dr.GetString(2));
+
+                    }
+                    clsapoio.auditoriaTexto("\n\n");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            finally
+            {
+                clsapoio.desconectarBD();
+                            MessageBox.Show("Criado Arquivo");
+
+            }
+                        clsapoio.auditoriaTexto("\n\n");
+                    })
+
+                    };
+
+            Task.WaitAll(regras);
+
+            Task[] usuarios =
+            {
+                    Task.Factory.StartNew(() =>
+                    {
+                        try
+            {
+                clsapoio.stringBDBD();
+                SqlCommand Cmd = new SqlCommand("SELECT US_ABREVIADO AS USUARIO, LEFT (FIL_RAZAO_SOCIAL,15) AS LOJA,  LEFT  (REPLACE (REPLACE(US_GERAL2,'0','NAO') ,'1','SIM') ,3) AS GERAL FROM USUARIOS INNER JOIN FILIAL ON (FIL_CODIGO = US_FILIAL)WHERE FIL_ATIVA <> 'M' ORDER BY LOJA", clsapoio.conn);
+                SqlDataReader dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                if (dr.HasRows)
+                {
+                                clsapoio.auditoriaTexto("Usuarios?");
+                                clsapoio.auditoriaTexto("Atenção: O cadastro de usuários só pode ser realizado através do sistema Retaguarda e as senhas devem ser informadas ao usuários para que possam alterar a mesma caso tenham permissão");
+                    while (dr.Read())
+                    {
+
+                        clsapoio.auditoriaTexto("Nome: " + dr.GetString(0) + "              Filial:  " +  dr.GetString(1) + "             Geral:  " + dr.GetString(2));
+
+                    }
+                    clsapoio.auditoriaTexto("\n\n");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            finally
+            {
+                clsapoio.desconectarBD();
+                            MessageBox.Show("Criado Arquivo");
+
+            }
+                        clsapoio.auditoriaTexto("\n\n");
+                    })
+
+                    };
+
+            Task.WaitAll(usuarios);
+
+            Task[] obssobreRequisitos =
+            {
+                    Task.Factory.StartNew(() =>
+                    {
+                        MessageBox.Show("");
+                        clsapoio.auditoriaTexto("COMPUTADOR");
+                        clsapoio.auditoriaTexto("Windows 10 ou Superior.");
+                        clsapoio.auditoriaTexto("Net Framework 4.5.2");
+                        clsapoio.auditoriaTexto("Internet funcionando.");
+                        clsapoio.auditoriaTexto("Usuário e senha com direito de administrador.");
+                        clsapoio.auditoriaTexto("O Certificado Digital deve estar instalado. ");
+                        clsapoio.auditoriaTexto("Todas as impressoras de etiqueta, fiscal ou não fiscal devem estar instaladas e testadas. ");
+                        clsapoio.auditoriaTexto("Processador – Dual Core ou superior. ");
+                        clsapoio.auditoriaTexto("HD - 120 GB livres.");
+                        clsapoio.auditoriaTexto("Memória - 8 GB.  ");
+                        clsapoio.auditoriaTexto("Resolução de Vídeo - igual ou superior a 1024x768(Não suporta netbook).  ");
+                        clsapoio.auditoriaTexto("Porta de comunicação e USBs testadas.");
+                        clsapoio.auditoriaTexto("\n");
+
+                        clsapoio.auditoriaTexto("REQUISITOS MÍNIMOS PARA NFe / NFCe / Sistema");
+                        clsapoio.auditoriaTexto("Certificado Digital tipo A1 ou A3 já instalados e testados no computador  (No certificado A3 a senha não fica gravada e sempre será solicitada). ");
+                        clsapoio.auditoriaTexto("Estar credenciado para emissão de NFe junto a SEFAZ. ");
+                        clsapoio.auditoriaTexto("Disponibilizar informações tributárias, Regime, Tributações (PIS e Cofins), CSOSN, CNAE, CSC, CFOP, Substituição tributária, etc. ");
+                        clsapoio.auditoriaTexto("\n");
+
+                        clsapoio.auditoriaTexto("DICAS IMPORTANTES");
+                        clsapoio.auditoriaTexto("Atenção: Verifique sempre na Nota fiscal de compra se os produtos possuem substituição tributária e configure essa tributação no cadastro do produto. Mantendo a tributação correta no cadastro do produto, não acarretará encargos tributários desnecessários. Consulte sua contabilidade!  ");
+                        clsapoio.auditoriaTexto("Atenção: Não deixe de fazer notas fiscais eletrônicas das mercadorias devolvidas pelos clientes para não acarretar encargos tributários desnecessários. Consulte sua contabilidade!");
+                        clsapoio.auditoriaTexto("Não se esqueça de fazer sempre o Backup do sistema em mídia externa para garantir a disponibilidade dos seus dados.");
+                        clsapoio.auditoriaTexto("Zele pelos equipamentos, fazendo uma manutenção preventiva contra vírus. ");
+                        clsapoio.auditoriaTexto("Se precisar tirar alguma dúvida ou resolver algum problema, ligue para o Suporte (21) 2159-0606. ");
+
+                        clsapoio.auditoriaTexto("Confira sempre se os requisitos mínimos estão atendendo antes de instalar o sistema nas lojas");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+
+                    })
+
+                    };
+
+            Task.WaitAll(obssobreRequisitos);
+
+            Task[] infoharware =
+            {
+                    Task.Factory.StartNew(() =>
+                    {
+                        MessageBox.Show("");
+                        clsapoio.auditoriaTexto("INFORMAÇÕES TÉCNICAS DO SERVIDOR");
+                        clsapoio.auditoriaTexto("Nunca deixe de executar e conferir se o backup do banco de dados está sendo realizado com sucesso, ele não é de autoria da PDV NET Sistemas.");
+                        clsapoio.auditoriaTexto("Em caso de dúvidas de como fazer o backup, entre em contato com o nosso Suporte para esclarecimentos.");
+                        clsapoio.auditoriaTexto("Informacoes relacionadas ao Processador: ");
+                        clsapoio.auditoriaTexto("Informacoes relacionadas ao Hard Disk");
+                        
+                        clsapoio.auditoriaTexto("\n\n");
+                    })
+
+                    };
+
+            Task.WaitAll(infoharware);
+
+
+            Task[] finalcomestilo =
+            {
+                    Task.Factory.StartNew(() =>
+                    {
+                        clsapoio.auditoriaTexto("PDV NET LOCACAO DE SISTEMAS DE INFORMATICA LTDA - EPP");
+                        clsapoio.auditoriaTexto(@"CNPJ: 06.910.563/0001-01");
+                        clsapoio.auditoriaTexto("Endereço: Av. Rio Branco, 251/11º andar - Centro - Rio de Janeiro.");
+                        clsapoio.auditoriaTexto("CEP: 20040-009");
+                        clsapoio.auditoriaTexto("Tel: (21) 2159-0606");
+                        clsapoio.auditoriaTexto("\n");
+                        clsapoio.auditoriaTexto("Supervisor de Implantação: Evandro Barroso ");
+                        clsapoio.auditoriaTexto("Email: implantacao@pdvnet.com.br");
+                        clsapoio.auditoriaTexto("Tel: (21) 96775-4275 (Vivo) \n");
+                    })
+
+                    };
+
+            Task.WaitAll(finalcomestilo);
+
+
+
+
+
+
+
+
+            #region LerArquivo
+            try
+            {
+
+                clsapoio.lerauditoriaTexto(txtConteudo);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
+            }
+            finally
+            {
+                MessageBox.Show("Arquivo concluido");
+            }
+
+            #endregion
         }
 
 
 
         #endregion
 
-        
+
     }
 }
 

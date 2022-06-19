@@ -20,3 +20,4 @@ C:\Users\SRV-EVANDROR2\source\repos\EvandroR2\bancozerado\bancozerado\obj\Debug\
 C:\Users\SRV-EVANDROR2\source\repos\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.csproj.CoreCompileInputs.cache
 C:\Users\SRV-EVANDROR2\source\repos\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.exe
 C:\Users\SRV-EVANDROR2\source\repos\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.pdb
+C:\Users\SRV-EVANDROR2\source\repos\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.frm_perguntaRelatorio.resources

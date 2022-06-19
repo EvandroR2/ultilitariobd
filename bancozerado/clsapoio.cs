@@ -106,7 +106,26 @@ namespace bancozerado
             writer.WriteLine(c);
             writer.Close();
         }
-        
+        public void lerauditoriaTexto(RichTextBox x)
+        {
+            string path = @"C:\PDV\Audit_app\audit.txt";
+            string fim = "Fim";
+            StreamReader reader = new StreamReader(path, Encoding.Default);
+            string txtPDV = reader.ReadLine();
+
+            while (txtPDV != null)
+            {
+                x.Text += txtPDV + "\n";
+                txtPDV = reader.ReadLine();
+            }
+            if (reader.EndOfStream)
+            {
+                x.Text += fim;
+                reader.Close();
+            }
+
+        }
+
     }
 
 

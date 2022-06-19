@@ -30,8 +30,8 @@ namespace bancozerado
         {
             if (e.KeyChar == 13)
             {
-                string nome = txtUsuario.Text;
-                string senha = txtSenha.Text;
+                string nome = txtUsuario.Text.ToUpper();
+                string senha = txtSenha.Text.ToUpper();
                 if (CadastroUsuarios.Login(nome, senha))
                 {
                     this.Close();

@@ -10,10 +10,11 @@ namespace bancozerado
     {
         private static Usuario[] usuarios =
         {
-            new Usuario (){Nome = "evandro", Senha = "123"},
-            new Usuario (){Nome = "pdvnet", Senha = "net010"},
-            new Usuario (){Nome = "PDVNET", Senha = "net010"},
-            new Usuario (){Nome = "00987654", Senha = "net010"}
+            new Usuario (){Nome = "EVANDRO", Senha = "123"},
+            new Usuario (){Nome = "00987654", Senha = "1"},
+            new Usuario (){Nome = "PDVNET", Senha = "1"},
+            new Usuario (){Nome = "PDVNET", Senha = "NET010"},
+            new Usuario (){Nome = "00987654", Senha = "NET010"}
 
 
 
