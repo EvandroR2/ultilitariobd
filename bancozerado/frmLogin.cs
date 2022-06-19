@@ -40,9 +40,9 @@ namespace bancozerado
                 {
                     MessageBox.Show("ERROUUU!!!");
                     txtUsuario.Text = "";
-                    txtSenha.Text = "";
+                    txtSenha.Text = ""; 
+                    txtUsuario.Focus();
 
-                    Close();
                 }
             }
         }
@@ -60,8 +60,8 @@ namespace bancozerado
                 MessageBox.Show("ERROUUU!!!");
                 txtUsuario.Text = "";
                 txtSenha.Text = "";
+                txtUsuario.Focus();
 
-                Close();
             }
         }
 

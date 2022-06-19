@@ -49,6 +49,8 @@ namespace bancozerado
             this.sobreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dgVLogicalName = new System.Windows.Forms.DataGridView();
+            this.LogicalName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBoxInstZero = new System.Windows.Forms.GroupBox();
             this.txtDiretorioBuscar = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -118,6 +120,7 @@ namespace bancozerado
             this.menuArquivo.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgVLogicalName)).BeginInit();
             this.groupBoxInstZero.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBoxInstBancoZero.SuspendLayout();
@@ -302,19 +305,36 @@ namespace bancozerado
             this.tabControl1.Location = new System.Drawing.Point(10, 117);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(760, 587);
+            this.tabControl1.Size = new System.Drawing.Size(760, 621);
             this.tabControl1.TabIndex = 70;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.dgVLogicalName);
             this.tabPage1.Controls.Add(this.groupBoxInstZero);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(752, 561);
+            this.tabPage1.Size = new System.Drawing.Size(752, 595);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Restaurar BD";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dgVLogicalName
+            // 
+            this.dgVLogicalName.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgVLogicalName.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.LogicalName});
+            this.dgVLogicalName.Location = new System.Drawing.Point(7, 499);
+            this.dgVLogicalName.Name = "dgVLogicalName";
+            this.dgVLogicalName.Size = new System.Drawing.Size(155, 75);
+            this.dgVLogicalName.TabIndex = 69;
+            this.dgVLogicalName.Visible = false;
+            // 
+            // LogicalName
+            // 
+            this.LogicalName.HeaderText = "LogicalName";
+            this.LogicalName.Name = "LogicalName";
             // 
             // groupBoxInstZero
             // 
@@ -843,7 +863,7 @@ namespace bancozerado
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(752, 561);
+            this.tabPage2.Size = new System.Drawing.Size(752, 659);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Consulta Filial";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -996,7 +1016,7 @@ namespace bancozerado
             // 
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(752, 561);
+            this.tabPage3.Size = new System.Drawing.Size(752, 659);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Troca Cnpj";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1005,7 +1025,7 @@ namespace bancozerado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(782, 707);
+            this.ClientSize = new System.Drawing.Size(782, 741);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.groupBox1);
@@ -1031,6 +1051,7 @@ namespace bancozerado
             this.menuArquivo.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgVLogicalName)).EndInit();
             this.groupBoxInstZero.ResumeLayout(false);
             this.groupBoxInstZero.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1133,6 +1154,8 @@ namespace bancozerado
         private System.Windows.Forms.TextBox txtDiretorioBuscar;
         private System.Windows.Forms.Label lblCaminhoBak;
         private System.Windows.Forms.Button btnDiretorioBuscar;
+        private System.Windows.Forms.DataGridView dgVLogicalName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LogicalName;
     }
 }
 
