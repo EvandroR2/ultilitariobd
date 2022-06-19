@@ -61,7 +61,7 @@ namespace bancozerado
         //Mensagem sobre versao
         private void sobreToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Desenvolvedor: Evandro  \n" + "Contato: Implantacao  \n" + "Versão 0.1.2");
+            MessageBox.Show("Desenvolvedor: Evandro  \n" + "Contato: Implantacao  \n" + "Versão 1.1.2");
         }
 
         //BUSCANDO INFORMAÇÕES DO BANCO DE DADOS
@@ -1775,6 +1775,354 @@ namespace bancozerado
             clsapoio.checkboxmensageminformativo(checkBoxInstZeroousembackup, "Aqui voce vai poder inserir informacao para uma instalação do sistema de franquia");
         }
         #endregion
+
+
+        #region EncontroInicial_arquivo
+
+        private void txtConteudo_TextChanged(object sender, EventArgs e)
+        {
+            mArquivoSalvar.Enabled = true;
+        }
+
+
+        private void mArquivoNovo_Click(object sender, EventArgs e)
+        {
+            txtConteudo.Clear();
+            mArquivoSalvar.Enabled = true;
+            Text = Application.ProductName;
+        }
+
+        private void mArquivoAbrir_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Title = "Abrir ...";
+            dialog.Filter = "rich text file|*.rtf|texto|*.txt|todos|*.*";
+            DialogResult result = dialog.ShowDialog();
+
+
+            if (result != DialogResult.Cancel && result != DialogResult.Abort)
+            {
+                if (File.Exists(dialog.FileName))
+                {
+                    FileInfo file = new FileInfo(dialog.FileName);
+                    Text = Application.ProductName + " - " + file.Name;
+
+                    Gerenciador.FolderPath = file.DirectoryName + "\\";
+                    Gerenciador.FileName = file.Name.Remove(file.Name.LastIndexOf("."));
+                    Gerenciador.FileExt = file.Extension;
+
+                    StreamReader stream = null;
+                    mArquivoSalvar.Enabled = true;
+                    try
+                    {
+                        stream = new StreamReader(file.FullName, true);
+                        txtConteudo.Text = stream.ReadToEnd();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
+                    }
+                    finally
+                    {
+                        stream.Close();
+                    }
+
+
+                }
+            }
+        }
+
+        private void mArquivoSalvar_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(Gerenciador.FilePath))
+            {
+                SalvarArquivo(Gerenciador.FilePath);
+            }
+            else
+            {
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.Title = "Salvar...";
+                dialog.Filter = "rich text file|*.rtf|texto|*.txt|todos|*.*";
+                dialog.CheckFileExists = false;
+                dialog.CheckPathExists = true;
+
+
+                var result = dialog.ShowDialog();
+                if (result != DialogResult.Cancel && result != DialogResult.Abort)
+                {
+                    SalvarArquivo(dialog.FileName);
+                }
+            }
+        }
+
+        private void mArquivoSalvarComo_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Title = "Salvar...";
+            dialog.Filter = "rich text file|*.rtf|texto|*.txt|todos|*.*";
+            dialog.CheckFileExists = false;
+            dialog.CheckPathExists = true;
+
+            var result = dialog.ShowDialog();
+            if (result != DialogResult.Cancel && result != DialogResult.Abort)
+            {
+                SalvarArquivo(dialog.FileName);
+            }
+        }
+        private void SalvarArquivo(String path)
+        {
+            ///Objeto responsável oir escrever i arquivo
+            StreamWriter writer = null;
+
+            try
+            {
+                writer = new StreamWriter(path, false);
+                writer.Write(txtConteudo.Text);
+
+                FileInfo file = new FileInfo(path);
+                Gerenciador.FolderPath = file.DirectoryName + "\\";
+                Gerenciador.FileName = file.Name.Remove(file.Name.LastIndexOf("."));
+                Gerenciador.FileExt = file.Extension;
+                mArquivoSalvar.Enabled = false;
+
+                Text = Application.ProductName + " - " + file.Name;
+
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Erro Salvar Arquivo: \n" + e.Message);
+            }
+            finally
+            {
+                writer.Close();
+            }
+
+        }
+
+
+
+        #endregion
+
+        #region EncontroInicial_editar
+
+        private void mEditarDesfazer_Click(object sender, EventArgs e)
+        {
+            txtConteudo.Undo();
+
+        }
+
+        private void mEditarRefazer_Click(object sender, EventArgs e)
+        {
+            txtConteudo.Redo();
+        }
+
+        private void mEditarRecortar_Click(object sender, EventArgs e)
+        {
+            txtConteudo.Cut();
+        }
+
+        private void mEditarCopiar_Click(object sender, EventArgs e)
+        {
+            txtConteudo.Copy();
+        }
+
+        private void mEditarColar_Click(object sender, EventArgs e)
+        {
+            txtConteudo.Paste();
+        }
+
+        private void mEditarExcluir_Click(object sender, EventArgs e)
+        {
+            txtConteudo.Text = txtConteudo.Text.Remove(txtConteudo.SelectionStart, txtConteudo.SelectedText.Length);
+        }
+
+        private void mEditarDataeHora_Click(object sender, EventArgs e)
+        {
+            int index = txtConteudo.SelectionStart;
+            string dataHora = DateTime.Now.ToString();
+            if (txtConteudo.SelectionStart == txtConteudo.Text.Length)
+            {
+                txtConteudo.Text = txtConteudo.Text + dataHora;
+                txtConteudo.SelectionStart = index + dataHora.Length;
+                return;
+
+            }
+
+            string temp = "";
+            for (int i = 0; i < txtConteudo.Text.Length; i++)
+            {
+                if (i == txtConteudo.SelectionStart)
+                {
+                    temp += dataHora;
+                    temp += txtConteudo.Text[i];
+
+                }
+                else
+                {
+                    temp += txtConteudo.Text[i];
+                }
+            }
+        }
+
+
+        #endregion
+
+        #region EncontroInicial_formatar
+
+        private void mFormatarQuebra_Click(object sender, EventArgs e)
+        {
+            txtConteudo.WordWrap = mFormatarQuebra.Checked;
+        }
+
+        private void mFormatarFonte_Click(object sender, EventArgs e)
+        {
+            FontDialog fonte = new FontDialog();
+
+            fonte.ShowColor = true;
+            fonte.ShowEffects = true;
+            fonte.Font = txtConteudo.Font;
+            fonte.Color = txtConteudo.ForeColor;
+
+            DialogResult result = fonte.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                txtConteudo.Font = fonte.Font;
+                txtConteudo.ForeColor = fonte.Color;
+            }
+
+
+
+        }
+
+
+        #endregion
+
+
+        #region EncontroInicial_Exibir
+        private void mExibirZoomApliar_Click(object sender, EventArgs e)
+        {
+            txtConteudo.ZoomFactor += 0.1f;
+            atualizaZoomStatusBar(txtConteudo.ZoomFactor);
+        }
+
+        private void mExibirZoomReduzir_Click(object sender, EventArgs e)
+        {
+            txtConteudo.ZoomFactor -= 0.1f;
+            atualizaZoomStatusBar(txtConteudo.ZoomFactor);
+        }
+
+        private void mExibirZoomRestaurar_Click(object sender, EventArgs e)
+        {
+            txtConteudo.ZoomFactor = 1f;
+            atualizaZoomStatusBar(txtConteudo.ZoomFactor);
+        }
+        private void mExibirBarraStatus_Click(object sender, EventArgs e)
+        {
+            statusBar.Visible = mExibirBarraStatus.Checked;
+        }
+
+        private void atualizaZoomStatusBar(float zoom)
+        {
+            statusBarLabel.Text = $"{Math.Round(zoom * 100)} %";
+            //statusBarLabel.Text = (txtConteudo.ZoomFactor += 0.1f).ToString() + "%";
+        }
+
+
+        #endregion
+
+        #region EncontroInicial_ajuda
+
+        private void mAjudaExibir_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("IMPLANTACAO PDVNET \n" + "Tel (21) 2159-0606 ");
+        }
+
+        private void mAjudaSobre_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Desenvolvedor: Evandro  \n" + "Contato: Implantacao  \n" + "Versão 1.1.2");
+        }
+
+        private void mAjudaLerConfig_Click(object sender, EventArgs e)
+        {
+
+            //Depois criar uma classe para essa informação ficar menor
+            string ConfigPath = @"c:\pdv\config\";
+            string ConfigBase = "BASE.INI";
+            string ConfigPDV = "PDV.INI";
+            string FimdoArquivo = " \n";
+            string TitledoArquivoPDV = "PDV.INI \n ";
+            string TitledoArquivoBase = "BASE.INI \n ";
+
+
+
+            try
+            {
+                StreamReader reader = new StreamReader(ConfigPath + ConfigPDV, Encoding.Default);
+                string txtPDV = reader.ReadLine();
+                //string txtBase += reader.ReadToEnd();
+
+                txtConteudo.Text += TitledoArquivoPDV;
+
+                while (txtPDV != null)
+                {
+                    txtConteudo.Text += txtPDV + "\n";
+                    txtPDV = reader.ReadLine();
+
+                }
+                if (reader.EndOfStream)
+                {
+                    txtConteudo.Text += FimdoArquivo;
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
+            }
+
+            try
+            {
+                StreamReader reader = new StreamReader(ConfigPath + ConfigBase, Encoding.Default);
+                string txtBase = reader.ReadLine();
+                //string txtBase += reader.ReadToEnd();
+                txtConteudo.Text += TitledoArquivoBase;
+
+                while (txtBase != null)
+                {
+                    txtConteudo.Text += txtBase + "\n";
+                    txtBase = reader.ReadLine();
+                }
+                if (reader.EndOfStream)
+                {
+                    txtConteudo.Text += FimdoArquivo;
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
+            }
+            //Depois criar uma classe para essa informação ficar menor
+        }
+
+        private void mAjudaConsultaBanco_Click(object sender, EventArgs e)
+        {
+            //Aqui vou chamar a configuração dos formulario e trabalhar com muitas querry
+            MessageBox.Show("Branches em desenvolvimento");
+        }
+
+
+
+        #endregion
+
+        
     }
 }
 

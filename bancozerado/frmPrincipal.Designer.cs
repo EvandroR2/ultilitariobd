@@ -116,6 +116,42 @@ namespace bancozerado
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RAZAO_SOCIAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.menuBar = new System.Windows.Forms.MenuStrip();
+            this.mArquivo = new System.Windows.Forms.ToolStripMenuItem();
+            this.mArquivoNovo = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mArquivoAbrir = new System.Windows.Forms.ToolStripMenuItem();
+            this.mArquivoSalvar = new System.Windows.Forms.ToolStripMenuItem();
+            this.mArquivoSalvarComo = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mEditar = new System.Windows.Forms.ToolStripMenuItem();
+            this.mEditarDesfazer = new System.Windows.Forms.ToolStripMenuItem();
+            this.mEditarRefazer = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.mEditarRecortar = new System.Windows.Forms.ToolStripMenuItem();
+            this.mEditarCopiar = new System.Windows.Forms.ToolStripMenuItem();
+            this.mEditarColar = new System.Windows.Forms.ToolStripMenuItem();
+            this.mEditarExcluir = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.mEditarDataeHora = new System.Windows.Forms.ToolStripMenuItem();
+            this.mFormatar = new System.Windows.Forms.ToolStripMenuItem();
+            this.mFormatarQuebra = new System.Windows.Forms.ToolStripMenuItem();
+            this.mFormatarFonte = new System.Windows.Forms.ToolStripMenuItem();
+            this.mExibir = new System.Windows.Forms.ToolStripMenuItem();
+            this.mExibirZoom = new System.Windows.Forms.ToolStripMenuItem();
+            this.mExibirZoomApliar = new System.Windows.Forms.ToolStripMenuItem();
+            this.mExibirZoomReduzir = new System.Windows.Forms.ToolStripMenuItem();
+            this.mExibirBarraStatus = new System.Windows.Forms.ToolStripMenuItem();
+            this.mAjuda = new System.Windows.Forms.ToolStripMenuItem();
+            this.mAjudaExibir = new System.Windows.Forms.ToolStripMenuItem();
+            this.mAjudaSobre = new System.Windows.Forms.ToolStripMenuItem();
+            this.mAjudaLerConfig = new System.Windows.Forms.ToolStripMenuItem();
+            this.mAjudaConsultaBanco = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtConteudo = new System.Windows.Forms.RichTextBox();
+            this.statusBar = new System.Windows.Forms.StatusStrip();
+            this.statusBarLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.mExibirZoomRestaurar = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.menuArquivo.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -128,6 +164,9 @@ namespace bancozerado
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaTributo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaFilial)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaEmpresa)).BeginInit();
+            this.tabPage4.SuspendLayout();
+            this.menuBar.SuspendLayout();
+            this.statusBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSair
@@ -302,6 +341,7 @@ namespace bancozerado
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(10, 117);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -863,7 +903,7 @@ namespace bancozerado
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(752, 659);
+            this.tabPage2.Size = new System.Drawing.Size(752, 595);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Consulta Filial";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1016,10 +1056,302 @@ namespace bancozerado
             // 
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(752, 659);
+            this.tabPage3.Size = new System.Drawing.Size(752, 595);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Troca Cnpj";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.statusBar);
+            this.tabPage4.Controls.Add(this.txtConteudo);
+            this.tabPage4.Controls.Add(this.menuBar);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(752, 595);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Encontro Inicial";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // menuBar
+            // 
+            this.menuBar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.menuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mArquivo,
+            this.mEditar,
+            this.mFormatar,
+            this.mExibir,
+            this.mAjuda});
+            this.menuBar.Location = new System.Drawing.Point(3, 3);
+            this.menuBar.Name = "menuBar";
+            this.menuBar.Size = new System.Drawing.Size(746, 29);
+            this.menuBar.TabIndex = 1;
+            this.menuBar.Text = "menuStrip1";
+            // 
+            // mArquivo
+            // 
+            this.mArquivo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mArquivoNovo,
+            this.toolStripSeparator1,
+            this.mArquivoAbrir,
+            this.mArquivoSalvar,
+            this.mArquivoSalvarComo,
+            this.toolStripSeparator2});
+            this.mArquivo.Name = "mArquivo";
+            this.mArquivo.Size = new System.Drawing.Size(83, 25);
+            this.mArquivo.Text = "Arquivo";
+            // 
+            // mArquivoNovo
+            // 
+            this.mArquivoNovo.Name = "mArquivoNovo";
+            this.mArquivoNovo.Size = new System.Drawing.Size(187, 26);
+            this.mArquivoNovo.Text = "Novo Arquivo";
+            this.mArquivoNovo.Click += new System.EventHandler(this.mArquivoNovo_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(184, 6);
+            // 
+            // mArquivoAbrir
+            // 
+            this.mArquivoAbrir.Name = "mArquivoAbrir";
+            this.mArquivoAbrir.Size = new System.Drawing.Size(187, 26);
+            this.mArquivoAbrir.Text = "Abrir";
+            this.mArquivoAbrir.Click += new System.EventHandler(this.mArquivoAbrir_Click);
+            // 
+            // mArquivoSalvar
+            // 
+            this.mArquivoSalvar.Name = "mArquivoSalvar";
+            this.mArquivoSalvar.Size = new System.Drawing.Size(187, 26);
+            this.mArquivoSalvar.Text = "Salvar";
+            this.mArquivoSalvar.Click += new System.EventHandler(this.mArquivoSalvar_Click);
+            // 
+            // mArquivoSalvarComo
+            // 
+            this.mArquivoSalvarComo.Name = "mArquivoSalvarComo";
+            this.mArquivoSalvarComo.Size = new System.Drawing.Size(187, 26);
+            this.mArquivoSalvarComo.Text = "Salvar Como";
+            this.mArquivoSalvarComo.Click += new System.EventHandler(this.mArquivoSalvarComo_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(184, 6);
+            // 
+            // mEditar
+            // 
+            this.mEditar.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mEditarDesfazer,
+            this.mEditarRefazer,
+            this.toolStripSeparator3,
+            this.mEditarRecortar,
+            this.mEditarCopiar,
+            this.mEditarColar,
+            this.mEditarExcluir,
+            this.toolStripSeparator4,
+            this.mEditarDataeHora});
+            this.mEditar.Name = "mEditar";
+            this.mEditar.Size = new System.Drawing.Size(67, 25);
+            this.mEditar.Text = "Editar";
+            // 
+            // mEditarDesfazer
+            // 
+            this.mEditarDesfazer.Name = "mEditarDesfazer";
+            this.mEditarDesfazer.Size = new System.Drawing.Size(180, 26);
+            this.mEditarDesfazer.Text = "Desfazer";
+            this.mEditarDesfazer.Click += new System.EventHandler(this.mEditarDesfazer_Click);
+            // 
+            // mEditarRefazer
+            // 
+            this.mEditarRefazer.Name = "mEditarRefazer";
+            this.mEditarRefazer.Size = new System.Drawing.Size(180, 26);
+            this.mEditarRefazer.Text = "Refazer";
+            this.mEditarRefazer.Click += new System.EventHandler(this.mEditarRefazer_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            // 
+            // mEditarRecortar
+            // 
+            this.mEditarRecortar.Name = "mEditarRecortar";
+            this.mEditarRecortar.Size = new System.Drawing.Size(180, 26);
+            this.mEditarRecortar.Text = "Recortar";
+            this.mEditarRecortar.Click += new System.EventHandler(this.mEditarRecortar_Click);
+            // 
+            // mEditarCopiar
+            // 
+            this.mEditarCopiar.Name = "mEditarCopiar";
+            this.mEditarCopiar.Size = new System.Drawing.Size(180, 26);
+            this.mEditarCopiar.Text = "Copiar";
+            this.mEditarCopiar.Click += new System.EventHandler(this.mEditarCopiar_Click);
+            // 
+            // mEditarColar
+            // 
+            this.mEditarColar.Name = "mEditarColar";
+            this.mEditarColar.Size = new System.Drawing.Size(180, 26);
+            this.mEditarColar.Text = "Colar";
+            this.mEditarColar.Click += new System.EventHandler(this.mEditarColar_Click);
+            // 
+            // mEditarExcluir
+            // 
+            this.mEditarExcluir.Name = "mEditarExcluir";
+            this.mEditarExcluir.Size = new System.Drawing.Size(180, 26);
+            this.mEditarExcluir.Text = "Excluir";
+            this.mEditarExcluir.Click += new System.EventHandler(this.mEditarExcluir_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            // 
+            // mEditarDataeHora
+            // 
+            this.mEditarDataeHora.Name = "mEditarDataeHora";
+            this.mEditarDataeHora.Size = new System.Drawing.Size(180, 26);
+            this.mEditarDataeHora.Text = "Data e Hora";
+            this.mEditarDataeHora.Click += new System.EventHandler(this.mEditarDataeHora_Click);
+            // 
+            // mFormatar
+            // 
+            this.mFormatar.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mFormatarQuebra,
+            this.mFormatarFonte});
+            this.mFormatar.Name = "mFormatar";
+            this.mFormatar.Size = new System.Drawing.Size(91, 25);
+            this.mFormatar.Text = "Formatar";
+            // 
+            // mFormatarQuebra
+            // 
+            this.mFormatarQuebra.CheckOnClick = true;
+            this.mFormatarQuebra.Name = "mFormatarQuebra";
+            this.mFormatarQuebra.Size = new System.Drawing.Size(293, 26);
+            this.mFormatarQuebra.Text = "Quebra automática de linha";
+            this.mFormatarQuebra.Click += new System.EventHandler(this.mFormatarQuebra_Click);
+            // 
+            // mFormatarFonte
+            // 
+            this.mFormatarFonte.Name = "mFormatarFonte";
+            this.mFormatarFonte.Size = new System.Drawing.Size(293, 26);
+            this.mFormatarFonte.Text = "Fonte";
+            this.mFormatarFonte.Click += new System.EventHandler(this.mFormatarFonte_Click);
+            // 
+            // mExibir
+            // 
+            this.mExibir.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mExibirZoom,
+            this.mExibirBarraStatus});
+            this.mExibir.Name = "mExibir";
+            this.mExibir.Size = new System.Drawing.Size(66, 25);
+            this.mExibir.Text = "Exibir";
+            // 
+            // mExibirZoom
+            // 
+            this.mExibirZoom.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mExibirZoomApliar,
+            this.mExibirZoomReduzir,
+            this.mExibirZoomRestaurar});
+            this.mExibirZoom.Name = "mExibirZoom";
+            this.mExibirZoom.Size = new System.Drawing.Size(192, 26);
+            this.mExibirZoom.Text = "Zoom";
+            // 
+            // mExibirZoomApliar
+            // 
+            this.mExibirZoomApliar.Name = "mExibirZoomApliar";
+            this.mExibirZoomApliar.Size = new System.Drawing.Size(180, 26);
+            this.mExibirZoomApliar.Text = "Ampliar";
+            this.mExibirZoomApliar.Click += new System.EventHandler(this.mExibirZoomApliar_Click);
+            // 
+            // mExibirZoomReduzir
+            // 
+            this.mExibirZoomReduzir.Name = "mExibirZoomReduzir";
+            this.mExibirZoomReduzir.Size = new System.Drawing.Size(180, 26);
+            this.mExibirZoomReduzir.Text = "Reduzir";
+            this.mExibirZoomReduzir.Click += new System.EventHandler(this.mExibirZoomReduzir_Click);
+            // 
+            // mExibirBarraStatus
+            // 
+            this.mExibirBarraStatus.CheckOnClick = true;
+            this.mExibirBarraStatus.Name = "mExibirBarraStatus";
+            this.mExibirBarraStatus.Size = new System.Drawing.Size(192, 26);
+            this.mExibirBarraStatus.Text = "Barra de status";
+            this.mExibirBarraStatus.Click += new System.EventHandler(this.mExibirBarraStatus_Click);
+            // 
+            // mAjuda
+            // 
+            this.mAjuda.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mAjudaExibir,
+            this.mAjudaSobre,
+            this.mAjudaLerConfig,
+            this.mAjudaConsultaBanco});
+            this.mAjuda.Name = "mAjuda";
+            this.mAjuda.Size = new System.Drawing.Size(67, 25);
+            this.mAjuda.Text = "Ajuda";
+            // 
+            // mAjudaExibir
+            // 
+            this.mAjudaExibir.Name = "mAjudaExibir";
+            this.mAjudaExibir.Size = new System.Drawing.Size(266, 26);
+            this.mAjudaExibir.Text = "Exibir Ajuda";
+            this.mAjudaExibir.Click += new System.EventHandler(this.mAjudaExibir_Click);
+            // 
+            // mAjudaSobre
+            // 
+            this.mAjudaSobre.Name = "mAjudaSobre";
+            this.mAjudaSobre.Size = new System.Drawing.Size(266, 26);
+            this.mAjudaSobre.Text = "Sobre o Editor TXT";
+            this.mAjudaSobre.Click += new System.EventHandler(this.mAjudaSobre_Click);
+            // 
+            // mAjudaLerConfig
+            // 
+            this.mAjudaLerConfig.Name = "mAjudaLerConfig";
+            this.mAjudaLerConfig.Size = new System.Drawing.Size(266, 26);
+            this.mAjudaLerConfig.Text = "Ler Config";
+            this.mAjudaLerConfig.Click += new System.EventHandler(this.mAjudaLerConfig_Click);
+            // 
+            // mAjudaConsultaBanco
+            // 
+            this.mAjudaConsultaBanco.Name = "mAjudaConsultaBanco";
+            this.mAjudaConsultaBanco.Size = new System.Drawing.Size(266, 26);
+            this.mAjudaConsultaBanco.Text = "Fazer Consulta no Banco";
+            this.mAjudaConsultaBanco.Click += new System.EventHandler(this.mAjudaConsultaBanco_Click);
+            // 
+            // txtConteudo
+            // 
+            this.txtConteudo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtConteudo.Location = new System.Drawing.Point(3, 32);
+            this.txtConteudo.Name = "txtConteudo";
+            this.txtConteudo.Size = new System.Drawing.Size(746, 560);
+            this.txtConteudo.TabIndex = 3;
+            this.txtConteudo.Text = "";
+            this.txtConteudo.WordWrap = false;
+            this.txtConteudo.TextChanged += new System.EventHandler(this.txtConteudo_TextChanged);
+            // 
+            // statusBar
+            // 
+            this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusBarLabel});
+            this.statusBar.Location = new System.Drawing.Point(3, 570);
+            this.statusBar.Name = "statusBar";
+            this.statusBar.Size = new System.Drawing.Size(746, 22);
+            this.statusBar.TabIndex = 4;
+            this.statusBar.Text = "statusStrip1";
+            // 
+            // statusBarLabel
+            // 
+            this.statusBarLabel.Name = "statusBarLabel";
+            this.statusBarLabel.Size = new System.Drawing.Size(38, 17);
+            this.statusBarLabel.Text = "100 %";
+            // 
+            // mExibirZoomRestaurar
+            // 
+            this.mExibirZoomRestaurar.Name = "mExibirZoomRestaurar";
+            this.mExibirZoomRestaurar.Size = new System.Drawing.Size(180, 26);
+            this.mExibirZoomRestaurar.Text = "Restaurar";
+            this.mExibirZoomRestaurar.Click += new System.EventHandler(this.mExibirZoomRestaurar_Click);
             // 
             // frmPrincipal
             // 
@@ -1063,6 +1395,12 @@ namespace bancozerado
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaTributo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaFilial)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaEmpresa)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            this.menuBar.ResumeLayout(false);
+            this.menuBar.PerformLayout();
+            this.statusBar.ResumeLayout(false);
+            this.statusBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1156,6 +1494,42 @@ namespace bancozerado
         private System.Windows.Forms.Button btnDiretorioBuscar;
         private System.Windows.Forms.DataGridView dgVLogicalName;
         private System.Windows.Forms.DataGridViewTextBoxColumn LogicalName;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.RichTextBox txtConteudo;
+        private System.Windows.Forms.MenuStrip menuBar;
+        private System.Windows.Forms.ToolStripMenuItem mArquivo;
+        private System.Windows.Forms.ToolStripMenuItem mArquivoNovo;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem mArquivoAbrir;
+        private System.Windows.Forms.ToolStripMenuItem mArquivoSalvar;
+        private System.Windows.Forms.ToolStripMenuItem mArquivoSalvarComo;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem mEditar;
+        private System.Windows.Forms.ToolStripMenuItem mEditarDesfazer;
+        private System.Windows.Forms.ToolStripMenuItem mEditarRefazer;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem mEditarRecortar;
+        private System.Windows.Forms.ToolStripMenuItem mEditarCopiar;
+        private System.Windows.Forms.ToolStripMenuItem mEditarColar;
+        private System.Windows.Forms.ToolStripMenuItem mEditarExcluir;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem mEditarDataeHora;
+        private System.Windows.Forms.ToolStripMenuItem mFormatar;
+        private System.Windows.Forms.ToolStripMenuItem mFormatarQuebra;
+        private System.Windows.Forms.ToolStripMenuItem mFormatarFonte;
+        private System.Windows.Forms.ToolStripMenuItem mExibir;
+        private System.Windows.Forms.ToolStripMenuItem mExibirZoom;
+        private System.Windows.Forms.ToolStripMenuItem mExibirZoomApliar;
+        private System.Windows.Forms.ToolStripMenuItem mExibirZoomReduzir;
+        private System.Windows.Forms.ToolStripMenuItem mExibirBarraStatus;
+        private System.Windows.Forms.ToolStripMenuItem mAjuda;
+        private System.Windows.Forms.ToolStripMenuItem mAjudaExibir;
+        private System.Windows.Forms.ToolStripMenuItem mAjudaSobre;
+        private System.Windows.Forms.ToolStripMenuItem mAjudaLerConfig;
+        private System.Windows.Forms.ToolStripMenuItem mAjudaConsultaBanco;
+        private System.Windows.Forms.StatusStrip statusBar;
+        private System.Windows.Forms.ToolStripStatusLabel statusBarLabel;
+        private System.Windows.Forms.ToolStripMenuItem mExibirZoomRestaurar;
     }
 }
 
