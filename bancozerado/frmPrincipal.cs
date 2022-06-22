@@ -10,13 +10,15 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.IO;
 using System.Diagnostics;
+using System.Management;
+using System.Management.Instrumentation;
 
 namespace bancozerado
 {
     public partial class frmPrincipal : Form
     {
         clsapoio clsapoio = new clsapoio();
-        
+
 
         public frmPrincipal()
         {
@@ -56,7 +58,7 @@ namespace bancozerado
 
             Visible = true;
 
-            
+
         }
         //Mensagem sobre versao
         private void sobreToolStripMenuItem_Click(object sender, EventArgs e)
@@ -75,7 +77,7 @@ namespace bancozerado
             try
             {
                 clsapoio.stringBD();
-                
+
                 SqlCommand cmd = new SqlCommand("SELECT name FROM sys.databases where name not in ('master', 'model', 'tempdb', 'msdb') and name not like('%ReportServer$PDVNET%')", clsapoio.conn);
                 SqlDataReader dr = cmd.ExecuteReader();
                 DataTable dt = new DataTable();
@@ -98,7 +100,7 @@ namespace bancozerado
                 clsapoio.desconectarBD();
 
             }
-            
+
         }
 
         private void txtSenha_KeyPress(object sender, KeyPressEventArgs e)
@@ -203,9 +205,9 @@ namespace bancozerado
                     //    if (dr.Read())
                     //    {
                     //        msgBanco = dr.GetString(0);
-                            
+
                     //    }
-                        
+
 
                     //}
 
@@ -2120,33 +2122,55 @@ namespace bancozerado
             clsapoio.nomeSenha = txtSenha.Text;
             clsapoio.Bdbanco = cmbBanco.Text;
 
-            Task[] exemplo =
+            if (cmbBanco.SelectedItem == null)
+            {
+                MessageBox.Show("Campo Vazio !");
+                cmbBanco.Focus();
+            }
+            else
+            {
+                if (txtConteudo.Text != "")
+                {
+                    var result = MessageBox.Show("Exite informação no Bloco de notas deseja apagar ?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        txtConteudo.Clear();
+                    }
+
+                }
+
+
+                Task[] exemplo =
             {
                     Task.Factory.StartNew(() =>
                     {
-                        MessageBox.Show("");
-                        clsapoio.auditoriaTexto("\n\n");
+                        MessageBox.Show("Etapa 1");
+                        clsapoio.auditoriaTextosubstituir("\n\n");
+
                     })
 
                     };
 
-            Task.WaitAll(exemplo);
+                Task.WaitAll(exemplo);
+                toolStripProgressBar.Value = 10;
 
-            Task[] qualTecnico =
-            {
+                Task[] qualTecnico =
+                {
                     Task.Factory.StartNew(() =>
                     {
                         clsapoio.auditoriaTexto("Qual Técnico fez o Encontro Inicial");
                         frm_perguntaRelatorio frm = new frm_perguntaRelatorio();
                         frm.ShowDialog();
+
                     })
 
                     };
 
-            Task.WaitAll(qualTecnico);
+                Task.WaitAll(qualTecnico);
+                toolStripProgressBar.Value = 20;
 
-            Task[] nomeEmpresa =
-            {
+                Task[] nomeEmpresa =
+                {
                     Task.Factory.StartNew(() =>
                     {
                         try
@@ -2164,6 +2188,7 @@ namespace bancozerado
 
                     }
                     clsapoio.auditoriaTexto(" \n");
+
                 }
 
             }
@@ -2181,11 +2206,12 @@ namespace bancozerado
 
                     };
 
-            Task.WaitAll(nomeEmpresa);
+                Task.WaitAll(nomeEmpresa);
+                toolStripProgressBar.Value = 30;
 
 
-            Task[] InformacaoFilial =
-            {
+                Task[] InformacaoFilial =
+                {
                     Task.Factory.StartNew(() =>
                     {
                         try
@@ -2213,29 +2239,33 @@ namespace bancozerado
             finally
             {
                 clsapoio.desconectarBD();
-                            MessageBox.Show("Criado Arquivo");
+                            MessageBox.Show("Etapa Filial");
+
 
             }
                     })
 
                     };
 
-            Task.WaitAll(InformacaoFilial);
+                Task.WaitAll(InformacaoFilial);
+                toolStripProgressBar.Value = 40;
 
-            Task[] entradadeNotas =
-            {
+                Task[] entradadeNotas =
+                {
                     Task.Factory.StartNew(() =>
                     {
-                        MessageBox.Show("");
+                        MessageBox.Show("Etapa Entrada de notas /n Etapa Pedido de compra");
                         clsapoio.auditoriaTexto("\n\n");
+
                     })
 
                     };
 
-            Task.WaitAll(entradadeNotas);
+                Task.WaitAll(entradadeNotas);
+                toolStripProgressBar.Value = 50;
 
-            Task[] regras =
-            {
+                Task[] regras =
+                {
                     Task.Factory.StartNew(() =>
                     {
                         try
@@ -2263,7 +2293,8 @@ namespace bancozerado
             finally
             {
                 clsapoio.desconectarBD();
-                            MessageBox.Show("Criado Arquivo");
+                            MessageBox.Show("Etapa Regras");
+
 
             }
                         clsapoio.auditoriaTexto("\n\n");
@@ -2271,10 +2302,11 @@ namespace bancozerado
 
                     };
 
-            Task.WaitAll(regras);
+                Task.WaitAll(regras);
+                toolStripProgressBar.Value = 60;
 
-            Task[] usuarios =
-            {
+                Task[] usuarios =
+                {
                     Task.Factory.StartNew(() =>
                     {
                         try
@@ -2303,7 +2335,8 @@ namespace bancozerado
             finally
             {
                 clsapoio.desconectarBD();
-                            MessageBox.Show("Criado Arquivo");
+                            MessageBox.Show("Etapa Usuarios");
+
 
             }
                         clsapoio.auditoriaTexto("\n\n");
@@ -2311,14 +2344,15 @@ namespace bancozerado
 
                     };
 
-            Task.WaitAll(usuarios);
+                Task.WaitAll(usuarios);
+                toolStripProgressBar.Value = 70;
 
-            Task[] obssobreRequisitos =
-            {
+                Task[] obssobreRequisitos =
+                {
                     Task.Factory.StartNew(() =>
                     {
                         MessageBox.Show("");
-                        clsapoio.auditoriaTexto("COMPUTADOR");
+                        clsapoio.auditoriaTexto("REQUISITOS MINIMOS PARA FUNCIONAR O SISTEMA PDVNET");
                         clsapoio.auditoriaTexto("Windows 10 ou Superior.");
                         clsapoio.auditoriaTexto("Net Framework 4.5.2");
                         clsapoio.auditoriaTexto("Internet funcionando.");
@@ -2363,29 +2397,43 @@ namespace bancozerado
 
                     };
 
-            Task.WaitAll(obssobreRequisitos);
+                Task.WaitAll(obssobreRequisitos);
+                toolStripProgressBar.Value = 80;
 
-            Task[] infoharware =
-            {
+                Task[] infoharware =
+                {
                     Task.Factory.StartNew(() =>
                     {
-                        MessageBox.Show("");
+
                         clsapoio.auditoriaTexto("INFORMAÇÕES TÉCNICAS DO SERVIDOR");
                         clsapoio.auditoriaTexto("Nunca deixe de executar e conferir se o backup do banco de dados está sendo realizado com sucesso, ele não é de autoria da PDV NET Sistemas.");
                         clsapoio.auditoriaTexto("Em caso de dúvidas de como fazer o backup, entre em contato com o nosso Suporte para esclarecimentos.");
-                        clsapoio.auditoriaTexto("Informacoes relacionadas ao Processador: ");
+                        clsapoio.auditoriaTexto("Informacoes relacionadas ao Nome do Computador : " + Environment.MachineName);
+                        clsapoio.auditoriaTexto("Informacoes relacionadas ao Processador: " + Environment.ProcessorCount + "N de nucleo");
                         clsapoio.auditoriaTexto("Informacoes relacionadas ao Hard Disk");
-                        
+                        string Consulta = "SELECT MaxCapacity FROM Win32_PhysicalMemoryArray";
+                        int memoriaRam = 0;
+                        ManagementObjectSearcher objetoPesquisado = new ManagementObjectSearcher(Consulta);
+                        foreach (ManagementObject WniPART in objetoPesquisado.Get())
+                            {
+                             UInt32 tamanhoKB = Convert.ToUInt32(WniPART.Properties["MaxCapacity"].Value);
+                             UInt32 tamanhoMB = tamanhoKB / 1024;
+                             memoriaRam += Convert.ToInt32(tamanhoMB);
+                            clsapoio.auditoriaTexto("Informacoes relacionadas a memoria Ram " + tamanhoMB + "Mb");
+                            }
+
                         clsapoio.auditoriaTexto("\n\n");
+                        MessageBox.Show("Etapa Info Hadware");
+
                     })
 
                     };
 
-            Task.WaitAll(infoharware);
+                Task.WaitAll(infoharware);
+                toolStripProgressBar.Value = 90;
 
-
-            Task[] finalcomestilo =
-            {
+                Task[] finalcomestilo =
+                {
                     Task.Factory.StartNew(() =>
                     {
                         clsapoio.auditoriaTexto("PDV NET LOCACAO DE SISTEMAS DE INFORMATICA LTDA - EPP");
@@ -2397,11 +2445,13 @@ namespace bancozerado
                         clsapoio.auditoriaTexto("Supervisor de Implantação: Evandro Barroso ");
                         clsapoio.auditoriaTexto("Email: implantacao@pdvnet.com.br");
                         clsapoio.auditoriaTexto("Tel: (21) 96775-4275 (Vivo) \n");
+
                     })
 
                     };
 
-            Task.WaitAll(finalcomestilo);
+                Task.WaitAll(finalcomestilo);
+                toolStripProgressBar.Value = 100;
 
 
 
@@ -2410,23 +2460,28 @@ namespace bancozerado
 
 
 
-            #region LerArquivo
-            try
-            {
+                #region LerArquivo
+                try
+                {
 
-                clsapoio.lerauditoriaTexto(txtConteudo);
+                    clsapoio.lerauditoriaTexto(txtConteudo);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
+                }
+                finally
+                {
+                    MessageBox.Show("Arquivo concluido");
+                }
+
+                #endregion
+
+
 
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
-            }
-            finally
-            {
-                MessageBox.Show("Arquivo concluido");
-            }
 
-            #endregion
         }
 
 

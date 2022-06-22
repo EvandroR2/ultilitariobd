@@ -91,7 +91,20 @@ namespace bancozerado
 
         }
 
-
+        public void auditoriaTextosubstituir(string c)
+        {
+            //string path = @"C:\curso\sistemas\sistemaemc\file.txt";
+            string path = @"C:\PDV\";
+            bool res = Directory.Exists(path + "Audit_app");
+            if (!res)
+            {
+                Directory.CreateDirectory(path + "Audit_app");
+            }
+            string path1 = @"C:\PDV\Audit_app\audit.txt";
+            StreamWriter writer = new StreamWriter(path1, false, Encoding.UTF8);
+            writer.WriteLine(c);
+            writer.Close();
+        }
         public void auditoriaTexto(string c)
         {
             //string path = @"C:\curso\sistemas\sistemaemc\file.txt";
@@ -102,7 +115,7 @@ namespace bancozerado
                 Directory.CreateDirectory(path + "Audit_app");
             }
             string path1 = @"C:\PDV\Audit_app\audit.txt";
-            StreamWriter writer = new StreamWriter(path1, true, Encoding.UTF8);
+            StreamWriter writer = new StreamWriter(path1,true,Encoding.UTF8);
             writer.WriteLine(c);
             writer.Close();
         }
@@ -126,7 +139,35 @@ namespace bancozerado
 
         }
 
+        public void hardDisk()
+        {
+            DriveInfo[] allDrives = DriveInfo.GetDrives();
+
+            foreach (DriveInfo d in allDrives)
+            {
+                Console.WriteLine("Drive {0}", d.Name);
+                Console.WriteLine("  Drive type: {0}", d.DriveType);
+                if (d.IsReady == true)
+                {
+                    Console.WriteLine("  Volume label: {0}", d.VolumeLabel);
+                    Console.WriteLine("  File system: {0}", d.DriveFormat);
+                    Console.WriteLine(
+                        "  Available space to current user:{0, 15} bytes",
+                        d.AvailableFreeSpace);
+
+                    Console.WriteLine(
+                        "  Total available space:          {0, 15} bytes",
+                        d.TotalFreeSpace);
+
+                    Console.WriteLine(
+                        "  Total size of drive:            {0, 15} bytes ",
+                        d.TotalSize);
+                }
+            }
+
+        }
+
+
+
     }
-
-
 }

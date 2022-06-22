@@ -117,6 +117,9 @@ namespace bancozerado
             this.RAZAO_SOCIAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.statusBar = new System.Windows.Forms.StatusStrip();
+            this.statusBarLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.txtConteudo = new System.Windows.Forms.RichTextBox();
             this.menuBar = new System.Windows.Forms.MenuStrip();
             this.mArquivo = new System.Windows.Forms.ToolStripMenuItem();
             this.mArquivoNovo = new System.Windows.Forms.ToolStripMenuItem();
@@ -142,16 +145,14 @@ namespace bancozerado
             this.mExibirZoom = new System.Windows.Forms.ToolStripMenuItem();
             this.mExibirZoomApliar = new System.Windows.Forms.ToolStripMenuItem();
             this.mExibirZoomReduzir = new System.Windows.Forms.ToolStripMenuItem();
+            this.mExibirZoomRestaurar = new System.Windows.Forms.ToolStripMenuItem();
             this.mExibirBarraStatus = new System.Windows.Forms.ToolStripMenuItem();
             this.mAjuda = new System.Windows.Forms.ToolStripMenuItem();
             this.mAjudaExibir = new System.Windows.Forms.ToolStripMenuItem();
             this.mAjudaSobre = new System.Windows.Forms.ToolStripMenuItem();
             this.mAjudaLerConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.mAjudaConsultaBanco = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtConteudo = new System.Windows.Forms.RichTextBox();
-            this.statusBar = new System.Windows.Forms.StatusStrip();
-            this.statusBarLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.mExibirZoomRestaurar = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.groupBox1.SuspendLayout();
             this.menuArquivo.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -165,8 +166,8 @@ namespace bancozerado
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaFilial)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaEmpresa)).BeginInit();
             this.tabPage4.SuspendLayout();
-            this.menuBar.SuspendLayout();
             this.statusBar.SuspendLayout();
+            this.menuBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSair
@@ -1074,6 +1075,34 @@ namespace bancozerado
             this.tabPage4.Text = "Encontro Inicial";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // statusBar
+            // 
+            this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusBarLabel,
+            this.toolStripProgressBar});
+            this.statusBar.Location = new System.Drawing.Point(3, 570);
+            this.statusBar.Name = "statusBar";
+            this.statusBar.Size = new System.Drawing.Size(746, 22);
+            this.statusBar.TabIndex = 4;
+            this.statusBar.Text = "statusStrip1";
+            // 
+            // statusBarLabel
+            // 
+            this.statusBarLabel.Name = "statusBarLabel";
+            this.statusBarLabel.Size = new System.Drawing.Size(38, 17);
+            this.statusBarLabel.Text = "100 %";
+            // 
+            // txtConteudo
+            // 
+            this.txtConteudo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtConteudo.Location = new System.Drawing.Point(3, 32);
+            this.txtConteudo.Name = "txtConteudo";
+            this.txtConteudo.Size = new System.Drawing.Size(746, 560);
+            this.txtConteudo.TabIndex = 3;
+            this.txtConteudo.Text = "";
+            this.txtConteudo.WordWrap = false;
+            this.txtConteudo.TextChanged += new System.EventHandler(this.txtConteudo_TextChanged);
+            // 
             // menuBar
             // 
             this.menuBar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
@@ -1159,59 +1188,59 @@ namespace bancozerado
             // mEditarDesfazer
             // 
             this.mEditarDesfazer.Name = "mEditarDesfazer";
-            this.mEditarDesfazer.Size = new System.Drawing.Size(180, 26);
+            this.mEditarDesfazer.Size = new System.Drawing.Size(170, 26);
             this.mEditarDesfazer.Text = "Desfazer";
             this.mEditarDesfazer.Click += new System.EventHandler(this.mEditarDesfazer_Click);
             // 
             // mEditarRefazer
             // 
             this.mEditarRefazer.Name = "mEditarRefazer";
-            this.mEditarRefazer.Size = new System.Drawing.Size(180, 26);
+            this.mEditarRefazer.Size = new System.Drawing.Size(170, 26);
             this.mEditarRefazer.Text = "Refazer";
             this.mEditarRefazer.Click += new System.EventHandler(this.mEditarRefazer_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(167, 6);
             // 
             // mEditarRecortar
             // 
             this.mEditarRecortar.Name = "mEditarRecortar";
-            this.mEditarRecortar.Size = new System.Drawing.Size(180, 26);
+            this.mEditarRecortar.Size = new System.Drawing.Size(170, 26);
             this.mEditarRecortar.Text = "Recortar";
             this.mEditarRecortar.Click += new System.EventHandler(this.mEditarRecortar_Click);
             // 
             // mEditarCopiar
             // 
             this.mEditarCopiar.Name = "mEditarCopiar";
-            this.mEditarCopiar.Size = new System.Drawing.Size(180, 26);
+            this.mEditarCopiar.Size = new System.Drawing.Size(170, 26);
             this.mEditarCopiar.Text = "Copiar";
             this.mEditarCopiar.Click += new System.EventHandler(this.mEditarCopiar_Click);
             // 
             // mEditarColar
             // 
             this.mEditarColar.Name = "mEditarColar";
-            this.mEditarColar.Size = new System.Drawing.Size(180, 26);
+            this.mEditarColar.Size = new System.Drawing.Size(170, 26);
             this.mEditarColar.Text = "Colar";
             this.mEditarColar.Click += new System.EventHandler(this.mEditarColar_Click);
             // 
             // mEditarExcluir
             // 
             this.mEditarExcluir.Name = "mEditarExcluir";
-            this.mEditarExcluir.Size = new System.Drawing.Size(180, 26);
+            this.mEditarExcluir.Size = new System.Drawing.Size(170, 26);
             this.mEditarExcluir.Text = "Excluir";
             this.mEditarExcluir.Click += new System.EventHandler(this.mEditarExcluir_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(167, 6);
             // 
             // mEditarDataeHora
             // 
             this.mEditarDataeHora.Name = "mEditarDataeHora";
-            this.mEditarDataeHora.Size = new System.Drawing.Size(180, 26);
+            this.mEditarDataeHora.Size = new System.Drawing.Size(170, 26);
             this.mEditarDataeHora.Text = "Data e Hora";
             this.mEditarDataeHora.Click += new System.EventHandler(this.mEditarDataeHora_Click);
             // 
@@ -1261,16 +1290,23 @@ namespace bancozerado
             // mExibirZoomApliar
             // 
             this.mExibirZoomApliar.Name = "mExibirZoomApliar";
-            this.mExibirZoomApliar.Size = new System.Drawing.Size(180, 26);
+            this.mExibirZoomApliar.Size = new System.Drawing.Size(152, 26);
             this.mExibirZoomApliar.Text = "Ampliar";
             this.mExibirZoomApliar.Click += new System.EventHandler(this.mExibirZoomApliar_Click);
             // 
             // mExibirZoomReduzir
             // 
             this.mExibirZoomReduzir.Name = "mExibirZoomReduzir";
-            this.mExibirZoomReduzir.Size = new System.Drawing.Size(180, 26);
+            this.mExibirZoomReduzir.Size = new System.Drawing.Size(152, 26);
             this.mExibirZoomReduzir.Text = "Reduzir";
             this.mExibirZoomReduzir.Click += new System.EventHandler(this.mExibirZoomReduzir_Click);
+            // 
+            // mExibirZoomRestaurar
+            // 
+            this.mExibirZoomRestaurar.Name = "mExibirZoomRestaurar";
+            this.mExibirZoomRestaurar.Size = new System.Drawing.Size(152, 26);
+            this.mExibirZoomRestaurar.Text = "Restaurar";
+            this.mExibirZoomRestaurar.Click += new System.EventHandler(this.mExibirZoomRestaurar_Click);
             // 
             // mExibirBarraStatus
             // 
@@ -1319,39 +1355,10 @@ namespace bancozerado
             this.mAjudaConsultaBanco.Text = "Fazer Consulta no Banco";
             this.mAjudaConsultaBanco.Click += new System.EventHandler(this.mAjudaConsultaBanco_Click);
             // 
-            // txtConteudo
+            // toolStripProgressBar
             // 
-            this.txtConteudo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtConteudo.Location = new System.Drawing.Point(3, 32);
-            this.txtConteudo.Name = "txtConteudo";
-            this.txtConteudo.Size = new System.Drawing.Size(746, 560);
-            this.txtConteudo.TabIndex = 3;
-            this.txtConteudo.Text = "";
-            this.txtConteudo.WordWrap = false;
-            this.txtConteudo.TextChanged += new System.EventHandler(this.txtConteudo_TextChanged);
-            // 
-            // statusBar
-            // 
-            this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusBarLabel});
-            this.statusBar.Location = new System.Drawing.Point(3, 570);
-            this.statusBar.Name = "statusBar";
-            this.statusBar.Size = new System.Drawing.Size(746, 22);
-            this.statusBar.TabIndex = 4;
-            this.statusBar.Text = "statusStrip1";
-            // 
-            // statusBarLabel
-            // 
-            this.statusBarLabel.Name = "statusBarLabel";
-            this.statusBarLabel.Size = new System.Drawing.Size(38, 17);
-            this.statusBarLabel.Text = "100 %";
-            // 
-            // mExibirZoomRestaurar
-            // 
-            this.mExibirZoomRestaurar.Name = "mExibirZoomRestaurar";
-            this.mExibirZoomRestaurar.Size = new System.Drawing.Size(180, 26);
-            this.mExibirZoomRestaurar.Text = "Restaurar";
-            this.mExibirZoomRestaurar.Click += new System.EventHandler(this.mExibirZoomRestaurar_Click);
+            this.toolStripProgressBar.Name = "toolStripProgressBar";
+            this.toolStripProgressBar.Size = new System.Drawing.Size(650, 16);
             // 
             // frmPrincipal
             // 
@@ -1397,10 +1404,10 @@ namespace bancozerado
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaEmpresa)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
-            this.menuBar.ResumeLayout(false);
-            this.menuBar.PerformLayout();
             this.statusBar.ResumeLayout(false);
             this.statusBar.PerformLayout();
+            this.menuBar.ResumeLayout(false);
+            this.menuBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1530,6 +1537,7 @@ namespace bancozerado
         private System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.ToolStripStatusLabel statusBarLabel;
         private System.Windows.Forms.ToolStripMenuItem mExibirZoomRestaurar;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
     }
 }
 

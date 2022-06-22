@@ -52,23 +52,23 @@ namespace bancozerado
             this.txtTecnico = new System.Windows.Forms.TextBox();
             this.lblMsg = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.txtObservacoes = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.rbtImpressoraConfigurarnaLoja = new System.Windows.Forms.RadioButton();
+            this.rbtNaopossuiSuprimento = new System.Windows.Forms.RadioButton();
+            this.rbtImpressoraseracomprada = new System.Windows.Forms.RadioButton();
+            this.rbtNaopossuiimpressora = new System.Windows.Forms.RadioButton();
+            this.rbtImpvaiSerConfignasLojas = new System.Windows.Forms.RadioButton();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
-            this.radioButton8 = new System.Windows.Forms.RadioButton();
-            this.radioButton9 = new System.Windows.Forms.RadioButton();
-            this.radioButton10 = new System.Windows.Forms.RadioButton();
+            this.rbtTrabalhacretiradaCrediariosemComissao = new System.Windows.Forms.RadioButton();
             this.label7 = new System.Windows.Forms.Label();
+            this.rbtNaoTrabalhacretirada = new System.Windows.Forms.RadioButton();
+            this.rbtTrabalhacretiradaOutrosSemComissao = new System.Windows.Forms.RadioButton();
+            this.rbtTrabalhacretiradaOutroscomComissao = new System.Windows.Forms.RadioButton();
+            this.rbtTrabalhacretiradaCrediariocomComissao = new System.Windows.Forms.RadioButton();
             this.gBoxNFEeVenda.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -125,6 +125,7 @@ namespace bancozerado
             this.rbtNfeSim.TabStop = true;
             this.rbtNfeSim.Text = "Sim";
             this.rbtNfeSim.UseVisualStyleBackColor = true;
+            this.rbtNfeSim.CheckedChanged += new System.EventHandler(this.rbtNfeSim_CheckedChanged);
             this.rbtNfeSim.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtNfeSim_KeyPress);
             // 
             // groupBox3
@@ -210,8 +211,6 @@ namespace bancozerado
             // checkVenda
             // 
             this.checkVenda.AutoSize = true;
-            this.checkVenda.Checked = true;
-            this.checkVenda.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkVenda.Location = new System.Drawing.Point(6, 19);
             this.checkVenda.Name = "checkVenda";
             this.checkVenda.Size = new System.Drawing.Size(57, 17);
@@ -328,6 +327,16 @@ namespace bancozerado
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Particularidades";
             // 
+            // txtObservacoes
+            // 
+            this.txtObservacoes.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtObservacoes.Location = new System.Drawing.Point(10, 50);
+            this.txtObservacoes.Multiline = true;
+            this.txtObservacoes.Name = "txtObservacoes";
+            this.txtObservacoes.Size = new System.Drawing.Size(203, 302);
+            this.txtObservacoes.TabIndex = 61;
+            this.txtObservacoes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtObservacoes_KeyPress);
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -337,15 +346,6 @@ namespace bancozerado
             this.label6.Size = new System.Drawing.Size(207, 24);
             this.label6.TabIndex = 46;
             this.label6.Text = "Descreva observações:";
-            // 
-            // txtObservacoes
-            // 
-            this.txtObservacoes.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtObservacoes.Location = new System.Drawing.Point(10, 50);
-            this.txtObservacoes.Multiline = true;
-            this.txtObservacoes.Name = "txtObservacoes";
-            this.txtObservacoes.Size = new System.Drawing.Size(203, 302);
-            this.txtObservacoes.TabIndex = 61;
             // 
             // groupBox2
             // 
@@ -358,6 +358,73 @@ namespace bancozerado
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Particularidades";
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.rbtImpressoraConfigurarnaLoja);
+            this.groupBox5.Controls.Add(this.rbtNaopossuiSuprimento);
+            this.groupBox5.Controls.Add(this.rbtImpressoraseracomprada);
+            this.groupBox5.Controls.Add(this.rbtNaopossuiimpressora);
+            this.groupBox5.Controls.Add(this.rbtImpvaiSerConfignasLojas);
+            this.groupBox5.Location = new System.Drawing.Point(8, 50);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(217, 302);
+            this.groupBox5.TabIndex = 63;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Eti";
+            // 
+            // rbtImpressoraConfigurarnaLoja
+            // 
+            this.rbtImpressoraConfigurarnaLoja.Location = new System.Drawing.Point(6, 119);
+            this.rbtImpressoraConfigurarnaLoja.Name = "rbtImpressoraConfigurarnaLoja";
+            this.rbtImpressoraConfigurarnaLoja.Size = new System.Drawing.Size(205, 31);
+            this.rbtImpressoraConfigurarnaLoja.TabIndex = 12;
+            this.rbtImpressoraConfigurarnaLoja.Text = "A configuração de etiqueta é realizada direto na loja.";
+            this.rbtImpressoraConfigurarnaLoja.UseVisualStyleBackColor = true;
+            this.rbtImpressoraConfigurarnaLoja.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtImpressoraConfigurarnaLoja_KeyPress);
+            // 
+            // rbtNaopossuiSuprimento
+            // 
+            this.rbtNaopossuiSuprimento.Location = new System.Drawing.Point(6, 82);
+            this.rbtNaopossuiSuprimento.Name = "rbtNaopossuiSuprimento";
+            this.rbtNaopossuiSuprimento.Size = new System.Drawing.Size(205, 31);
+            this.rbtNaopossuiSuprimento.TabIndex = 11;
+            this.rbtNaopossuiSuprimento.Text = "Não possui um modelo de etiqueta ou suprimentos no momento para configuração.";
+            this.rbtNaopossuiSuprimento.UseVisualStyleBackColor = true;
+            this.rbtNaopossuiSuprimento.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtNaopossuiSuprimento_KeyPress);
+            // 
+            // rbtImpressoraseracomprada
+            // 
+            this.rbtImpressoraseracomprada.Location = new System.Drawing.Point(6, 45);
+            this.rbtImpressoraseracomprada.Name = "rbtImpressoraseracomprada";
+            this.rbtImpressoraseracomprada.Size = new System.Drawing.Size(205, 31);
+            this.rbtImpressoraseracomprada.TabIndex = 10;
+            this.rbtImpressoraseracomprada.Text = "A imp. de Etiqueta ainda será comprada.";
+            this.rbtImpressoraseracomprada.UseVisualStyleBackColor = true;
+            this.rbtImpressoraseracomprada.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtImpressoraseracomprada_KeyPress);
+            // 
+            // rbtNaopossuiimpressora
+            // 
+            this.rbtNaopossuiimpressora.AutoSize = true;
+            this.rbtNaopossuiimpressora.Checked = true;
+            this.rbtNaopossuiimpressora.Location = new System.Drawing.Point(6, 22);
+            this.rbtNaopossuiimpressora.Name = "rbtNaopossuiimpressora";
+            this.rbtNaopossuiimpressora.Size = new System.Drawing.Size(159, 17);
+            this.rbtNaopossuiimpressora.TabIndex = 9;
+            this.rbtNaopossuiimpressora.TabStop = true;
+            this.rbtNaopossuiimpressora.Text = "Não possui imp. de etiqueta.";
+            this.rbtNaopossuiimpressora.UseVisualStyleBackColor = true;
+            this.rbtNaopossuiimpressora.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtNaopossuiimpressora_KeyPress);
+            // 
+            // rbtImpvaiSerConfignasLojas
+            // 
+            this.rbtImpvaiSerConfignasLojas.Location = new System.Drawing.Point(6, 156);
+            this.rbtImpvaiSerConfignasLojas.Name = "rbtImpvaiSerConfignasLojas";
+            this.rbtImpvaiSerConfignasLojas.Size = new System.Drawing.Size(205, 31);
+            this.rbtImpvaiSerConfignasLojas.TabIndex = 8;
+            this.rbtImpvaiSerConfignasLojas.Text = "Imp. foi config na Matriz e tbm vai fazer nas lojas";
+            this.rbtImpvaiSerConfignasLojas.UseVisualStyleBackColor = true;
+            this.rbtImpvaiSerConfignasLojas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtImpvaiSerConfignasLojas_KeyPress);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -368,75 +435,14 @@ namespace bancozerado
             this.label3.TabIndex = 46;
             this.label3.Text = "Etiqueta Cod. de Barra";
             // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.radioButton6);
-            this.groupBox5.Controls.Add(this.radioButton3);
-            this.groupBox5.Controls.Add(this.radioButton4);
-            this.groupBox5.Controls.Add(this.radioButton2);
-            this.groupBox5.Controls.Add(this.radioButton1);
-            this.groupBox5.Location = new System.Drawing.Point(8, 50);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(217, 302);
-            this.groupBox5.TabIndex = 63;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Eti";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.Location = new System.Drawing.Point(6, 156);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(205, 31);
-            this.radioButton1.TabIndex = 8;
-            this.radioButton1.Text = "Imp. foi config na Matriz e tbm vai fazer nas lojas";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Checked = true;
-            this.radioButton2.Location = new System.Drawing.Point(6, 22);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(159, 17);
-            this.radioButton2.TabIndex = 9;
-            this.radioButton2.Text = "Não possui imp. de etiqueta.";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.Location = new System.Drawing.Point(6, 82);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(205, 31);
-            this.radioButton3.TabIndex = 11;
-            this.radioButton3.Text = "Não possui um modelo de etiqueta ou suprimentos no momento para configuração.";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.Location = new System.Drawing.Point(6, 45);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(205, 31);
-            this.radioButton4.TabIndex = 10;
-            this.radioButton4.Text = "A imp. de Etiqueta ainda será comprada.";
-            this.radioButton4.UseVisualStyleBackColor = true;
-            // 
-            // radioButton6
-            // 
-            this.radioButton6.Location = new System.Drawing.Point(6, 119);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(205, 31);
-            this.radioButton6.TabIndex = 12;
-            this.radioButton6.Text = "A configuração de etiqueta é realizada direto na loja.";
-            this.radioButton6.UseVisualStyleBackColor = true;
-            // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.radioButton5);
+            this.groupBox6.Controls.Add(this.rbtTrabalhacretiradaCrediariosemComissao);
             this.groupBox6.Controls.Add(this.label7);
-            this.groupBox6.Controls.Add(this.radioButton9);
-            this.groupBox6.Controls.Add(this.radioButton8);
-            this.groupBox6.Controls.Add(this.radioButton7);
-            this.groupBox6.Controls.Add(this.radioButton10);
+            this.groupBox6.Controls.Add(this.rbtNaoTrabalhacretirada);
+            this.groupBox6.Controls.Add(this.rbtTrabalhacretiradaOutrosSemComissao);
+            this.groupBox6.Controls.Add(this.rbtTrabalhacretiradaOutroscomComissao);
+            this.groupBox6.Controls.Add(this.rbtTrabalhacretiradaCrediariocomComissao);
             this.groupBox6.Location = new System.Drawing.Point(838, 111);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(231, 368);
@@ -444,52 +450,15 @@ namespace bancozerado
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Retirada de Funcionario";
             // 
-            // radioButton5
+            // rbtTrabalhacretiradaCrediariosemComissao
             // 
-            this.radioButton5.Location = new System.Drawing.Point(6, 170);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(219, 31);
-            this.radioButton5.TabIndex = 12;
-            this.radioButton5.Text = "Forma de pagamento crediario s/ comissão";
-            this.radioButton5.UseVisualStyleBackColor = true;
-            // 
-            // radioButton7
-            // 
-            this.radioButton7.Location = new System.Drawing.Point(6, 133);
-            this.radioButton7.Name = "radioButton7";
-            this.radioButton7.Size = new System.Drawing.Size(219, 31);
-            this.radioButton7.TabIndex = 11;
-            this.radioButton7.Text = "Forma de pagamento outros c/ comissão";
-            this.radioButton7.UseVisualStyleBackColor = true;
-            // 
-            // radioButton8
-            // 
-            this.radioButton8.Location = new System.Drawing.Point(6, 96);
-            this.radioButton8.Name = "radioButton8";
-            this.radioButton8.Size = new System.Drawing.Size(219, 31);
-            this.radioButton8.TabIndex = 10;
-            this.radioButton8.Text = "Forma de pagamento outros s/ comissão";
-            this.radioButton8.UseVisualStyleBackColor = true;
-            // 
-            // radioButton9
-            // 
-            this.radioButton9.AutoSize = true;
-            this.radioButton9.Checked = true;
-            this.radioButton9.Location = new System.Drawing.Point(6, 73);
-            this.radioButton9.Name = "radioButton9";
-            this.radioButton9.Size = new System.Drawing.Size(151, 17);
-            this.radioButton9.TabIndex = 9;
-            this.radioButton9.Text = "Não Trabalha com retirada";
-            this.radioButton9.UseVisualStyleBackColor = true;
-            // 
-            // radioButton10
-            // 
-            this.radioButton10.Location = new System.Drawing.Point(6, 207);
-            this.radioButton10.Name = "radioButton10";
-            this.radioButton10.Size = new System.Drawing.Size(219, 31);
-            this.radioButton10.TabIndex = 8;
-            this.radioButton10.Text = "Forma de pagamento crediario c/ comissão";
-            this.radioButton10.UseVisualStyleBackColor = true;
+            this.rbtTrabalhacretiradaCrediariosemComissao.Location = new System.Drawing.Point(6, 170);
+            this.rbtTrabalhacretiradaCrediariosemComissao.Name = "rbtTrabalhacretiradaCrediariosemComissao";
+            this.rbtTrabalhacretiradaCrediariosemComissao.Size = new System.Drawing.Size(219, 31);
+            this.rbtTrabalhacretiradaCrediariosemComissao.TabIndex = 12;
+            this.rbtTrabalhacretiradaCrediariosemComissao.Text = "Forma de pagamento crediario s/ comissão";
+            this.rbtTrabalhacretiradaCrediariosemComissao.UseVisualStyleBackColor = true;
+            this.rbtTrabalhacretiradaCrediariosemComissao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtTrabalhacretiradaCrediariosemComissao_KeyPress);
             // 
             // label7
             // 
@@ -500,6 +469,49 @@ namespace bancozerado
             this.label7.Size = new System.Drawing.Size(212, 24);
             this.label7.TabIndex = 46;
             this.label7.Text = "Retirada de Funcionario";
+            // 
+            // rbtNaoTrabalhacretirada
+            // 
+            this.rbtNaoTrabalhacretirada.AutoSize = true;
+            this.rbtNaoTrabalhacretirada.Checked = true;
+            this.rbtNaoTrabalhacretirada.Location = new System.Drawing.Point(6, 73);
+            this.rbtNaoTrabalhacretirada.Name = "rbtNaoTrabalhacretirada";
+            this.rbtNaoTrabalhacretirada.Size = new System.Drawing.Size(151, 17);
+            this.rbtNaoTrabalhacretirada.TabIndex = 9;
+            this.rbtNaoTrabalhacretirada.TabStop = true;
+            this.rbtNaoTrabalhacretirada.Text = "Não Trabalha com retirada";
+            this.rbtNaoTrabalhacretirada.UseVisualStyleBackColor = true;
+            this.rbtNaoTrabalhacretirada.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtNaoTrabalhacretirada_KeyPress);
+            // 
+            // rbtTrabalhacretiradaOutrosSemComissao
+            // 
+            this.rbtTrabalhacretiradaOutrosSemComissao.Location = new System.Drawing.Point(6, 96);
+            this.rbtTrabalhacretiradaOutrosSemComissao.Name = "rbtTrabalhacretiradaOutrosSemComissao";
+            this.rbtTrabalhacretiradaOutrosSemComissao.Size = new System.Drawing.Size(219, 31);
+            this.rbtTrabalhacretiradaOutrosSemComissao.TabIndex = 10;
+            this.rbtTrabalhacretiradaOutrosSemComissao.Text = "Forma de pagamento outros s/ comissão";
+            this.rbtTrabalhacretiradaOutrosSemComissao.UseVisualStyleBackColor = true;
+            this.rbtTrabalhacretiradaOutrosSemComissao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtTrabalhacretiradaOutrosSemComissao_KeyPress);
+            // 
+            // rbtTrabalhacretiradaOutroscomComissao
+            // 
+            this.rbtTrabalhacretiradaOutroscomComissao.Location = new System.Drawing.Point(6, 133);
+            this.rbtTrabalhacretiradaOutroscomComissao.Name = "rbtTrabalhacretiradaOutroscomComissao";
+            this.rbtTrabalhacretiradaOutroscomComissao.Size = new System.Drawing.Size(219, 31);
+            this.rbtTrabalhacretiradaOutroscomComissao.TabIndex = 11;
+            this.rbtTrabalhacretiradaOutroscomComissao.Text = "Forma de pagamento outros c/ comissão";
+            this.rbtTrabalhacretiradaOutroscomComissao.UseVisualStyleBackColor = true;
+            this.rbtTrabalhacretiradaOutroscomComissao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtTrabalhacretiradaOutroscomComissao_KeyPress);
+            // 
+            // rbtTrabalhacretiradaCrediariocomComissao
+            // 
+            this.rbtTrabalhacretiradaCrediariocomComissao.Location = new System.Drawing.Point(6, 207);
+            this.rbtTrabalhacretiradaCrediariocomComissao.Name = "rbtTrabalhacretiradaCrediariocomComissao";
+            this.rbtTrabalhacretiradaCrediariocomComissao.Size = new System.Drawing.Size(219, 31);
+            this.rbtTrabalhacretiradaCrediariocomComissao.TabIndex = 8;
+            this.rbtTrabalhacretiradaCrediariocomComissao.Text = "Forma de pagamento crediario c/ comissão";
+            this.rbtTrabalhacretiradaCrediariocomComissao.UseVisualStyleBackColor = true;
+            this.rbtTrabalhacretiradaCrediariocomComissao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtTrabalhacretiradaCrediariocomComissao_KeyPress);
             // 
             // frm_perguntaRelatorio
             // 
@@ -572,18 +584,18 @@ namespace bancozerado
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.RadioButton radioButton6;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton rbtImpressoraConfigurarnaLoja;
+        private System.Windows.Forms.RadioButton rbtNaopossuiSuprimento;
+        private System.Windows.Forms.RadioButton rbtImpressoraseracomprada;
+        private System.Windows.Forms.RadioButton rbtNaopossuiimpressora;
+        private System.Windows.Forms.RadioButton rbtImpvaiSerConfignasLojas;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.RadioButton rbtTrabalhacretiradaCrediariosemComissao;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.RadioButton radioButton9;
-        private System.Windows.Forms.RadioButton radioButton8;
-        private System.Windows.Forms.RadioButton radioButton7;
-        private System.Windows.Forms.RadioButton radioButton10;
+        private System.Windows.Forms.RadioButton rbtNaoTrabalhacretirada;
+        private System.Windows.Forms.RadioButton rbtTrabalhacretiradaOutrosSemComissao;
+        private System.Windows.Forms.RadioButton rbtTrabalhacretiradaOutroscomComissao;
+        private System.Windows.Forms.RadioButton rbtTrabalhacretiradaCrediariocomComissao;
     }
 }

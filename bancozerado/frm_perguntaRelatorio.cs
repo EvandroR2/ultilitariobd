@@ -21,6 +21,7 @@ namespace bancozerado
             InitializeComponent();
         }
 
+
         private void frm_perguntaRelatorio_Load(object sender, EventArgs e)
         {
             txtTecnico.Focus();
@@ -61,10 +62,27 @@ namespace bancozerado
         {
             if (e.KeyChar == 13)
             {
-                checkVenda.Focus();
+                if (rbtNfeSim.Checked)
+                {
+                    checkVenda.Focus();
+                } else
+                {
+                    txtObservacoes.Focus();
+                }
+                
             }
         }
-
+        private void rbtNfeSim_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtNfeSim.Checked)
+            {
+                gBoxNFE.Visible = true;
+            }
+            else
+            {
+                gBoxNFE.Visible = false;
+            }
+        }
         private void checkVenda_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
@@ -93,10 +111,96 @@ namespace bancozerado
         {
             if (e.KeyChar == 13)
             {
-                btnOkfrmRelatorio.Focus();
+                txtObservacoes.Focus();
             }
         }
 
+        private void txtObservacoes_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                rbtNaopossuiimpressora.Focus();
+            }
+        }
+        private void rbtNaopossuiimpressora_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                rbtImpressoraseracomprada.Focus();
+            }
+        }
+
+        private void rbtImpressoraseracomprada_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                rbtNaopossuiSuprimento.Focus();
+            }
+        }
+
+        private void rbtNaopossuiSuprimento_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                rbtImpressoraConfigurarnaLoja.Focus();
+            }
+        }
+
+        private void rbtImpressoraConfigurarnaLoja_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                rbtImpvaiSerConfignasLojas.Focus();
+            }
+        }
+
+        private void rbtImpvaiSerConfignasLojas_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                rbtNaoTrabalhacretirada.Focus();
+            }
+        }
+
+        private void rbtNaoTrabalhacretirada_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                rbtTrabalhacretiradaOutrosSemComissao.Focus();
+            }
+        }
+
+        private void rbtTrabalhacretiradaOutrosSemComissao_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                rbtTrabalhacretiradaOutroscomComissao.Focus();
+            }
+        }
+
+        private void rbtTrabalhacretiradaOutroscomComissao_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                rbtTrabalhacretiradaCrediariosemComissao.Focus();
+            }
+        }
+
+        private void rbtTrabalhacretiradaCrediariosemComissao_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                rbtTrabalhacretiradaCrediariocomComissao.Focus();
+            }
+        }
+
+        private void rbtTrabalhacretiradaCrediariocomComissao_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                btnOkfrmRelatorio.Focus();
+            }
+        }
         private void btnOkfrmRelatorio_Click(object sender, EventArgs e)
         {
             if ((txtTecnico.Text != "") && (txtParticipantes.Text != "") && (txtRamodeAtuacao.Text != ""))
@@ -144,8 +248,55 @@ namespace bancozerado
                     }
                     clsapoio.auditoriaTexto("\n");
                 }
-
-
+                if (txtObservacoes.Text != "")
+                {
+                    clsapoio.auditoriaTexto("Observações do Clientes: \n");
+                    clsapoio.auditoriaTexto(txtObservacoes.Text + "\n");
+                }
+                clsapoio.auditoriaTexto("Impressora Codigo de Barra: \n");
+                if (rbtNaopossuiimpressora.Checked)
+                {
+                    clsapoio.auditoriaTexto("Cliente não vai trabalhar com Impressora de Codigo de Barra no momento \n");
+                }
+                if (rbtImpressoraseracomprada.Checked)
+                {
+                    clsapoio.auditoriaTexto("Cliente ainda vai adquirir uma impressora de Codigo de barra");
+                    clsapoio.auditoriaTexto("Indicado as impressora com Linguagem PPLA Argox \n");
+                }
+                if (rbtNaopossuiSuprimento.Checked)
+                {
+                    clsapoio.auditoriaTexto("Cliente tem a impressora de Codigo de Barra mas ainda não tem os suprimento para a impressão");
+                    clsapoio.auditoriaTexto("Assim que comprar o suprimento fazer contato e agendar o serviço. \n");
+                }
+                if (rbtImpressoraConfigurarnaLoja.Checked)
+                {
+                    clsapoio.auditoriaTexto("A impressora vai ser configurada na loja \n");
+                }
+                if (rbtImpvaiSerConfignasLojas.Checked)
+                {
+                    clsapoio.auditoriaTexto("A impressora vai ser configurada na Retaguarda e tambem vai ser enviado o layout para as lojas. \n");
+                }
+                clsapoio.auditoriaTexto("Retirada de funcionario: \n");
+                if (rbtNaoTrabalhacretirada.Checked)
+                {
+                    clsapoio.auditoriaTexto("Cliente não vai trabalhar com retirada de funcionario \n");
+                }
+                if (rbtTrabalhacretiradaOutrosSemComissao.Checked)
+                {
+                    clsapoio.auditoriaTexto("Retirada de funcionario vai ser na forma de pagamento Outros sem gerar comissão \n");
+                }
+                if (rbtTrabalhacretiradaOutroscomComissao.Checked)
+                {
+                    clsapoio.auditoriaTexto("Retirada de funcionario vai ser na forma de pagamento Outros com comissão \n");
+                }
+                if (rbtTrabalhacretiradaCrediariosemComissao.Checked)
+                {
+                    clsapoio.auditoriaTexto("Retirada de funcionario vai ser na forma de pagamento Crédiario sem gerar comissão \n");
+                }
+                if (rbtTrabalhacretiradaCrediariocomComissao.Checked)
+                {
+                    clsapoio.auditoriaTexto("Retirada de funcionario vai ser na forma de pagamento Crédiario com comissão \n");
+                }
 
 
 
