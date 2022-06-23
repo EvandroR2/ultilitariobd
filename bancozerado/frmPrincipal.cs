@@ -63,7 +63,7 @@ namespace bancozerado
         //Mensagem sobre versao
         private void sobreToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Desenvolvedor: Evandro  \n" + "Contato: Implantacao  \n" + "Versão 1.1.2");
+            MessageBox.Show("Desenvolvedor: Evandro  \n" + "Contato: Implantacao  \n" + "Versão 2.0");
         }
 
         //BUSCANDO INFORMAÇÕES DO BANCO DE DADOS
@@ -197,38 +197,43 @@ namespace bancozerado
             {
                 if (rbtnPontoBak.Checked)
                 {
-                    //try
-                    //{
-                    //    clsapoio.stringBD();
-                    //    SqlCommand cmd = new SqlCommand(@"RESTORE FILELISTONLY  from DISK =N'" + pathBuscar + @"\" + file +"'", clsapoio.conn);
-                    //    SqlDataReader dr = cmd.ExecuteReader();
-                    //    if (dr.Read())
-                    //    {
-                    //        msgBanco = dr.GetString(0);
-
-                    //    }
 
 
-                    //}
-
-                    //catch (Exception ex)
-                    //{
-                    //    MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    //}
-                    //finally
-                    //{
-                    //    clsapoio.desconectarBD();
-                    //    lblMsg.Text = msgBanco;
-                    //}
                     try
                     {
-                        string queryprincipal = @"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"] FROM  DISK = N'" + pathBuscar + @"\" + file + @"' WITH  FILE = 1,  MOVE N'BDLOJA' TO N'" + path + @"\" + nomedobancoZero + @".mdf ',  MOVE N'BDLOJA_log' TO N'" + path + @"\" + nomedobancoZero + @"_1.ldf',  NOUNLOAD,  STATS = 5";
+                        SqlCommand cmd = null;
+                        SqlDataReader dr = null;
                         clsapoio.stringBD();
-                        SqlCommand cmd = new SqlCommand(queryprincipal, clsapoio.conn);
-                        clsapoio.auditoriaTexto(queryprincipal);
-                        SqlDataReader dr = cmd.ExecuteReader();
+                        cmd = new SqlCommand(@"RESTORE FILELISTONLY  from DISK =N'" + pathBuscar + @"\" + file + "'", clsapoio.conn);
+                        dr = cmd.ExecuteReader();
 
+                        int contador = 0;
+
+                        string sCampo = "";
+                        string sCampo2 = "";
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+                                contador++;
+                                if (contador == 1)
+                                    sCampo = (string)dr["LogicalName"];
+                                else
+                                    sCampo2 = (string)dr["LogicalName"];
+
+                            }
+                        }
+
+                        dr.Close();
+                        string queryprincipal = @"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"] FROM  DISK = N'" + pathBuscar + @"\" + file + @"' WITH  FILE = 1,  MOVE N'" + sCampo + "' TO N'" + path + @"\" + nomedobancoZero + @".mdf ',  MOVE N'" + sCampo2 + "' TO N'" + path + @"\" + nomedobancoZero + @"_1.ldf',  NOUNLOAD,  STATS = 5";
+
+                        cmd = new SqlCommand(queryprincipal, clsapoio.conn);
+                        clsapoio.auditoriaTexto(queryprincipal);
+                        dr = cmd.ExecuteReader();
+
+                        dr.Close();
                     }
+
 
                     catch (Exception ex)
                     {
@@ -237,66 +242,45 @@ namespace bancozerado
                     finally
                     {
                         clsapoio.desconectarBD();
+
                     }
-                    #region projetoemandamento
-                    //try
-                    //{
-                    //    clsapoio.stringBD();
-                    //    SqlDataReader dr = null;
-                    //    SqlCommand cmd = new SqlCommand(@"RESTORE FILELISTONLY  from DISK =N'" + pathBuscar + @"\" + fileAux + "'", clsapoio.conn);
-                    //    SqlParameter param = new SqlParameter();
-                    //    param.ParameterName = "@LogicalName";
-                    //    // param.Value = cboCidade.Text;
-                    //    cmd.Parameters.Add(param);
-                    //    dr = cmd.ExecuteReader();
-                    //    if (dr.HasRows)
-                    //    {
-                    //        while (dr.Read())
-                    //        {
-                    //            MessageBox.Show(dr.ToString());
-
-                    //        }
-                    //    }
 
 
-                    //    // SqlCommand cmd = new SqlCommand("SELECT name FROM sys.databases where name not in ('master', 'model', 'tempdb', 'msdb') and name not like('%ReportServer$PDVNET%')", clsapoio.conn);
-                    //    //SqlDataReader dr = cmd.ExecuteReader();
-                    //    //if (dr.HasRows)
-                    //    //{
-                    //    //    while (dr.Read())
-                    //    //    {
-                    //    //        //MessageBox.Show("Resultado" + dr.GetString(0));
-                    //    //        string[,] b1 = 
-                    //    //            {
-                    //    //            {dr.GetString(0)}
 
-                    //    //            };
-                    //    //        MessageBox.Show(b1[0,0]);
-                    //    //        //clsapoio.auditoriaTexto(b1);
-
-                    //    //    }
-                    //    //}
-
-
-                    //}
-
-                    //catch (Exception ex)
-                    //{
-                    //    MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    //}
-                    //finally
-                    //{
-                    //    clsapoio.desconectarBD();
-                    //}
-
-                    #endregion
                     try
                     {
-                        string queryauxiliar = @"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"_AUXILIAR] FROM  DISK = N'" + pathBuscar + @"\" + fileAux + @"' WITH  FILE = 1,  MOVE N'BDREDMTv3_AUXILIAR_DAT' TO N'" + path + @"\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.mdf',  MOVE N'BDREDMTv3_AUXILIAR_LOG' TO N'" + path + @"\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.ldf',  NOUNLOAD,  STATS = 5";
+
+                        SqlCommand cmd = null;
+                        SqlDataReader dr = null;
                         clsapoio.stringBD();
-                        SqlCommand cmd = new SqlCommand(queryauxiliar, clsapoio.conn);
+                        cmd = new SqlCommand(@"RESTORE FILELISTONLY  from DISK =N'" + pathBuscar + @"\" + fileAux + "'", clsapoio.conn);
+                        dr = cmd.ExecuteReader();
+
+                        int contador = 0;
+
+                        string sCampo = "";
+                        string sCampo2 = "";
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+                                contador++;
+                                if (contador == 1)
+                                    sCampo = (string)dr["LogicalName"];
+                                else
+                                    sCampo2 = (string)dr["LogicalName"];
+
+                            }
+                        }
+
+                        dr.Close();
+
+                        string queryauxiliar = @"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"_AUXILIAR] FROM  DISK = N'" + pathBuscar + @"\" + fileAux + @"' WITH  FILE = 1,  MOVE N'" + sCampo + "' TO N'" + path + @"\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.mdf',  MOVE N'" + sCampo2 + "' TO N'" + path + @"\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.ldf',  NOUNLOAD,  STATS = 5";
+                        cmd = new SqlCommand(queryauxiliar, clsapoio.conn);
                         clsapoio.auditoriaTexto(queryauxiliar);
-                        SqlDataReader dr = cmd.ExecuteReader();
+                        dr = cmd.ExecuteReader();
+
+                        dr.Close();
 
                         MessageBox.Show("Banco de dados restaurado " + nomedobancoZero + "\n" + "Banco de dados restaurado " + nomedobancoZero + "_Auxiliar");
 
@@ -360,200 +344,6 @@ namespace bancozerado
 
             }
 
-
-
-
-            #region copiarerestaurar
-            //File.Copy(path, pathCombine, true);
-
-            //Task[] tasks0 =
-            //    {
-            //    Task.Factory.StartNew(() =>
-            //    {
-            //        File.Copy(path, pathCombine, true);
-            //    })
-
-            //    };
-
-            //Task.WaitAll(tasks0);
-
-            //Task[] tasks1 =
-            //{
-
-            //    Task.Factory.StartNew(() =>
-            //    {
-            //        try
-            //{
-            //    clsapoio.stringBD();
-            //    SqlCommand cmd = new SqlCommand(@"USE [master];  RESTORE DATABASE[" + nomedobancoZero + @"] FROM DISK = N'" + pathCombine + "' WITH FILE = 1, NOUNLOAD, STATS = 5; ", clsapoio.conn);
-            //    SqlDataReader dr = cmd.ExecuteReader();
-
-            //}
-
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //}
-            //finally
-            //{
-            //    clsapoio.desconectarBD();
-            //    MessageBox.Show("Banco de dados restaurado " + nomedobancoZero);
-            //}
-
-            //    })
-
-            //    };
-
-            //Task.WaitAll(tasks1);
-
-            //File.Copy(path, pathCombine, true);
-
-            #endregion
-            #region antigo
-
-            //    Task[] tasks0 =
-            //        {
-            //        Task.Factory.StartNew(() =>
-            //        {
-            //            File.Copy(path, pathCombine, true);
-            //        })
-
-            //        };
-
-            //    Task.WaitAll(tasks0);
-
-            //    Task[] tasks1 =
-            //    {
-
-            //        Task.Factory.StartNew(() =>
-            //        {
-            //            try
-            //                {
-            //                    clsapoio.stringBD();
-            //                    SqlCommand cmd = new SqlCommand(@"USE [master];  RESTORE DATABASE[" + nomedobancoZero + @"] FROM DISK = N'" + pathCombine + "' WITH FILE = 1, NOUNLOAD, STATS = 5; ", clsapoio.conn);
-            //                    SqlDataReader dr = cmd.ExecuteReader();
-
-            //                }
-
-            //                catch (Exception ex)
-            //                {
-            //                    MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //                }
-            //                finally
-            //                {
-            //                    clsapoio.desconectarBD();
-            //                    MessageBox.Show("Banco de dados restaurado " + nomedobancoZero);
-            //                }
-
-            //        })
-
-            //        };
-
-            //    Task.WaitAll(tasks1);
-
-            //    Task[] tasks2 =
-            //        {
-            //        Task.Factory.StartNew(() =>
-            //        {
-            //            try
-            //            {
-            //                clsapoio.stringBD();
-
-            //                SqlCommand cmd = new SqlCommand(@"USE [master]; BACKUP DATABASE [" + nomedobancoZero + @"] TO DISK = N'C:\basesql\" + nomedobancoZero + "dataehora" +  @".bak' WITH NOFORMAT, NOINIT, NAME = N'" + nomedobancoZero + @" - Full Database Backup', SKIP, NOREWIND, NOUNLOAD, STATS = 10;", clsapoio.conn);
-            //                SqlDataReader dr1 = cmd.ExecuteReader();
-
-
-            //            }
-
-            //            catch (Exception ex)
-            //            {
-            //                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //            }
-            //            finally
-            //            {
-            //                clsapoio.desconectarBD();
-
-            //            }
-            //        })
-
-            //        };
-
-            //    Task.WaitAll(tasks2);
-
-            //    Task[] tasks3 =
-            //        {
-            //        Task.Factory.StartNew(() =>
-            //        {
-
-            //            try
-            //            {
-            //                clsapoio.stringBD();
-
-            //                SqlCommand cmd = new SqlCommand(@"EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'" + nomedobancoZero + "' USE [master];", clsapoio.conn);
-            //                SqlDataReader dr1 = cmd.ExecuteReader();
-
-
-            //            }
-
-            //            catch (Exception ex)
-            //            {
-            //                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //            }
-            //            finally
-            //            {
-            //                clsapoio.desconectarBD();
-            //            }
-            //            try
-            //            {
-            //                clsapoio.stringBD();
-
-            //                SqlCommand cmd1 = new SqlCommand(@"DROP DATABASE [" + nomedobancoZero + "];", clsapoio.conn);
-            //                SqlDataReader dr = cmd1.ExecuteReader();
-
-            //            }
-
-            //            catch (Exception ex)
-            //            {
-            //                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //            }
-            //            finally
-            //            {
-            //                clsapoio.desconectarBD();
-            //                MessageBox.Show("Banco de dados Deletado " + nomedobancoZero);
-            //            }
-            //        })
-
-            //        };
-
-            //    Task.WaitAll(tasks3);
-
-            //    Task[] tasks4 =
-            //        {
-            //        Task.Factory.StartNew(() =>
-            //        {
-            //            try
-            //            {
-            //                clsapoio.stringBD();
-            //                SqlCommand cmd = new SqlCommand(@"USE [master];  RESTORE DATABASE[" + nomedobancoZero + @"] FROM DISK = N'" + pathCombine + "' WITH FILE = 1, NOUNLOAD, STATS = 5; ", clsapoio.conn);
-            //                SqlDataReader dr = cmd.ExecuteReader();
-
-            //            }
-
-            //            catch (Exception ex)
-            //            {
-            //                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //            }
-            //            finally
-            //            {
-            //                clsapoio.desconectarBD();
-            //                MessageBox.Show("Banco de dados restaurado " + nomedobancoZero);
-            //            }
-            //        })
-
-            //        };
-
-            //    Task.WaitAll(tasks4);
-            #endregion
 
         }
 
@@ -2044,7 +1834,7 @@ namespace bancozerado
 
         private void mAjudaSobre_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Desenvolvedor: Evandro  \n" + "Contato: Implantacao  \n" + "Versão 1.1.2");
+            MessageBox.Show("Desenvolvedor: Evandro  \n" + "Contato: Implantacao  \n" + "Versão 2.0");
         }
 
         private void mAjudaLerConfig_Click(object sender, EventArgs e)
