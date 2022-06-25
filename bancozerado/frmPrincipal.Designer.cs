@@ -49,8 +49,6 @@ namespace bancozerado
             this.sobreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.dgVLogicalName = new System.Windows.Forms.DataGridView();
-            this.LogicalName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBoxInstZero = new System.Windows.Forms.GroupBox();
             this.txtDiretorioBuscar = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -119,6 +117,7 @@ namespace bancozerado
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.statusBarLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.txtConteudo = new System.Windows.Forms.RichTextBox();
             this.menuBar = new System.Windows.Forms.MenuStrip();
             this.mArquivo = new System.Windows.Forms.ToolStripMenuItem();
@@ -152,12 +151,10 @@ namespace bancozerado
             this.mAjudaSobre = new System.Windows.Forms.ToolStripMenuItem();
             this.mAjudaLerConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.mAjudaConsultaBanco = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.groupBox1.SuspendLayout();
             this.menuArquivo.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgVLogicalName)).BeginInit();
             this.groupBoxInstZero.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBoxInstBancoZero.SuspendLayout();
@@ -351,7 +348,6 @@ namespace bancozerado
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.dgVLogicalName);
             this.tabPage1.Controls.Add(this.groupBoxInstZero);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -360,22 +356,6 @@ namespace bancozerado
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Restaurar BD";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // dgVLogicalName
-            // 
-            this.dgVLogicalName.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgVLogicalName.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.LogicalName});
-            this.dgVLogicalName.Location = new System.Drawing.Point(7, 499);
-            this.dgVLogicalName.Name = "dgVLogicalName";
-            this.dgVLogicalName.Size = new System.Drawing.Size(155, 75);
-            this.dgVLogicalName.TabIndex = 69;
-            this.dgVLogicalName.Visible = false;
-            // 
-            // LogicalName
-            // 
-            this.LogicalName.HeaderText = "LogicalName";
-            this.LogicalName.Name = "LogicalName";
             // 
             // groupBoxInstZero
             // 
@@ -404,7 +384,7 @@ namespace bancozerado
             this.groupBoxInstZero.Controls.Add(this.txtnomedoBancoZero);
             this.groupBoxInstZero.Location = new System.Drawing.Point(6, 6);
             this.groupBoxInstZero.Name = "groupBoxInstZero";
-            this.groupBoxInstZero.Size = new System.Drawing.Size(724, 487);
+            this.groupBoxInstZero.Size = new System.Drawing.Size(724, 482);
             this.groupBoxInstZero.TabIndex = 68;
             this.groupBoxInstZero.TabStop = false;
             this.groupBoxInstZero.Text = "Restaurar Banco de Dados";
@@ -423,7 +403,7 @@ namespace bancozerado
             // 
             this.groupBox2.Controls.Add(this.rbtnPontoMdf);
             this.groupBox2.Controls.Add(this.rbtnPontoBak);
-            this.groupBox2.Location = new System.Drawing.Point(479, 155);
+            this.groupBox2.Location = new System.Drawing.Point(511, 163);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(158, 40);
             this.groupBox2.TabIndex = 63;
@@ -497,7 +477,7 @@ namespace bancozerado
             // 
             this.checkBoxInstZeroousembackup.AutoSize = true;
             this.checkBoxInstZeroousembackup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxInstZeroousembackup.Location = new System.Drawing.Point(473, 226);
+            this.checkBoxInstZeroousembackup.Location = new System.Drawing.Point(472, 226);
             this.checkBoxInstZeroousembackup.Name = "checkBoxInstZeroousembackup";
             this.checkBoxInstZeroousembackup.Size = new System.Drawing.Size(197, 19);
             this.checkBoxInstZeroousembackup.TabIndex = 102;
@@ -527,7 +507,7 @@ namespace bancozerado
             this.groupBoxInstBancoZero.Controls.Add(this.txtCodigoMatrizFranquia);
             this.groupBoxInstBancoZero.Controls.Add(this.lblInfTabTributo);
             this.groupBoxInstBancoZero.Controls.Add(this.btnQuerry);
-            this.groupBoxInstBancoZero.Location = new System.Drawing.Point(7, 254);
+            this.groupBoxInstBancoZero.Location = new System.Drawing.Point(14, 253);
             this.groupBoxInstBancoZero.Name = "groupBoxInstBancoZero";
             this.groupBoxInstBancoZero.Size = new System.Drawing.Size(663, 212);
             this.groupBoxInstBancoZero.TabIndex = 69;
@@ -744,7 +724,7 @@ namespace bancozerado
             // 
             this.lblDiretorioBkp.AutoSize = true;
             this.lblDiretorioBkp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDiretorioBkp.Location = new System.Drawing.Point(7, 198);
+            this.lblDiretorioBkp.Location = new System.Drawing.Point(14, 198);
             this.lblDiretorioBkp.Name = "lblDiretorioBkp";
             this.lblDiretorioBkp.Size = new System.Drawing.Size(221, 20);
             this.lblDiretorioBkp.TabIndex = 94;
@@ -753,7 +733,7 @@ namespace bancozerado
             // txtDiretorioBkp
             // 
             this.txtDiretorioBkp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDiretorioBkp.Location = new System.Drawing.Point(6, 221);
+            this.txtDiretorioBkp.Location = new System.Drawing.Point(14, 221);
             this.txtDiretorioBkp.Name = "txtDiretorioBkp";
             this.txtDiretorioBkp.Size = new System.Drawing.Size(293, 26);
             this.txtDiretorioBkp.TabIndex = 92;
@@ -762,7 +742,7 @@ namespace bancozerado
             // 
             // btnDiretorioBkp
             // 
-            this.btnDiretorioBkp.Location = new System.Drawing.Point(305, 221);
+            this.btnDiretorioBkp.Location = new System.Drawing.Point(304, 221);
             this.btnDiretorioBkp.Name = "btnDiretorioBkp";
             this.btnDiretorioBkp.Size = new System.Drawing.Size(27, 26);
             this.btnDiretorioBkp.TabIndex = 93;
@@ -803,7 +783,7 @@ namespace bancozerado
             // txtArquivo
             // 
             this.txtArquivo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtArquivo.Location = new System.Drawing.Point(10, 110);
+            this.txtArquivo.Location = new System.Drawing.Point(14, 110);
             this.txtArquivo.Name = "txtArquivo";
             this.txtArquivo.Size = new System.Drawing.Size(287, 26);
             this.txtArquivo.TabIndex = 84;
@@ -814,7 +794,7 @@ namespace bancozerado
             // 
             this.lblInforme.AutoSize = true;
             this.lblInforme.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInforme.Location = new System.Drawing.Point(10, 81);
+            this.lblInforme.Location = new System.Drawing.Point(14, 81);
             this.lblInforme.Name = "lblInforme";
             this.lblInforme.Size = new System.Drawing.Size(244, 20);
             this.lblInforme.TabIndex = 86;
@@ -843,7 +823,7 @@ namespace bancozerado
             // btnBackup
             // 
             this.btnBackup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBackup.Location = new System.Drawing.Point(338, 221);
+            this.btnBackup.Location = new System.Drawing.Point(337, 221);
             this.btnBackup.Name = "btnBackup";
             this.btnBackup.Size = new System.Drawing.Size(86, 26);
             this.btnBackup.TabIndex = 80;
@@ -854,7 +834,7 @@ namespace bancozerado
             // btnDeletar
             // 
             this.btnDeletar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeletar.Location = new System.Drawing.Point(310, 169);
+            this.btnDeletar.Location = new System.Drawing.Point(391, 169);
             this.btnDeletar.Name = "btnDeletar";
             this.btnDeletar.Size = new System.Drawing.Size(114, 26);
             this.btnDeletar.TabIndex = 79;
@@ -865,7 +845,7 @@ namespace bancozerado
             // btnRestaurar
             // 
             this.btnRestaurar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRestaurar.Location = new System.Drawing.Point(183, 169);
+            this.btnRestaurar.Location = new System.Drawing.Point(264, 169);
             this.btnRestaurar.Name = "btnRestaurar";
             this.btnRestaurar.Size = new System.Drawing.Size(114, 26);
             this.btnRestaurar.TabIndex = 69;
@@ -877,7 +857,7 @@ namespace bancozerado
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(7, 141);
+            this.label1.Location = new System.Drawing.Point(14, 141);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(254, 20);
             this.label1.TabIndex = 67;
@@ -886,9 +866,9 @@ namespace bancozerado
             // txtnomedoBancoZero
             // 
             this.txtnomedoBancoZero.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtnomedoBancoZero.Location = new System.Drawing.Point(7, 169);
+            this.txtnomedoBancoZero.Location = new System.Drawing.Point(14, 169);
             this.txtnomedoBancoZero.Name = "txtnomedoBancoZero";
-            this.txtnomedoBancoZero.Size = new System.Drawing.Size(170, 26);
+            this.txtnomedoBancoZero.Size = new System.Drawing.Size(240, 26);
             this.txtnomedoBancoZero.TabIndex = 66;
             // 
             // tabPage2
@@ -1091,6 +1071,11 @@ namespace bancozerado
             this.statusBarLabel.Name = "statusBarLabel";
             this.statusBarLabel.Size = new System.Drawing.Size(38, 17);
             this.statusBarLabel.Text = "100 %";
+            // 
+            // toolStripProgressBar
+            // 
+            this.toolStripProgressBar.Name = "toolStripProgressBar";
+            this.toolStripProgressBar.Size = new System.Drawing.Size(650, 16);
             // 
             // txtConteudo
             // 
@@ -1355,11 +1340,6 @@ namespace bancozerado
             this.mAjudaConsultaBanco.Text = "Fazer Consulta no Banco";
             this.mAjudaConsultaBanco.Click += new System.EventHandler(this.mAjudaConsultaBanco_Click);
             // 
-            // toolStripProgressBar
-            // 
-            this.toolStripProgressBar.Name = "toolStripProgressBar";
-            this.toolStripProgressBar.Size = new System.Drawing.Size(650, 16);
-            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1390,7 +1370,6 @@ namespace bancozerado
             this.menuArquivo.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgVLogicalName)).EndInit();
             this.groupBoxInstZero.ResumeLayout(false);
             this.groupBoxInstZero.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1499,8 +1478,6 @@ namespace bancozerado
         private System.Windows.Forms.TextBox txtDiretorioBuscar;
         private System.Windows.Forms.Label lblCaminhoBak;
         private System.Windows.Forms.Button btnDiretorioBuscar;
-        private System.Windows.Forms.DataGridView dgVLogicalName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn LogicalName;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.RichTextBox txtConteudo;
         private System.Windows.Forms.MenuStrip menuBar;

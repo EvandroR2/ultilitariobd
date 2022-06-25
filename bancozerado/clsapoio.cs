@@ -61,7 +61,7 @@ namespace bancozerado
             ToolTip t_Tip = new ToolTip();
             t_Tip.Active = true;
             t_Tip.AutoPopDelay = 4000;
-            t_Tip.InitialDelay = 600;
+            t_Tip.InitialDelay = 1000;
             t_Tip.IsBalloon = true;
             t_Tip.ToolTipIcon = ToolTipIcon.Info;
             t_Tip.SetToolTip(txt, c);

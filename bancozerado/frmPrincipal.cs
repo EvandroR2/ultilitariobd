@@ -198,104 +198,111 @@ namespace bancozerado
                 if (rbtnPontoBak.Checked)
                 {
 
-
-                    try
+                    if (txtArquivo.Text != "")
                     {
-                        SqlCommand cmd = null;
-                        SqlDataReader dr = null;
-                        clsapoio.stringBD();
-                        cmd = new SqlCommand(@"RESTORE FILELISTONLY  from DISK =N'" + pathBuscar + @"\" + file + "'", clsapoio.conn);
-                        dr = cmd.ExecuteReader();
-
-                        int contador = 0;
-
-                        string sCampo = "";
-                        string sCampo2 = "";
-                        if (dr.HasRows)
+                        try
                         {
-                            while (dr.Read())
-                            {
-                                contador++;
-                                if (contador == 1)
-                                    sCampo = (string)dr["LogicalName"];
-                                else
-                                    sCampo2 = (string)dr["LogicalName"];
 
+                            SqlCommand cmd = null;
+                            SqlDataReader dr = null;
+                            clsapoio.stringBD();
+                            cmd = new SqlCommand(@"RESTORE FILELISTONLY  from DISK =N'" + pathBuscar + @"\" + file + "'", clsapoio.conn);
+                            dr = cmd.ExecuteReader();
+
+                            int contador = 0;
+
+                            string sCampo = "";
+                            string sCampo2 = "";
+                            if (dr.HasRows)
+                            {
+                                while (dr.Read())
+                                {
+                                    contador++;
+                                    if (contador == 1)
+                                        sCampo = (string)dr["LogicalName"];
+                                    else
+                                        sCampo2 = (string)dr["LogicalName"];
+
+                                }
                             }
+
+                            dr.Close();
+                            string queryprincipal = @"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"] FROM  DISK = N'" + pathBuscar + @"\" + file + @"' WITH  FILE = 1,  MOVE N'" + sCampo + "' TO N'" + path + @"\" + nomedobancoZero + @".mdf',  MOVE N'" + sCampo2 + "' TO N'" + path + @"\" + nomedobancoZero + @"_1.ldf',  NOUNLOAD,  STATS = 5";
+
+                            cmd = new SqlCommand(queryprincipal, clsapoio.conn);
+                            clsapoio.auditoriaTexto(queryprincipal);
+                            dr = cmd.ExecuteReader();
+
+                            dr.Close();
                         }
 
-                        dr.Close();
-                        string queryprincipal = @"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"] FROM  DISK = N'" + pathBuscar + @"\" + file + @"' WITH  FILE = 1,  MOVE N'" + sCampo + "' TO N'" + path + @"\" + nomedobancoZero + @".mdf ',  MOVE N'" + sCampo2 + "' TO N'" + path + @"\" + nomedobancoZero + @"_1.ldf',  NOUNLOAD,  STATS = 5";
 
-                        cmd = new SqlCommand(queryprincipal, clsapoio.conn);
-                        clsapoio.auditoriaTexto(queryprincipal);
-                        dr = cmd.ExecuteReader();
-
-                        dr.Close();
-                    }
-
-
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    }
-                    finally
-                    {
-                        clsapoio.desconectarBD();
-
-                    }
-
-
-
-                    try
-                    {
-
-                        SqlCommand cmd = null;
-                        SqlDataReader dr = null;
-                        clsapoio.stringBD();
-                        cmd = new SqlCommand(@"RESTORE FILELISTONLY  from DISK =N'" + pathBuscar + @"\" + fileAux + "'", clsapoio.conn);
-                        dr = cmd.ExecuteReader();
-
-                        int contador = 0;
-
-                        string sCampo = "";
-                        string sCampo2 = "";
-                        if (dr.HasRows)
+                        catch (Exception ex)
                         {
-                            while (dr.Read())
-                            {
-                                contador++;
-                                if (contador == 1)
-                                    sCampo = (string)dr["LogicalName"];
-                                else
-                                    sCampo2 = (string)dr["LogicalName"];
+                            MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
+                        finally
+                        {
+                            clsapoio.desconectarBD();
 
+                        }
+                    }
+
+
+                    if (txtArquivoAux.Text != "")
+                    {
+
+
+                        try
+                        {
+
+                            SqlCommand cmd = null;
+                            SqlDataReader dr = null;
+                            clsapoio.stringBD();
+                            cmd = new SqlCommand(@"RESTORE FILELISTONLY  from DISK =N'" + pathBuscar + @"\" + fileAux + "'", clsapoio.conn);
+                            dr = cmd.ExecuteReader();
+
+                            int contador = 0;
+
+                            string sCampo = "";
+                            string sCampo2 = "";
+                            if (dr.HasRows)
+                            {
+                                while (dr.Read())
+                                {
+                                    contador++;
+                                    if (contador == 1)
+                                        sCampo = (string)dr["LogicalName"];
+                                    else
+                                        sCampo2 = (string)dr["LogicalName"];
+
+                                }
                             }
+
+                            dr.Close();
+
+                            string queryauxiliar = @"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"_AUXILIAR] FROM  DISK = N'" + pathBuscar + @"\" + fileAux + @"' WITH  FILE = 1,  MOVE N'" + sCampo + "' TO N'" + path + @"\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.mdf',  MOVE N'" + sCampo2 + "' TO N'" + path + @"\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.ldf',  NOUNLOAD,  STATS = 5";
+                            cmd = new SqlCommand(queryauxiliar, clsapoio.conn);
+                            clsapoio.auditoriaTexto(queryauxiliar);
+                            dr = cmd.ExecuteReader();
+
+                            dr.Close();
+
+                            MessageBox.Show("Banco de dados restaurado " + nomedobancoZero + "\n" + "Banco de dados restaurado " + nomedobancoZero + "_Auxiliar");
+
                         }
 
-                        dr.Close();
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
+                        finally
+                        {
+                            clsapoio.desconectarBD();
 
-                        string queryauxiliar = @"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"_AUXILIAR] FROM  DISK = N'" + pathBuscar + @"\" + fileAux + @"' WITH  FILE = 1,  MOVE N'" + sCampo + "' TO N'" + path + @"\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.mdf',  MOVE N'" + sCampo2 + "' TO N'" + path + @"\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.ldf',  NOUNLOAD,  STATS = 5";
-                        cmd = new SqlCommand(queryauxiliar, clsapoio.conn);
-                        clsapoio.auditoriaTexto(queryauxiliar);
-                        dr = cmd.ExecuteReader();
-
-                        dr.Close();
-
-                        MessageBox.Show("Banco de dados restaurado " + nomedobancoZero + "\n" + "Banco de dados restaurado " + nomedobancoZero + "_Auxiliar");
-
+                        }
+                        txtnomedoBancoZero.Text = "";
                     }
-
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    }
-                    finally
-                    {
-                        clsapoio.desconectarBD();
-
-                    }
-                    txtnomedoBancoZero.Text = "";
                 }
                 else
                 {
@@ -303,42 +310,50 @@ namespace bancozerado
                     {
                         MessageBox.Show("Para Anexar o arquivo MDF o aquivo deve estar na mesma pasta que o diretorio de busca.");
                     }
-                    try
+                    if (txtArquivo.Text != "")
                     {
-                        clsapoio.stringBD();
-                        SqlCommand cmd = new SqlCommand(@"USE [master] CREATE DATABASE [" + nomedobancoZero + @"] ON ( FILENAME = N'" + path + @"\" + file + @".mdf'),( FILENAME = N'" + path + @"\" + file + @"_1.ldf' ) FOR ATTACH", clsapoio.conn);
-                        SqlDataReader dr = cmd.ExecuteReader();
 
+
+                        try
+                        {
+                            clsapoio.stringBD();
+                            SqlCommand cmd = new SqlCommand(@"USE [master] CREATE DATABASE [" + nomedobancoZero + @"] ON ( FILENAME = N'" + path + @"\" + file + @".mdf'),( FILENAME = N'" + path + @"\" + file + @"_1.ldf' ) FOR ATTACH", clsapoio.conn);
+                            SqlDataReader dr = cmd.ExecuteReader();
+
+                        }
+
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
+                        finally
+                        {
+                            clsapoio.desconectarBD();
+                        }
                     }
-
-                    catch (Exception ex)
+                    if (txtArquivoAux.Text != "")
                     {
-                        MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    }
-                    finally
-                    {
-                        clsapoio.desconectarBD();
-                    }
-                    try
-                    {
-                        clsapoio.stringBD();
-                        SqlCommand cmd = new SqlCommand(@"USE [master] CREATE DATABASE [" + nomedobancoZero + @"_AUXILIAR] ON ( FILENAME = N'" + path + @"\" + fileAux + @".mdf'),( FILENAME = N'" + path + @"\" + fileAux + @".ldf' ) FOR ATTACH", clsapoio.conn);
-                        SqlDataReader dr = cmd.ExecuteReader();
+                        try
+                        {
+                            clsapoio.stringBD();
+                            SqlCommand cmd = new SqlCommand(@"USE [master] CREATE DATABASE [" + nomedobancoZero + @"_AUXILIAR] ON ( FILENAME = N'" + path + @"\" + fileAux + @".mdf'),( FILENAME = N'" + path + @"\" + fileAux + @".ldf' ) FOR ATTACH", clsapoio.conn);
+                            SqlDataReader dr = cmd.ExecuteReader();
 
-                        MessageBox.Show("Banco de dados anexado " + nomedobancoZero + "\n" + "Banco de dados anexado " + nomedobancoZero + "_Auxiliar");
+                            MessageBox.Show("Banco de dados anexado " + nomedobancoZero + "\n" + "Banco de dados anexado " + nomedobancoZero + "_Auxiliar");
 
-                    }
+                        }
 
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    }
-                    finally
-                    {
-                        clsapoio.desconectarBD();
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
+                        finally
+                        {
+                            clsapoio.desconectarBD();
 
+                        }
+                        txtnomedoBancoZero.Text = "";
                     }
-                    txtnomedoBancoZero.Text = "";
                 }
 
 
@@ -860,7 +875,7 @@ namespace bancozerado
                             {
                                 clsapoio.stringBDBD();
 
-                                SqlCommand cmd1 = new SqlCommand(@"insert into filial values ('" + codigoFilial + "','" + nomedobancoZero + "','ISENTO','','N','',0,'" + codigoEmpresa + "','','.','',0,0,'" + nomedobancoZero + "',0,0,0,NULL,1,0,1,0,'','','',1,1,1,0,0,1,1,'',1,0,1,0,'',1,2,3,0,1,1,0,0,1,1,1,0,0,0,'','',0,0,0,0,0,0,0,'4132',0,'-1',0,0,'0000000000000002',3,1,'20-05-2022',1,1,0,1,0,0,0,1,'00987654',0,0,0,0,0,1,0,0,'',0,0,0,'',0,0)", clsapoio.conn);
+                                SqlCommand cmd1 = new SqlCommand(@"insert into filial values ('" + codigoFilial + "','" + cmbBanco.Text + "','ISENTO','','N','',0,'" + codigoEmpresa + "','','.','',0,0,'" + cmbBanco.Text + "',0,0,0,NULL,1,0,1,0,'','','',1,1,1,0,0,1,1,'',1,0,1,0,'',1,2,3,0,1,1,0,0,1,1,1,0,0,0,'','',0,0,0,0,0,0,0,'4132',0,'-1',0,0,'0000000000000002',3,1,'20-05-2022',1,1,0,1,0,0,0,1,'00987654',0,0,0,0,0,1,0,0,'',0,0,0,'',0,0)", clsapoio.conn);
                                 SqlDataReader dr1 = cmd1.ExecuteReader();
 
 
@@ -1045,7 +1060,7 @@ namespace bancozerado
                             {
                                 clsapoio.stringBDBD();
 
-                                SqlCommand cmd1 = new SqlCommand(@"insert into filial values ('" + codigoFilial + "','" + nomedobancoZero + "','ISENTO','','N','',0,'" + codigoEmpresa + "','','.','',0,0,'" + nomedobancoZero + "',0,1," + codigoMatrizFranquia + ",NULL,1,0,1,0,'','','',1,1,1,0,0,1,1,'',1,0,1,0,'',1,2,3,0,1,1,0,0,1,1,1,0,0,0,'','',0,0,0,0,0,0,0,'4132',0,'-1',0,0,'0000000000000002',3,1,'20-05-2022',1,1,0,1,0,0,0,1,'00987654',0,0,0,0,0,1,0,0,'',0,0,0,'',0,0)", clsapoio.conn);
+                                SqlCommand cmd1 = new SqlCommand(@"insert into filial values ('" + codigoFilial + "','" + cmbBanco.Text + "','ISENTO','','N','',0,'" + codigoEmpresa + "','','.','',0,0,'" + cmbBanco.Text + "',0,1," + codigoMatrizFranquia + ",NULL,1,0,1,0,'','','',1,1,1,0,0,1,1,'',1,0,1,0,'',1,2,3,0,1,1,0,0,1,1,1,0,0,0,'','',0,0,0,0,0,0,0,'4132',0,'-1',0,0,'0000000000000002',3,1,'20-05-2022',1,1,0,1,0,0,0,1,'00987654',0,0,0,0,0,1,0,0,'',0,0,0,'',0,0)", clsapoio.conn);
                                 SqlDataReader dr1 = cmd1.ExecuteReader();
 
 
@@ -1292,7 +1307,7 @@ namespace bancozerado
                                 SqlCommand cmd1 = new SqlCommand(@"insert into FRANQUIACONF values ('" + codigoFilial + "', '1','1','0',GETDATE())", clsapoio.conn);
                                 SqlDataReader dr1 = cmd1.ExecuteReader();
 
-                            MessageBox.Show("Empresa: ('" + codigoEmpresa + "','" + nomeEmpresa + "')  \n Filial: ('" + codigoFilial + "', RAZAO_SOCIAL = '" + nomedobancoZero + "', EMPRESA = '" + codigoEmpresa + "') \n Transferencia: ('" + codigoRomaneio + "') \n Franquiaconf: OK \n Classificacao Gerencial: OK \n TABELATRIBUTO: ('" + codTributacao + ",'" + descTributacao + "',0,'01-01-2000','01-01-2000','00987654','0','" + percTributacao + "') FIM", "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            MessageBox.Show("Empresa: ('" + codigoEmpresa + "','" + nomeEmpresa + "')  \n Filial: ('" + codigoFilial + "', RAZAO_SOCIAL = '" + cmbBanco.Text + "', EMPRESA = '" + codigoEmpresa + "') \n Transferencia: ('" + codigoRomaneio + "') \n Franquiaconf: OK \n Classificacao Gerencial: OK \n TABELATRIBUTO: ('" + codTributacao + ",'" + descTributacao + "',0,'01-01-2000','01-01-2000','00987654','0','" + percTributacao + "') FIM", "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
 
                             }
@@ -1930,325 +1945,387 @@ namespace bancozerado
                 }
 
 
-                Task[] exemplo =
-            {
-                    Task.Factory.StartNew(() =>
-                    {
-                        MessageBox.Show("Etapa 1");
-                        clsapoio.auditoriaTextosubstituir("\n\n");
-
-                    })
-
-                    };
-
-                Task.WaitAll(exemplo);
+                MessageBox.Show("Etapa 1");
+                clsapoio.auditoriaTextosubstituir("\n\n");
                 toolStripProgressBar.Value = 10;
-
-                Task[] qualTecnico =
-                {
-                    Task.Factory.StartNew(() =>
-                    {
-                        clsapoio.auditoriaTexto("Qual Técnico fez o Encontro Inicial");
-                        frm_perguntaRelatorio frm = new frm_perguntaRelatorio();
-                        frm.ShowDialog();
-
-                    })
-
-                    };
-
-                Task.WaitAll(qualTecnico);
+                clsapoio.auditoriaTexto("Qual Técnico fez o Encontro Inicial");
+                frm_perguntaRelatorio frm = new frm_perguntaRelatorio();
+                frm.ShowDialog();
                 toolStripProgressBar.Value = 20;
-
-                Task[] nomeEmpresa =
+                string rede = "";
+                
+                try
+                
                 {
-                    Task.Factory.StartNew(() =>
+                    SqlCommand Cmd = null;
+                    SqlDataReader dr = null;
+                    clsapoio.stringBDBD();
+                     Cmd = new SqlCommand("SELECT LEFT (EMP_RAZAO_SOCIAL,15),emp_codigo FROM EMPRESAS", clsapoio.conn);
+                     dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
                     {
-                        try
-            {
-                clsapoio.stringBDBD();
-                SqlCommand Cmd = new SqlCommand("SELECT LEFT (EMP_RAZAO_SOCIAL,15) FROM EMPRESAS", clsapoio.conn);
-                SqlDataReader dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                if (dr.HasRows)
-                {
-                                clsapoio.auditoriaTexto(" \n");
-                    while (dr.Read())
-                    {
+                        clsapoio.auditoriaTexto(" \n");
+                        while (dr.Read())
+                        {
 
-                        clsapoio.auditoriaTexto("Nome da Empresa? " + dr.GetString(0).ToString());
+                            clsapoio.auditoriaTexto("Nome da Empresa? " + dr.GetString(0).ToString());
+                            //codigo empresa esta em tynit
+                            rede = dr.GetByte(1).ToString();
+
+                        }
+                        clsapoio.auditoriaTexto(" \n");
+                        
+                    }
+                    
+                    dr.Close();
+                    toolStripProgressBar.Value = 30;
+                    MessageBox.Show("Etapa Empresa");
+
+                    Cmd = new SqlCommand("select fil_codigo,rtrim(fil_razao_social),fil_cgc from filial order by FIL_CODIGO", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        clsapoio.auditoriaTexto("Quais Filiais estão cadastradas ?");
+                        while (dr.Read())
+                        {
+                            //codigo filial esta em smalint
+                            clsapoio.auditoriaTexto("FILIAL:" + dr.GetInt16(0).ToString() + "                 NOME FANTASIA: " + dr.GetString(1) + "                   CNPJ OU CPF: " + dr.GetString(2));
+
+                        }
+                        clsapoio.auditoriaTexto("\n\n");
 
                     }
-                    clsapoio.auditoriaTexto(" \n");
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            finally
-            {
-                clsapoio.desconectarBD();
-                            MessageBox.Show("Criado Arquivo");
-
-            }
-                    })
-
-                    };
-
-                Task.WaitAll(nomeEmpresa);
-                toolStripProgressBar.Value = 30;
-
-
-                Task[] InformacaoFilial =
-                {
-                    Task.Factory.StartNew(() =>
-                    {
-                        try
-            {
-                clsapoio.stringBDBD();
-                SqlCommand Cmd = new SqlCommand("select fil_codigo,rtrim(fil_razao_social),fil_cgc from filial order by FIL_CODIGO", clsapoio.conn);
-                SqlDataReader dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                if (dr.HasRows)
-                {
-                                clsapoio.auditoriaTexto("Quais Filiais estão cadastradas ?");
-                    while (dr.Read())
-                    {
-
-                        clsapoio.auditoriaTexto("FILIAL:" + dr.GetInt16(0).ToString() + "                 NOME FANTASIA: " + dr.GetString(1) + "                   CNPJ OU CPF: " + dr.GetString(2));
-
-                    }
+                    dr.Close();
+                    toolStripProgressBar.Value = 40;
+                    MessageBox.Show("Etapa Filial");
                     clsapoio.auditoriaTexto("\n\n");
-                }
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            finally
-            {
-                clsapoio.desconectarBD();
-                            MessageBox.Show("Etapa Filial");
-
-
-            }
-                    })
-
-                    };
-
-                Task.WaitAll(InformacaoFilial);
-                toolStripProgressBar.Value = 40;
-
-                Task[] entradadeNotas =
-                {
-                    Task.Factory.StartNew(() =>
-                    {
-                        MessageBox.Show("Etapa Entrada de notas /n Etapa Pedido de compra");
-                        clsapoio.auditoriaTexto("\n\n");
-
-                    })
-
-                    };
-
-                Task.WaitAll(entradadeNotas);
-                toolStripProgressBar.Value = 50;
-
-                Task[] regras =
-                {
-                    Task.Factory.StartNew(() =>
-                    {
-                        try
-            {
-                clsapoio.stringBDBD();
-                SqlCommand Cmd = new SqlCommand("SELECT (reg_codigo) as CODIGO, left (REG_DESCRICAO, 40) ,CASE WHEN REG_STATUS = 0 THEN 'VAZIO' WHEN REG_STATUS = 1 THEN 'NAO ATIVA' WHEN REG_STATUS = 2 THEN 'ALERTAR' WHEN REG_STATUS = 4 THEN 'REGRA ATIVA' END FROM REGRAS  WHERE REG_STATUS = 4 ORDER BY REG_CODIGO", clsapoio.conn);
-                SqlDataReader dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                if (dr.HasRows)
-                {
-                                clsapoio.auditoriaTexto("REGRAS ATIVAS");
-                    while (dr.Read())
-                    {
-
-                        clsapoio.auditoriaTexto("Codigo: " + dr.GetInt16(0).ToString()+ "   Descricao:  " +  dr.GetString(1) + "      Status:  " + dr.GetString(2));
-
-                    }
+                    MessageBox.Show("Etapa Entrada de notas /n Etapa Pedido de compra");
+                    toolStripProgressBar.Value = 50;
                     clsapoio.auditoriaTexto("\n\n");
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            finally
-            {
-                clsapoio.desconectarBD();
-                            MessageBox.Show("Etapa Regras");
 
 
-            }
+                    Cmd = new SqlCommand("SELECT (reg_codigo) as CODIGO, REG_DESCRICAO ,CASE WHEN REG_STATUS = 0 THEN 'VAZIO' WHEN REG_STATUS = 1 THEN 'NAO ATIVA' WHEN REG_STATUS = 2 THEN 'ALERTAR' WHEN REG_STATUS = 4 THEN 'REGRA ATIVA' END FROM REGRAS  WHERE REG_STATUS = 4 ORDER BY REG_CODIGO", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        clsapoio.auditoriaTexto("REGRAS ATIVAS");
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto("Codigo: " + dr.GetInt16(0).ToString() + "   Descricao:  " + dr.GetString(1));
+
+                        }
                         clsapoio.auditoriaTexto("\n\n");
-                    })
-
-                    };
-
-                Task.WaitAll(regras);
-                toolStripProgressBar.Value = 60;
-
-                Task[] usuarios =
-                {
-                    Task.Factory.StartNew(() =>
-                    {
-                        try
-            {
-                clsapoio.stringBDBD();
-                SqlCommand Cmd = new SqlCommand("SELECT US_ABREVIADO AS USUARIO, LEFT (FIL_RAZAO_SOCIAL,15) AS LOJA,  LEFT  (REPLACE (REPLACE(US_GERAL2,'0','NAO') ,'1','SIM') ,3) AS GERAL FROM USUARIOS INNER JOIN FILIAL ON (FIL_CODIGO = US_FILIAL)WHERE FIL_ATIVA <> 'M' ORDER BY LOJA", clsapoio.conn);
-                SqlDataReader dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                if (dr.HasRows)
-                {
-                                clsapoio.auditoriaTexto("Usuarios?");
-                                clsapoio.auditoriaTexto("Atenção: O cadastro de usuários só pode ser realizado através do sistema Retaguarda e as senhas devem ser informadas ao usuários para que possam alterar a mesma caso tenham permissão");
-                    while (dr.Read())
-                    {
-
-                        clsapoio.auditoriaTexto("Nome: " + dr.GetString(0) + "              Filial:  " +  dr.GetString(1) + "             Geral:  " + dr.GetString(2));
-
                     }
+
+                    dr.Close();
+                    MessageBox.Show("Etapa Regras");
+                    toolStripProgressBar.Value = 60;
                     clsapoio.auditoriaTexto("\n\n");
+
+                    clsapoio.auditoriaTexto("Configuracoes das Lojas");
+                    #region configuracoesdaslojas
+
+
+                    dr.Close();
+                    Cmd = new SqlCommand("SELECT CASE WHEN CON_EXIBE_ESTOQUE2 = '0'THEN 'As quantidades em estoque nao serao exibidas nas lojas.' WHEN CON_EXIBE_ESTOQUE2 = '1' AND CON_EXIBE_QTD2 = '1'	THEN 'As quantidades em estoque dos produtos serao exibidas em quantidade.'		            ELSE 'As quantidades em estoque dos produtos serao exibidas com: (Sim/nao).'    END as Resutado      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + "group by CON_EXIBE_ESTOQUE2, CON_EXIBE_QTD2", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto(dr.GetString(0));
+
+                        }
+                    }
+
+                    dr.Close();
+                    Cmd = new SqlCommand("SELECT CASE WHEN CON_MOVIMENTO2 = '0'             THEN 'Nao consegue alterar nenhum registro em data anterior da data do movimento em aberto.'                                 ELSE 'Consegue alterar registros de datas anteriores.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_MOVIMENTO2", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto(dr.GetString(0));
+
+                        }
+                    }
+
+                    dr.Close();
+                    Cmd = new SqlCommand("SELECT CASE WHEN CON_CONSULTA_MOVIMENTO = '0'             THEN 'Nao consegue consultar registros realizados em datas anteriores ao do movimento em aberto.'                                 ELSE 'Consegue consultar registros realizados em datas anteriores ao do movimento em aberto.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_CONSULTA_MOVIMENTO", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto(dr.GetString(0));
+
+                        }
+                    }
+
+                    dr.Close();
+                    Cmd = new SqlCommand("SELECT CASE WHEN CON_ALTERAR_PRECO2 = '0'             THEN 'Nao habilitado para alterar o preco dos produtos durante a venda.'                                   when CON_ALTERAR_PRECO2 = '1' and CON_SENHA_PRECO2 = '1'            then 'Sistema habilitado para alterar o preco dos produtos durante a venda mediante autorizacao por senha.'                    ELSE 'Sistema habilitado para alterar o preco dos produtos durante a venda sem precisar de autorizacao por senha.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_ALTERAR_PRECO2,CON_SENHA_PRECO2", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto(dr.GetString(0));
+
+                        }
+                    }
+
+                    dr.Close();
+                    Cmd = new SqlCommand("SELECT CASE WHEN CON_SENHA_DESCONTO2 = '0'             THEN 'Configurado para aplicar desconto sem autorizacao por senha.'                                 ELSE 'O desconto só poderá ser aplicado mediante autorizacao por senha.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_SENHA_DESCONTO2", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto(dr.GetString(0));
+
+                        }
+                    }
+
+                    dr.Close();
+                    Cmd = new SqlCommand("SELECT CASE WHEN CON_PLANO2 = '1'             THEN 'Configurado para trabalhar com condições de pagamento para cheque.'                                 ELSE ''    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_PLANO2", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto(dr.GetString(0));
+
+                        }
+                    }
+
+                    dr.Close();
+                    Cmd = new SqlCommand("SELECT CASE WHEN CON_cpf = '0'             THEN 'Obrigatorio cadastro de CPF no cadastro de clientes.'                                 ELSE 'Nao obrigatorio o cadastro de CPF no cadastro de clientes.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_CPF", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto(dr.GetString(0));
+
+                        }
+                    }
+
+                    dr.Close();
+                    
+                    Cmd = new SqlCommand("SELECT CASE WHEN CON_AGUARDAR = '1'             THEN 'Habilitado a opcao de aguardar confirmacao de preco no pontos de venda(ECF), deixando livre a digitacao do preco.'                                 ELSE ''    END as result      FROM CONFIGURACOES where CON_FILIAL = 99 and CON_REDE = " + rede + " group by CON_AGUARDAR", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto(dr.GetString(0));
+
+                        }
+                    }
+
+                    dr.Close();
+                    Cmd = new SqlCommand("SELECT CASE WHEN CON_SENHA_CANCELAMENTO = '1'             THEN 'Habilitado para cancelar produtos na tela de venda mediante autorizacao por senha.'                                 ELSE 'Habilitado para cancelar produtos na tela de venda sem autorizacao por senha.'     END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_SENHA_CANCELAMENTO", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto(dr.GetString(0));
+
+                        }
+                    }
+
+                    dr.Close();
+                    Cmd = new SqlCommand("SELECT CASE WHEN EMP_HABILITA_QUANTIDADE = '0'  THEN 'Função que permite inserir quantidades nos produtos na tela Ponto de venda está desabilitada.'  ELSE 'Função que permite inserir quantidades nos produtos na tela Ponto de venda está habilitada.'  END as result  FROM EMPRESAS where EMP_CODIGO = " + rede + " group by EMP_HABILITA_QUANTIDADE union SELECT   CASE WHEN CON_DIAS_MAXIMO_CHEQUE = 0  THEN '' ELSE 'Prazo máximo de dias entre cheques será de ' + ltrim(rtrim(CAST (CON_DIAS_MAXIMO_CHEQUE AS NCHAR))) + ' dias.' END as result  FROM CONFIGURACOES where  CON_REDE = " + rede + " group by CON_DIAS_MAXIMO_CHEQUE", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto(dr.GetString(0));
+
+                        }
+                    }
+
+                    dr.Close();
+                    Cmd = new SqlCommand("SELECT CASE WHEN CON_ENVIA_VALE = 0    THEN 'Configurado para não enviar Vale entre lojas.'     ELSE 'Configurado para enviar vale entre lojas.'   END as result  FROM CONFIGURACOES where   CON_REDE = " + rede + " group by CON_ENVIA_VALE", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto(dr.GetString(0));
+
+                        }
+                    }
+
+                    dr.Close();
+                    Cmd = new SqlCommand("SELECT CASE WHEN CON_VIAS_PREVENDA  = 0 THEN 'Não existe numero de vias de pré - venda a imprimir'  WHEN CON_VIAS_PREVENDA  = 1 THEN 'Foi configurado 1 via de pré - venda a imprimir'          WHEN CON_VIAS_PREVENDA  = 2 THEN          'Foi configurado 2 vias de pré - venda a imprimir'          WHEN CON_VIAS_PREVENDA  = 3 THEN          'Foi configurado 3 vias de pré - venda a imprimir'          ELSE 'Foi configurado numero de vias de pré - venda a imprimir'        END AS result FROM   configuracoes WHERE  CON_REDE = " + rede + " GROUP  BY CON_VIAS_PREVENDA", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto(dr.GetString(0));
+
+                        }
+                    }
+
+                    dr.Close();
+                    Cmd = new SqlCommand("SELECT CASE WHEN CON_FECHAR_PREVENDA_DIAS  = 0 THEN          'Pre - venda configurada para ficar em aberto ate ser finalizada'          WHEN CON_FECHAR_PREVENDA_DIAS  = 1 THEN          'Pre - venda configurada para fechar em 1 dia'          WHEN CON_FECHAR_PREVENDA_DIAS  = 2 THEN          'Pre - venda configurada para fechar em 2 dias'          WHEN CON_FECHAR_PREVENDA_DIAS  = 3 THEN          'Pre - venda configurada para fechar em 3 dias'          ELSE 'Pre - venda configurada para fechar com muitos dias'        END AS result FROM   configuracoes WHERE  CON_REDE = " + rede + " GROUP  BY CON_FECHAR_PREVENDA_DIAS ", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto(dr.GetString(0));
+
+                        }
+                    }
+
+                    dr.Close();
+                    clsapoio.auditoriaTexto("\n");
+                    clsapoio.auditoriaTexto("Configuracoes do clientes:");
+                    Cmd = new SqlCommand("SELECT  case  WHEN CON_CPF = 0     THEN 'No cadastro de clientes o CPF é obrigatório (não recomendado).'         ELSE 'No cadastro de clientes o CPF é obrigatório.'        END as result  FROM CONFIGURACOES where   CON_REDE = " + rede + " group by CON_CPF    union      SELECT  case  WHEN CON_EXIGE_CLIENTE2 = 0     THEN 'Não obrigatório o cadastro de clientes nas vendas em cheque.'         ELSE 'Obrigatório o cadastro de clientes nas vendas em cheque.'        END as result  FROM CONFIGURACOES where   CON_REDE = " + rede + " group by CON_EXIGE_CLIENTE2           union      SELECT  case  WHEN CON_CLIENTE_PARCIAL = 0     THEN 'Não aceita cadastro parcial de cliente. Obrigatório os campos Nome, Telefone, Endereço, Sexo, Loja e Vendedor.'         ELSE 'Aceita cadastro parcial de clientes somente durante a venda.'       END as result  FROM CONFIGURACOES where   CON_REDE = " + rede + " group by CON_CLIENTE_PARCIAL   union      SELECT  case  WHEN EMP_FIDELIDADE = 0     THEN ''      WHEN (SELECT CON_FIDELIDADE_LOJA FROM CONFIGURACOES WHERE CON_REDE = " + rede + " group by CON_FIDELIDADE_LOJA) = 0      THEN 'Trabalha com cartão fidelidade e o cadastro somente pode ser realizado na Retaguarda.'     ELSE 'Trabalha com cartão fidelidade e o cadastro pode ser feito na loja.'       END as result  FROM EMPRESAS where   EMP_CODIGO = " + rede + " group by EMP_FIDELIDADE union SELECT  case  WHEN EMP_ULT_VENDEDOR = 0     THEN 'Ao cadastrar um cliente, o vendedor registrado na primeira vez, será sempre o vendedor do cliente mesmo que outro o atenda posteriomente. Alteração é permitida de forma manual.'       ELSE 'Ao vincular o cliente durante durante uma nova venda, o vendedor selecionado será atualizado em seu cadastro e passará a ser o vendedor do cliente.'       END as result  FROM EMPRESAS where   EMP_CODIGO = " + rede + " group by EMP_ULT_VENDEDOR       union         SELECT  case  WHEN EMP_ULT_FILIAL = 0     THEN 'Ao cadastrar um cliente, a loja registrada na primeira vez, será sempre a loja do cliente mesmo que ele compre em outra loja. Alteração é permitida de forma manual.'       ELSE 'Ao vincular o cliente durante durante uma nova venda, a loja visitada será atualizada em seu cadastro e passará a ser a loja do cliente.'       END as result  FROM EMPRESAS where   EMP_CODIGO = " + rede + " group by EMP_ULT_FILIAL", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto(dr.GetString(0));
+
+                        }
+                    }
+                    dr.Close();
+                    clsapoio.auditoriaTexto("\n\n");
+                    MessageBox.Show("Etapa Configuracoes das lojas");
+                    #endregion
+
+                    Cmd = new SqlCommand("SELECT US_ABREVIADO AS USUARIO, LEFT (FIL_RAZAO_SOCIAL,15) AS LOJA,  LEFT  (REPLACE (REPLACE(US_GERAL2,'0','NAO') ,'1','SIM') ,3) AS GERAL FROM USUARIOS INNER JOIN FILIAL ON (FIL_CODIGO = US_FILIAL)WHERE FIL_ATIVA <> 'M' ORDER BY LOJA", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
+                    {
+                        clsapoio.auditoriaTexto("Cadastro de Usuarios: ");
+                        clsapoio.auditoriaTexto("Atenção: O cadastro de usuários só pode ser realizado através do sistema Retaguarda");
+                        clsapoio.auditoriaTexto("E as senhas devem ser informadas ao usuários para que possam alterar a mesma caso tenham permissão");
+                        while (dr.Read())
+                        {
+
+                            clsapoio.auditoriaTexto("Nome: " + dr.GetString(0) + "              Filial:  " + dr.GetString(1) + "             Geral:  " + dr.GetString(2));
+
+                        }
+                        clsapoio.auditoriaTexto("\n\n");
+                    }
+                    dr.Close();
+                    
+                    clsapoio.auditoriaTexto("\n\n");
+                    MessageBox.Show("Etapa Usuarios");
+                    clsapoio.auditoriaTexto("\n\n");
+                    toolStripProgressBar.Value = 70;
+
+                    clsapoio.auditoriaTexto("REQUISITOS MINIMOS PARA FUNCIONAR O SISTEMA PDVNET");
+                    clsapoio.auditoriaTexto("Windows 10 ou Superior.");
+                    clsapoio.auditoriaTexto("Net Framework 4.5.2");
+                    clsapoio.auditoriaTexto("Internet funcionando.");
+                    clsapoio.auditoriaTexto("Usuário e senha com direito de administrador.");
+                    clsapoio.auditoriaTexto("O Certificado Digital deve estar instalado. ");
+                    clsapoio.auditoriaTexto("Todas as impressoras de etiqueta, fiscal ou não fiscal devem estar instaladas e testadas. ");
+                    clsapoio.auditoriaTexto("Processador – Dual Core ou superior. ");
+                    clsapoio.auditoriaTexto("HD - 120 GB livres.");
+                    clsapoio.auditoriaTexto("Memória - 8 GB.  ");
+                    clsapoio.auditoriaTexto("Resolução de Vídeo - igual ou superior a 1024x768(Não suporta netbook).  ");
+                    clsapoio.auditoriaTexto("Porta de comunicação e USBs testadas.");
+                    clsapoio.auditoriaTexto("\n");
+
+                    clsapoio.auditoriaTexto("REQUISITOS MÍNIMOS PARA NFe / NFCe / Sistema");
+                    clsapoio.auditoriaTexto("Certificado Digital tipo A1 ou A3 já instalados e testados no computador  (No certificado A3 a senha não fica gravada e sempre será solicitada). ");
+                    clsapoio.auditoriaTexto("Estar credenciado para emissão de NFe junto a SEFAZ. ");
+                    clsapoio.auditoriaTexto("Disponibilizar informações tributárias, Regime, Tributações (PIS e Cofins), CSOSN, CNAE, CSC, CFOP, Substituição tributária, etc. ");
+                    clsapoio.auditoriaTexto("\n");
+
+                    clsapoio.auditoriaTexto("DICAS IMPORTANTES");
+                    clsapoio.auditoriaTexto("Atenção: Verifique sempre na Nota fiscal de compra se os produtos possuem substituição tributária e configure essa tributação no cadastro do produto. Mantendo a tributação correta no cadastro do produto, não acarretará encargos tributários desnecessários. Consulte sua contabilidade!  ");
+                    clsapoio.auditoriaTexto("Atenção: Não deixe de fazer notas fiscais eletrônicas das mercadorias devolvidas pelos clientes para não acarretar encargos tributários desnecessários. Consulte sua contabilidade!");
+                    clsapoio.auditoriaTexto("Não se esqueça de fazer sempre o Backup do sistema em mídia externa para garantir a disponibilidade dos seus dados.");
+                    clsapoio.auditoriaTexto("Zele pelos equipamentos, fazendo uma manutenção preventiva contra vírus. ");
+                    clsapoio.auditoriaTexto("Se precisar tirar alguma dúvida ou resolver algum problema, ligue para o Suporte (21) 2159-0606. ");
+
+                    clsapoio.auditoriaTexto("Confira sempre se os requisitos mínimos estão atendendo antes de instalar o sistema nas lojas");
+                    clsapoio.auditoriaTexto("");
+                    clsapoio.auditoriaTexto("");
+                    clsapoio.auditoriaTexto("");
+                    clsapoio.auditoriaTexto("");
+                    clsapoio.auditoriaTexto("");
+
+                    clsapoio.auditoriaTexto("");
+                    clsapoio.auditoriaTexto("");
+                    clsapoio.auditoriaTexto("");
+                    clsapoio.auditoriaTexto("");
+                    clsapoio.auditoriaTexto("");
+                    clsapoio.auditoriaTexto("");
+                    toolStripProgressBar.Value = 80;
+
+                    clsapoio.auditoriaTexto("INFORMAÇÕES TÉCNICAS DO SERVIDOR");
+                    clsapoio.auditoriaTexto("Nunca deixe de executar e conferir se o backup do banco de dados está sendo realizado com sucesso, ele não é de autoria da PDV NET Sistemas.");
+                    clsapoio.auditoriaTexto("Em caso de dúvidas de como fazer o backup, entre em contato com o nosso Suporte para esclarecimentos.");
+                    clsapoio.auditoriaTexto("Informacoes relacionadas ao Nome do Computador : " + Environment.MachineName);
+                    clsapoio.auditoriaTexto("Informacoes relacionadas ao Processador: " + Environment.ProcessorCount + "N de nucleo");
+                    clsapoio.auditoriaTexto("Informacoes relacionadas ao Hard Disk");
+                    string Consulta = "SELECT MaxCapacity FROM Win32_PhysicalMemoryArray";
+                    int memoriaRam = 0;
+                    ManagementObjectSearcher objetoPesquisado = new ManagementObjectSearcher(Consulta);
+                    foreach (ManagementObject WniPART in objetoPesquisado.Get())
+                    {
+                        UInt32 tamanhoKB = Convert.ToUInt32(WniPART.Properties["MaxCapacity"].Value);
+                        UInt32 tamanhoMB = tamanhoKB / 1024;
+                        memoriaRam += Convert.ToInt32(tamanhoMB);
+                        clsapoio.auditoriaTexto("Informacoes relacionadas a memoria Ram " + tamanhoMB + "Mb");
+                    }
+
+                    clsapoio.auditoriaTexto("\n\n");
+                    toolStripProgressBar.Value = 90;
+                    MessageBox.Show("Etapa Info Hadware");
+
+                    clsapoio.auditoriaTexto("PDV NET LOCACAO DE SISTEMAS DE INFORMATICA LTDA - EPP");
+                    clsapoio.auditoriaTexto(@"CNPJ: 06.910.563/0001-01");
+                    clsapoio.auditoriaTexto("Endereço: Av. Rio Branco, 251/11º andar - Centro - Rio de Janeiro.");
+                    clsapoio.auditoriaTexto("CEP: 20040-009");
+                    clsapoio.auditoriaTexto("Tel: (21) 2159-0606");
+                    clsapoio.auditoriaTexto("\n");
+                    clsapoio.auditoriaTexto("Supervisor de Implantação: Evandro Barroso ");
+                    clsapoio.auditoriaTexto("Email: implantacao@pdvnet.com.br");
+                    clsapoio.auditoriaTexto("Tel: (21) 96775-4275 (Vivo) \n");
+                    toolStripProgressBar.Value = 100;
+
+
                 }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            finally
-            {
-                clsapoio.desconectarBD();
-                            MessageBox.Show("Etapa Usuarios");
-
-
-            }
-                        clsapoio.auditoriaTexto("\n\n");
-                    })
-
-                    };
-
-                Task.WaitAll(usuarios);
-                toolStripProgressBar.Value = 70;
-
-                Task[] obssobreRequisitos =
+                catch (Exception ex)
                 {
-                    Task.Factory.StartNew(() =>
-                    {
-                        MessageBox.Show("");
-                        clsapoio.auditoriaTexto("REQUISITOS MINIMOS PARA FUNCIONAR O SISTEMA PDVNET");
-                        clsapoio.auditoriaTexto("Windows 10 ou Superior.");
-                        clsapoio.auditoriaTexto("Net Framework 4.5.2");
-                        clsapoio.auditoriaTexto("Internet funcionando.");
-                        clsapoio.auditoriaTexto("Usuário e senha com direito de administrador.");
-                        clsapoio.auditoriaTexto("O Certificado Digital deve estar instalado. ");
-                        clsapoio.auditoriaTexto("Todas as impressoras de etiqueta, fiscal ou não fiscal devem estar instaladas e testadas. ");
-                        clsapoio.auditoriaTexto("Processador – Dual Core ou superior. ");
-                        clsapoio.auditoriaTexto("HD - 120 GB livres.");
-                        clsapoio.auditoriaTexto("Memória - 8 GB.  ");
-                        clsapoio.auditoriaTexto("Resolução de Vídeo - igual ou superior a 1024x768(Não suporta netbook).  ");
-                        clsapoio.auditoriaTexto("Porta de comunicação e USBs testadas.");
-                        clsapoio.auditoriaTexto("\n");
-
-                        clsapoio.auditoriaTexto("REQUISITOS MÍNIMOS PARA NFe / NFCe / Sistema");
-                        clsapoio.auditoriaTexto("Certificado Digital tipo A1 ou A3 já instalados e testados no computador  (No certificado A3 a senha não fica gravada e sempre será solicitada). ");
-                        clsapoio.auditoriaTexto("Estar credenciado para emissão de NFe junto a SEFAZ. ");
-                        clsapoio.auditoriaTexto("Disponibilizar informações tributárias, Regime, Tributações (PIS e Cofins), CSOSN, CNAE, CSC, CFOP, Substituição tributária, etc. ");
-                        clsapoio.auditoriaTexto("\n");
-
-                        clsapoio.auditoriaTexto("DICAS IMPORTANTES");
-                        clsapoio.auditoriaTexto("Atenção: Verifique sempre na Nota fiscal de compra se os produtos possuem substituição tributária e configure essa tributação no cadastro do produto. Mantendo a tributação correta no cadastro do produto, não acarretará encargos tributários desnecessários. Consulte sua contabilidade!  ");
-                        clsapoio.auditoriaTexto("Atenção: Não deixe de fazer notas fiscais eletrônicas das mercadorias devolvidas pelos clientes para não acarretar encargos tributários desnecessários. Consulte sua contabilidade!");
-                        clsapoio.auditoriaTexto("Não se esqueça de fazer sempre o Backup do sistema em mídia externa para garantir a disponibilidade dos seus dados.");
-                        clsapoio.auditoriaTexto("Zele pelos equipamentos, fazendo uma manutenção preventiva contra vírus. ");
-                        clsapoio.auditoriaTexto("Se precisar tirar alguma dúvida ou resolver algum problema, ligue para o Suporte (21) 2159-0606. ");
-
-                        clsapoio.auditoriaTexto("Confira sempre se os requisitos mínimos estão atendendo antes de instalar o sistema nas lojas");
-                        clsapoio.auditoriaTexto("");
-                        clsapoio.auditoriaTexto("");
-                        clsapoio.auditoriaTexto("");
-                        clsapoio.auditoriaTexto("");
-                        clsapoio.auditoriaTexto("");
-
-                        clsapoio.auditoriaTexto("");
-                        clsapoio.auditoriaTexto("");
-                        clsapoio.auditoriaTexto("");
-                        clsapoio.auditoriaTexto("");
-                        clsapoio.auditoriaTexto("");
-                        clsapoio.auditoriaTexto("");
-
-                    })
-
-                    };
-
-                Task.WaitAll(obssobreRequisitos);
-                toolStripProgressBar.Value = 80;
-
-                Task[] infoharware =
+                    MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                finally
                 {
-                    Task.Factory.StartNew(() =>
-                    {
+                    clsapoio.desconectarBD();
+                    MessageBox.Show("Criado Arquivo");
 
-                        clsapoio.auditoriaTexto("INFORMAÇÕES TÉCNICAS DO SERVIDOR");
-                        clsapoio.auditoriaTexto("Nunca deixe de executar e conferir se o backup do banco de dados está sendo realizado com sucesso, ele não é de autoria da PDV NET Sistemas.");
-                        clsapoio.auditoriaTexto("Em caso de dúvidas de como fazer o backup, entre em contato com o nosso Suporte para esclarecimentos.");
-                        clsapoio.auditoriaTexto("Informacoes relacionadas ao Nome do Computador : " + Environment.MachineName);
-                        clsapoio.auditoriaTexto("Informacoes relacionadas ao Processador: " + Environment.ProcessorCount + "N de nucleo");
-                        clsapoio.auditoriaTexto("Informacoes relacionadas ao Hard Disk");
-                        string Consulta = "SELECT MaxCapacity FROM Win32_PhysicalMemoryArray";
-                        int memoriaRam = 0;
-                        ManagementObjectSearcher objetoPesquisado = new ManagementObjectSearcher(Consulta);
-                        foreach (ManagementObject WniPART in objetoPesquisado.Get())
-                            {
-                             UInt32 tamanhoKB = Convert.ToUInt32(WniPART.Properties["MaxCapacity"].Value);
-                             UInt32 tamanhoMB = tamanhoKB / 1024;
-                             memoriaRam += Convert.ToInt32(tamanhoMB);
-                            clsapoio.auditoriaTexto("Informacoes relacionadas a memoria Ram " + tamanhoMB + "Mb");
-                            }
-
-                        clsapoio.auditoriaTexto("\n\n");
-                        MessageBox.Show("Etapa Info Hadware");
-
-                    })
-
-                    };
-
-                Task.WaitAll(infoharware);
-                toolStripProgressBar.Value = 90;
-
-                Task[] finalcomestilo =
-                {
-                    Task.Factory.StartNew(() =>
-                    {
-                        clsapoio.auditoriaTexto("PDV NET LOCACAO DE SISTEMAS DE INFORMATICA LTDA - EPP");
-                        clsapoio.auditoriaTexto(@"CNPJ: 06.910.563/0001-01");
-                        clsapoio.auditoriaTexto("Endereço: Av. Rio Branco, 251/11º andar - Centro - Rio de Janeiro.");
-                        clsapoio.auditoriaTexto("CEP: 20040-009");
-                        clsapoio.auditoriaTexto("Tel: (21) 2159-0606");
-                        clsapoio.auditoriaTexto("\n");
-                        clsapoio.auditoriaTexto("Supervisor de Implantação: Evandro Barroso ");
-                        clsapoio.auditoriaTexto("Email: implantacao@pdvnet.com.br");
-                        clsapoio.auditoriaTexto("Tel: (21) 96775-4275 (Vivo) \n");
-
-                    })
-
-                    };
-
-                Task.WaitAll(finalcomestilo);
-                toolStripProgressBar.Value = 100;
-
-
-
-
-
-
-
+                }
+                    
 
                 #region LerArquivo
                 try
