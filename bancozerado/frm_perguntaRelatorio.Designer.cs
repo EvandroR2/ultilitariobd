@@ -45,12 +45,12 @@ namespace bancozerado
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtParticipantes = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbmMsgParticipante = new System.Windows.Forms.Label();
             this.txtRamodeAtuacao = new System.Windows.Forms.TextBox();
             this.lblRamodeAtuacao = new System.Windows.Forms.Label();
             this.btnOkfrmRelatorio = new System.Windows.Forms.Button();
             this.txtTecnico = new System.Windows.Forms.TextBox();
-            this.lblMsg = new System.Windows.Forms.Label();
+            this.lblMsgTecnico = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtObservacoes = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -69,6 +69,8 @@ namespace bancozerado
             this.rbtTrabalhacretiradaOutrosSemComissao = new System.Windows.Forms.RadioButton();
             this.rbtTrabalhacretiradaOutroscomComissao = new System.Windows.Forms.RadioButton();
             this.rbtTrabalhacretiradaCrediariocomComissao = new System.Windows.Forms.RadioButton();
+            this.txtNomedoCliente = new System.Windows.Forms.TextBox();
+            this.lblMsgCliente = new System.Windows.Forms.Label();
             this.gBoxNFEeVenda.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -86,7 +88,7 @@ namespace bancozerado
             this.gBoxNFEeVenda.Controls.Add(this.gBoxNFE);
             this.gBoxNFEeVenda.Controls.Add(this.label4);
             this.gBoxNFEeVenda.Controls.Add(this.label5);
-            this.gBoxNFEeVenda.Location = new System.Drawing.Point(16, 111);
+            this.gBoxNFEeVenda.Location = new System.Drawing.Point(16, 148);
             this.gBoxNFEeVenda.Name = "gBoxNFEeVenda";
             this.gBoxNFEeVenda.Size = new System.Drawing.Size(342, 368);
             this.gBoxNFEeVenda.TabIndex = 58;
@@ -109,7 +111,7 @@ namespace bancozerado
             this.rbtNfeNao.Location = new System.Drawing.Point(54, 13);
             this.rbtNfeNao.Name = "rbtNfeNao";
             this.rbtNfeNao.Size = new System.Drawing.Size(45, 17);
-            this.rbtNfeNao.TabIndex = 7;
+            this.rbtNfeNao.TabIndex = 8;
             this.rbtNfeNao.Text = "Não";
             this.rbtNfeNao.UseVisualStyleBackColor = true;
             this.rbtNfeNao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtNfeSim_KeyPress);
@@ -121,7 +123,7 @@ namespace bancozerado
             this.rbtNfeSim.Location = new System.Drawing.Point(6, 13);
             this.rbtNfeSim.Name = "rbtNfeSim";
             this.rbtNfeSim.Size = new System.Drawing.Size(42, 17);
-            this.rbtNfeSim.TabIndex = 6;
+            this.rbtNfeSim.TabIndex = 7;
             this.rbtNfeSim.TabStop = true;
             this.rbtNfeSim.Text = "Sim";
             this.rbtNfeSim.UseVisualStyleBackColor = true;
@@ -144,7 +146,7 @@ namespace bancozerado
             this.rbtnotaManualNao.Location = new System.Drawing.Point(54, 13);
             this.rbtnotaManualNao.Name = "rbtnotaManualNao";
             this.rbtnotaManualNao.Size = new System.Drawing.Size(45, 17);
-            this.rbtnotaManualNao.TabIndex = 5;
+            this.rbtnotaManualNao.TabIndex = 6;
             this.rbtnotaManualNao.Text = "Não";
             this.rbtnotaManualNao.UseVisualStyleBackColor = true;
             this.rbtnotaManualNao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtnotaManualSim_KeyPress);
@@ -156,7 +158,7 @@ namespace bancozerado
             this.rbtnotaManualSim.Location = new System.Drawing.Point(6, 13);
             this.rbtnotaManualSim.Name = "rbtnotaManualSim";
             this.rbtnotaManualSim.Size = new System.Drawing.Size(42, 17);
-            this.rbtnotaManualSim.TabIndex = 4;
+            this.rbtnotaManualSim.TabIndex = 5;
             this.rbtnotaManualSim.TabStop = true;
             this.rbtnotaManualSim.Text = "Sim";
             this.rbtnotaManualSim.UseVisualStyleBackColor = true;
@@ -181,7 +183,7 @@ namespace bancozerado
             this.checkTransferencia.Location = new System.Drawing.Point(6, 88);
             this.checkTransferencia.Name = "checkTransferencia";
             this.checkTransferencia.Size = new System.Drawing.Size(91, 17);
-            this.checkTransferencia.TabIndex = 11;
+            this.checkTransferencia.TabIndex = 12;
             this.checkTransferencia.Text = "Transferencia";
             this.checkTransferencia.UseVisualStyleBackColor = true;
             this.checkTransferencia.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.checkTransferencia_KeyPress);
@@ -192,7 +194,7 @@ namespace bancozerado
             this.checkDevClientes.Location = new System.Drawing.Point(6, 42);
             this.checkDevClientes.Name = "checkDevClientes";
             this.checkDevClientes.Size = new System.Drawing.Size(216, 17);
-            this.checkDevClientes.TabIndex = 9;
+            this.checkDevClientes.TabIndex = 10;
             this.checkDevClientes.Text = "Troca clientes (DEVOLUCAO CLIENTE)";
             this.checkDevClientes.UseVisualStyleBackColor = true;
             this.checkDevClientes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.checkDevClientes_KeyPress);
@@ -203,7 +205,7 @@ namespace bancozerado
             this.checkDevFornecedor.Location = new System.Drawing.Point(6, 65);
             this.checkDevFornecedor.Name = "checkDevFornecedor";
             this.checkDevFornecedor.Size = new System.Drawing.Size(135, 17);
-            this.checkDevFornecedor.TabIndex = 10;
+            this.checkDevFornecedor.TabIndex = 11;
             this.checkDevFornecedor.Text = "Devolucao Fornecedor";
             this.checkDevFornecedor.UseVisualStyleBackColor = true;
             this.checkDevFornecedor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.checkDevFornecedor_KeyPress);
@@ -214,7 +216,7 @@ namespace bancozerado
             this.checkVenda.Location = new System.Drawing.Point(6, 19);
             this.checkVenda.Name = "checkVenda";
             this.checkVenda.Size = new System.Drawing.Size(57, 17);
-            this.checkVenda.TabIndex = 8;
+            this.checkVenda.TabIndex = 9;
             this.checkVenda.Text = "Venda";
             this.checkVenda.UseVisualStyleBackColor = true;
             this.checkVenda.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.checkVenda_KeyPress);
@@ -251,36 +253,36 @@ namespace bancozerado
             // txtParticipantes
             // 
             this.txtParticipantes.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtParticipantes.Location = new System.Drawing.Point(203, 77);
+            this.txtParticipantes.Location = new System.Drawing.Point(203, 114);
             this.txtParticipantes.Name = "txtParticipantes";
             this.txtParticipantes.Size = new System.Drawing.Size(345, 29);
-            this.txtParticipantes.TabIndex = 3;
+            this.txtParticipantes.TabIndex = 4;
             this.txtParticipantes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtParticipantes_KeyPress);
             // 
-            // label1
+            // lbmMsgParticipante
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 77);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(185, 24);
-            this.label1.TabIndex = 56;
-            this.label1.Text = "Quais Participantes ?";
+            this.lbmMsgParticipante.AutoSize = true;
+            this.lbmMsgParticipante.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbmMsgParticipante.Location = new System.Drawing.Point(12, 114);
+            this.lbmMsgParticipante.Name = "lbmMsgParticipante";
+            this.lbmMsgParticipante.Size = new System.Drawing.Size(185, 24);
+            this.lbmMsgParticipante.TabIndex = 56;
+            this.lbmMsgParticipante.Text = "Quais Participantes ?";
             // 
             // txtRamodeAtuacao
             // 
             this.txtRamodeAtuacao.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRamodeAtuacao.Location = new System.Drawing.Point(203, 42);
+            this.txtRamodeAtuacao.Location = new System.Drawing.Point(203, 79);
             this.txtRamodeAtuacao.Name = "txtRamodeAtuacao";
             this.txtRamodeAtuacao.Size = new System.Drawing.Size(345, 29);
-            this.txtRamodeAtuacao.TabIndex = 2;
+            this.txtRamodeAtuacao.TabIndex = 3;
             this.txtRamodeAtuacao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRamodeAtuacao_KeyPress);
             // 
             // lblRamodeAtuacao
             // 
             this.lblRamodeAtuacao.AutoSize = true;
             this.lblRamodeAtuacao.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRamodeAtuacao.Location = new System.Drawing.Point(12, 42);
+            this.lblRamodeAtuacao.Location = new System.Drawing.Point(12, 79);
             this.lblRamodeAtuacao.Name = "lblRamodeAtuacao";
             this.lblRamodeAtuacao.Size = new System.Drawing.Size(125, 24);
             this.lblRamodeAtuacao.TabIndex = 55;
@@ -289,7 +291,7 @@ namespace bancozerado
             // btnOkfrmRelatorio
             // 
             this.btnOkfrmRelatorio.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOkfrmRelatorio.Location = new System.Drawing.Point(976, 499);
+            this.btnOkfrmRelatorio.Location = new System.Drawing.Point(976, 536);
             this.btnOkfrmRelatorio.Name = "btnOkfrmRelatorio";
             this.btnOkfrmRelatorio.Size = new System.Drawing.Size(93, 39);
             this.btnOkfrmRelatorio.TabIndex = 60;
@@ -300,27 +302,27 @@ namespace bancozerado
             // txtTecnico
             // 
             this.txtTecnico.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTecnico.Location = new System.Drawing.Point(203, 7);
+            this.txtTecnico.Location = new System.Drawing.Point(203, 44);
             this.txtTecnico.Name = "txtTecnico";
             this.txtTecnico.Size = new System.Drawing.Size(345, 29);
-            this.txtTecnico.TabIndex = 1;
+            this.txtTecnico.TabIndex = 2;
             this.txtTecnico.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTecnico_KeyPress);
             // 
-            // lblMsg
+            // lblMsgTecnico
             // 
-            this.lblMsg.AutoSize = true;
-            this.lblMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMsg.Location = new System.Drawing.Point(12, 7);
-            this.lblMsg.Name = "lblMsg";
-            this.lblMsg.Size = new System.Drawing.Size(139, 24);
-            this.lblMsg.TabIndex = 53;
-            this.lblMsg.Text = "Qual Técnico ?";
+            this.lblMsgTecnico.AutoSize = true;
+            this.lblMsgTecnico.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMsgTecnico.Location = new System.Drawing.Point(12, 44);
+            this.lblMsgTecnico.Name = "lblMsgTecnico";
+            this.lblMsgTecnico.Size = new System.Drawing.Size(139, 24);
+            this.lblMsgTecnico.TabIndex = 53;
+            this.lblMsgTecnico.Text = "Qual Técnico ?";
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.txtObservacoes);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Location = new System.Drawing.Point(364, 111);
+            this.groupBox1.Location = new System.Drawing.Point(364, 148);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(231, 368);
             this.groupBox1.TabIndex = 59;
@@ -334,7 +336,7 @@ namespace bancozerado
             this.txtObservacoes.Multiline = true;
             this.txtObservacoes.Name = "txtObservacoes";
             this.txtObservacoes.Size = new System.Drawing.Size(203, 302);
-            this.txtObservacoes.TabIndex = 61;
+            this.txtObservacoes.TabIndex = 13;
             this.txtObservacoes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtObservacoes_KeyPress);
             // 
             // label6
@@ -351,7 +353,7 @@ namespace bancozerado
             // 
             this.groupBox2.Controls.Add(this.groupBox5);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(601, 111);
+            this.groupBox2.Location = new System.Drawing.Point(601, 148);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(231, 368);
             this.groupBox2.TabIndex = 62;
@@ -377,7 +379,7 @@ namespace bancozerado
             this.rbtImpressoraConfigurarnaLoja.Location = new System.Drawing.Point(6, 119);
             this.rbtImpressoraConfigurarnaLoja.Name = "rbtImpressoraConfigurarnaLoja";
             this.rbtImpressoraConfigurarnaLoja.Size = new System.Drawing.Size(205, 31);
-            this.rbtImpressoraConfigurarnaLoja.TabIndex = 12;
+            this.rbtImpressoraConfigurarnaLoja.TabIndex = 17;
             this.rbtImpressoraConfigurarnaLoja.Text = "A configuração de etiqueta é realizada direto na loja.";
             this.rbtImpressoraConfigurarnaLoja.UseVisualStyleBackColor = true;
             this.rbtImpressoraConfigurarnaLoja.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtImpressoraConfigurarnaLoja_KeyPress);
@@ -387,7 +389,7 @@ namespace bancozerado
             this.rbtNaopossuiSuprimento.Location = new System.Drawing.Point(6, 82);
             this.rbtNaopossuiSuprimento.Name = "rbtNaopossuiSuprimento";
             this.rbtNaopossuiSuprimento.Size = new System.Drawing.Size(205, 31);
-            this.rbtNaopossuiSuprimento.TabIndex = 11;
+            this.rbtNaopossuiSuprimento.TabIndex = 16;
             this.rbtNaopossuiSuprimento.Text = "Não possui um modelo de etiqueta ou suprimentos no momento para configuração.";
             this.rbtNaopossuiSuprimento.UseVisualStyleBackColor = true;
             this.rbtNaopossuiSuprimento.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtNaopossuiSuprimento_KeyPress);
@@ -397,7 +399,7 @@ namespace bancozerado
             this.rbtImpressoraseracomprada.Location = new System.Drawing.Point(6, 45);
             this.rbtImpressoraseracomprada.Name = "rbtImpressoraseracomprada";
             this.rbtImpressoraseracomprada.Size = new System.Drawing.Size(205, 31);
-            this.rbtImpressoraseracomprada.TabIndex = 10;
+            this.rbtImpressoraseracomprada.TabIndex = 15;
             this.rbtImpressoraseracomprada.Text = "A imp. de Etiqueta ainda será comprada.";
             this.rbtImpressoraseracomprada.UseVisualStyleBackColor = true;
             this.rbtImpressoraseracomprada.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtImpressoraseracomprada_KeyPress);
@@ -409,7 +411,7 @@ namespace bancozerado
             this.rbtNaopossuiimpressora.Location = new System.Drawing.Point(6, 22);
             this.rbtNaopossuiimpressora.Name = "rbtNaopossuiimpressora";
             this.rbtNaopossuiimpressora.Size = new System.Drawing.Size(159, 17);
-            this.rbtNaopossuiimpressora.TabIndex = 9;
+            this.rbtNaopossuiimpressora.TabIndex = 14;
             this.rbtNaopossuiimpressora.TabStop = true;
             this.rbtNaopossuiimpressora.Text = "Não possui imp. de etiqueta.";
             this.rbtNaopossuiimpressora.UseVisualStyleBackColor = true;
@@ -420,7 +422,7 @@ namespace bancozerado
             this.rbtImpvaiSerConfignasLojas.Location = new System.Drawing.Point(6, 156);
             this.rbtImpvaiSerConfignasLojas.Name = "rbtImpvaiSerConfignasLojas";
             this.rbtImpvaiSerConfignasLojas.Size = new System.Drawing.Size(205, 31);
-            this.rbtImpvaiSerConfignasLojas.TabIndex = 8;
+            this.rbtImpvaiSerConfignasLojas.TabIndex = 18;
             this.rbtImpvaiSerConfignasLojas.Text = "Imp. foi config na Matriz e tbm vai fazer nas lojas";
             this.rbtImpvaiSerConfignasLojas.UseVisualStyleBackColor = true;
             this.rbtImpvaiSerConfignasLojas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtImpvaiSerConfignasLojas_KeyPress);
@@ -443,7 +445,7 @@ namespace bancozerado
             this.groupBox6.Controls.Add(this.rbtTrabalhacretiradaOutrosSemComissao);
             this.groupBox6.Controls.Add(this.rbtTrabalhacretiradaOutroscomComissao);
             this.groupBox6.Controls.Add(this.rbtTrabalhacretiradaCrediariocomComissao);
-            this.groupBox6.Location = new System.Drawing.Point(838, 111);
+            this.groupBox6.Location = new System.Drawing.Point(838, 148);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(231, 368);
             this.groupBox6.TabIndex = 64;
@@ -455,7 +457,7 @@ namespace bancozerado
             this.rbtTrabalhacretiradaCrediariosemComissao.Location = new System.Drawing.Point(6, 170);
             this.rbtTrabalhacretiradaCrediariosemComissao.Name = "rbtTrabalhacretiradaCrediariosemComissao";
             this.rbtTrabalhacretiradaCrediariosemComissao.Size = new System.Drawing.Size(219, 31);
-            this.rbtTrabalhacretiradaCrediariosemComissao.TabIndex = 12;
+            this.rbtTrabalhacretiradaCrediariosemComissao.TabIndex = 22;
             this.rbtTrabalhacretiradaCrediariosemComissao.Text = "Forma de pagamento crediario s/ comissão";
             this.rbtTrabalhacretiradaCrediariosemComissao.UseVisualStyleBackColor = true;
             this.rbtTrabalhacretiradaCrediariosemComissao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtTrabalhacretiradaCrediariosemComissao_KeyPress);
@@ -477,7 +479,7 @@ namespace bancozerado
             this.rbtNaoTrabalhacretirada.Location = new System.Drawing.Point(6, 73);
             this.rbtNaoTrabalhacretirada.Name = "rbtNaoTrabalhacretirada";
             this.rbtNaoTrabalhacretirada.Size = new System.Drawing.Size(151, 17);
-            this.rbtNaoTrabalhacretirada.TabIndex = 9;
+            this.rbtNaoTrabalhacretirada.TabIndex = 19;
             this.rbtNaoTrabalhacretirada.TabStop = true;
             this.rbtNaoTrabalhacretirada.Text = "Não Trabalha com retirada";
             this.rbtNaoTrabalhacretirada.UseVisualStyleBackColor = true;
@@ -488,7 +490,7 @@ namespace bancozerado
             this.rbtTrabalhacretiradaOutrosSemComissao.Location = new System.Drawing.Point(6, 96);
             this.rbtTrabalhacretiradaOutrosSemComissao.Name = "rbtTrabalhacretiradaOutrosSemComissao";
             this.rbtTrabalhacretiradaOutrosSemComissao.Size = new System.Drawing.Size(219, 31);
-            this.rbtTrabalhacretiradaOutrosSemComissao.TabIndex = 10;
+            this.rbtTrabalhacretiradaOutrosSemComissao.TabIndex = 20;
             this.rbtTrabalhacretiradaOutrosSemComissao.Text = "Forma de pagamento outros s/ comissão";
             this.rbtTrabalhacretiradaOutrosSemComissao.UseVisualStyleBackColor = true;
             this.rbtTrabalhacretiradaOutrosSemComissao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtTrabalhacretiradaOutrosSemComissao_KeyPress);
@@ -498,7 +500,7 @@ namespace bancozerado
             this.rbtTrabalhacretiradaOutroscomComissao.Location = new System.Drawing.Point(6, 133);
             this.rbtTrabalhacretiradaOutroscomComissao.Name = "rbtTrabalhacretiradaOutroscomComissao";
             this.rbtTrabalhacretiradaOutroscomComissao.Size = new System.Drawing.Size(219, 31);
-            this.rbtTrabalhacretiradaOutroscomComissao.TabIndex = 11;
+            this.rbtTrabalhacretiradaOutroscomComissao.TabIndex = 21;
             this.rbtTrabalhacretiradaOutroscomComissao.Text = "Forma de pagamento outros c/ comissão";
             this.rbtTrabalhacretiradaOutroscomComissao.UseVisualStyleBackColor = true;
             this.rbtTrabalhacretiradaOutroscomComissao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtTrabalhacretiradaOutroscomComissao_KeyPress);
@@ -508,29 +510,49 @@ namespace bancozerado
             this.rbtTrabalhacretiradaCrediariocomComissao.Location = new System.Drawing.Point(6, 207);
             this.rbtTrabalhacretiradaCrediariocomComissao.Name = "rbtTrabalhacretiradaCrediariocomComissao";
             this.rbtTrabalhacretiradaCrediariocomComissao.Size = new System.Drawing.Size(219, 31);
-            this.rbtTrabalhacretiradaCrediariocomComissao.TabIndex = 8;
+            this.rbtTrabalhacretiradaCrediariocomComissao.TabIndex = 23;
             this.rbtTrabalhacretiradaCrediariocomComissao.Text = "Forma de pagamento crediario c/ comissão";
             this.rbtTrabalhacretiradaCrediariocomComissao.UseVisualStyleBackColor = true;
             this.rbtTrabalhacretiradaCrediariocomComissao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtTrabalhacretiradaCrediariocomComissao_KeyPress);
+            // 
+            // txtNomedoCliente
+            // 
+            this.txtNomedoCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNomedoCliente.Location = new System.Drawing.Point(203, 9);
+            this.txtNomedoCliente.Name = "txtNomedoCliente";
+            this.txtNomedoCliente.Size = new System.Drawing.Size(345, 29);
+            this.txtNomedoCliente.TabIndex = 1;
+            // 
+            // lblMsgCliente
+            // 
+            this.lblMsgCliente.AutoSize = true;
+            this.lblMsgCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMsgCliente.Location = new System.Drawing.Point(12, 9);
+            this.lblMsgCliente.Name = "lblMsgCliente";
+            this.lblMsgCliente.Size = new System.Drawing.Size(167, 24);
+            this.lblMsgCliente.TabIndex = 66;
+            this.lblMsgCliente.Text = "Nome do Cliente ?";
             // 
             // frm_perguntaRelatorio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1080, 550);
+            this.ClientSize = new System.Drawing.Size(1080, 586);
             this.ControlBox = false;
+            this.Controls.Add(this.txtNomedoCliente);
+            this.Controls.Add(this.lblMsgCliente);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gBoxNFEeVenda);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtParticipantes);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lbmMsgParticipante);
             this.Controls.Add(this.txtRamodeAtuacao);
             this.Controls.Add(this.lblRamodeAtuacao);
             this.Controls.Add(this.btnOkfrmRelatorio);
             this.Controls.Add(this.txtTecnico);
-            this.Controls.Add(this.lblMsg);
+            this.Controls.Add(this.lblMsgTecnico);
             this.Name = "frm_perguntaRelatorio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.frm_perguntaRelatorio_Load);
@@ -573,12 +595,12 @@ namespace bancozerado
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtParticipantes;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbmMsgParticipante;
         private System.Windows.Forms.TextBox txtRamodeAtuacao;
         private System.Windows.Forms.Label lblRamodeAtuacao;
         private System.Windows.Forms.Button btnOkfrmRelatorio;
         private System.Windows.Forms.TextBox txtTecnico;
-        private System.Windows.Forms.Label lblMsg;
+        private System.Windows.Forms.Label lblMsgTecnico;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtObservacoes;
         private System.Windows.Forms.Label label6;
@@ -597,5 +619,7 @@ namespace bancozerado
         private System.Windows.Forms.RadioButton rbtTrabalhacretiradaOutrosSemComissao;
         private System.Windows.Forms.RadioButton rbtTrabalhacretiradaOutroscomComissao;
         private System.Windows.Forms.RadioButton rbtTrabalhacretiradaCrediariocomComissao;
+        private System.Windows.Forms.TextBox txtNomedoCliente;
+        private System.Windows.Forms.Label lblMsgCliente;
     }
 }

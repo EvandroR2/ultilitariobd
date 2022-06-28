@@ -205,6 +205,7 @@ namespace bancozerado
         {
             if ((txtTecnico.Text != "") && (txtParticipantes.Text != "") && (txtRamodeAtuacao.Text != ""))
             {
+                clsapoio.auditoriaTexto("Nome do Cliente: " + txtNomedoCliente.Text);
                 clsapoio.auditoriaTexto("Técnico: " + txtTecnico.Text);
                 clsapoio.auditoriaTexto("Ramo de Atuação: " + txtRamodeAtuacao.Text);
                 clsapoio.auditoriaTexto("Participantes: " + txtParticipantes.Text);
