@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CadastroUsuarios.cs" />
+    <Compile Include="classSql.cs" />
     <Compile Include="clsapoio.cs" />
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
@@ -63,6 +64,12 @@
     </Compile>
     <Compile Include="frmPrincipal.Designer.cs">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_codigodarede.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_codigodarede.Designer.cs">
+      <DependentUpon>frm_codigodarede.cs</DependentUpon>
     </Compile>
     <Compile Include="frm_perguntaRelatorio.cs">
       <SubType>Form</SubType>
@@ -79,6 +86,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_codigodarede.resx">
+      <DependentUpon>frm_codigodarede.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_perguntaRelatorio.resx">
       <DependentUpon>frm_perguntaRelatorio.cs</DependentUpon>
