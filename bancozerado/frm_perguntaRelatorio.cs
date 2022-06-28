@@ -24,7 +24,16 @@ namespace bancozerado
 
         private void frm_perguntaRelatorio_Load(object sender, EventArgs e)
         {
-            txtTecnico.Focus();
+            txtNomedoCliente.Focus();
+        }
+
+        private void txtNomedoCliente_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtTecnico.Focus();
+            }
+            
         }
 
         private void txtTecnico_KeyPress(object sender, KeyPressEventArgs e)

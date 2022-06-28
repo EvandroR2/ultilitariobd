@@ -522,6 +522,7 @@ namespace bancozerado
             this.txtNomedoCliente.Name = "txtNomedoCliente";
             this.txtNomedoCliente.Size = new System.Drawing.Size(345, 29);
             this.txtNomedoCliente.TabIndex = 1;
+            this.txtNomedoCliente.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNomedoCliente_KeyPress);
             // 
             // lblMsgCliente
             // 

@@ -8,10 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.IO;
-using System.Diagnostics;
-using System.Management;
-using System.Management.Instrumentation;
 
 
 namespace bancozerado

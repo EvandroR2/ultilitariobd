@@ -119,6 +119,21 @@ namespace bancozerado
             writer.WriteLine(c);
             writer.Close();
         }
+
+        public void escreverauditoriaTextoFonteMaior(string c)
+        {
+            //string path = @"C:\curso\sistemas\sistemaemc\file.txt";
+            string path = @"C:\PDV\";
+            bool res = Directory.Exists(path + "Audit_app");
+            if (!res)
+            {
+                Directory.CreateDirectory(path + "Audit_app");
+            }
+            string path1 = @"C:\PDV\Audit_app\audit.txt";
+            StreamWriter writer = new StreamWriter(path1, true, Encoding.UTF8);
+            writer.WriteLine(c);
+            writer.Close();
+        }
         public void lerauditoriaTexto(RichTextBox x)
         {
             string path = @"C:\PDV\Audit_app\audit.txt";

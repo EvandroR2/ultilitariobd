@@ -151,6 +151,7 @@ namespace bancozerado
             this.mAjudaSobre = new System.Windows.Forms.ToolStripMenuItem();
             this.mAjudaLerConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.mAjudaConsultaBanco = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkBoxBancoAuxiliar = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.menuArquivo.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -1340,11 +1341,23 @@ namespace bancozerado
             this.mAjudaConsultaBanco.Text = "Fazer Consulta no Banco";
             this.mAjudaConsultaBanco.Click += new System.EventHandler(this.mAjudaConsultaBanco_Click);
             // 
+            // checkBoxBancoAuxiliar
+            // 
+            this.checkBoxBancoAuxiliar.AutoSize = true;
+            this.checkBoxBancoAuxiliar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxBancoAuxiliar.Location = new System.Drawing.Point(478, 40);
+            this.checkBoxBancoAuxiliar.Name = "checkBoxBancoAuxiliar";
+            this.checkBoxBancoAuxiliar.Size = new System.Drawing.Size(154, 19);
+            this.checkBoxBancoAuxiliar.TabIndex = 71;
+            this.checkBoxBancoAuxiliar.Text = "Carregar banco Auxiliar";
+            this.checkBoxBancoAuxiliar.UseVisualStyleBackColor = true;
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(782, 741);
+            this.Controls.Add(this.checkBoxBancoAuxiliar);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.groupBox1);
@@ -1515,6 +1528,7 @@ namespace bancozerado
         private System.Windows.Forms.ToolStripStatusLabel statusBarLabel;
         private System.Windows.Forms.ToolStripMenuItem mExibirZoomRestaurar;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
+        private System.Windows.Forms.CheckBox checkBoxBancoAuxiliar;
     }
 }
 

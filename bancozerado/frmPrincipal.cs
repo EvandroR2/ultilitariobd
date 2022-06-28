@@ -24,7 +24,7 @@ namespace bancozerado
         {
             InitializeComponent();
         }
-        
+
 
         #region frm_superior
         //Chama o Formulario de login
@@ -102,6 +102,41 @@ namespace bancozerado
             }
 
         }
+        private void carregaBancosemauxiliar()
+        {
+            clsapoio.nomeInstancia = txtInstancia.Text;
+            clsapoio.nomeUsuario = txtUsuario.Text;
+            clsapoio.nomeSenha = txtSenha.Text;
+            clsapoio.Bdbanco = cmbBanco.Text;
+
+            try
+            {
+                clsapoio.stringBD();
+
+                SqlCommand cmd = new SqlCommand("SELECT name FROM sys.databases where name not in ('master', 'model', 'tempdb', 'msdb') and name not like('%ReportServer$PDVNET%') and name not like('%AUXILIAR%')", clsapoio.conn);
+                SqlDataReader dr = cmd.ExecuteReader();
+                DataTable dt = new DataTable();
+                dt.Load(dr);
+                cmbBanco.DataSource = dt;
+                cmbBanco.DisplayMember = "name";
+                /*
+                 * //SqlCommand cmd = new SqlCommand(@"RESTORE FILELISTONLY  from DISK =N'C:\BaseSQL\LOJAFLA\bak0206.bak'", clsapoio.conn);
+                cmbBanco.DisplayMember = "LogicalName"; 
+                //string num_pedido = ds.Tables[0].Rows[0]["COLUNA DO BD"].ToString();
+                 */
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            finally
+            {
+                clsapoio.desconectarBD();
+
+            }
+
+        }
 
         private void txtSenha_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -123,7 +158,15 @@ namespace bancozerado
 
         private void cmbBanco_Click(object sender, EventArgs e)
         {
-            carregaBanco();
+            if (!checkBoxBancoAuxiliar.Checked)
+            {
+                carregaBancosemauxiliar();
+            }
+            else
+            {
+                carregaBanco();
+            }
+
         }
 
         #region Botao_radio
@@ -731,6 +774,7 @@ namespace bancozerado
             lblCaminhoBak.Visible = true;
             txtDiretorioBuscar.Visible = true;
             btnDiretorioBuscar.Visible = true;
+
 
         }
 
@@ -1430,15 +1474,50 @@ namespace bancozerado
             }
             else
             {
+
+
+
                 try
                 {
+                    SqlCommand Cmd = null;
+                    SqlDataReader dr = null;
                     clsapoio.stringBDBD();
-                    DataTable dados = new DataTable();
-                    SqlDataAdapter adaptador = new SqlDataAdapter(queryempresa, clsapoio.conn);
-                    adaptador.Fill(dados);
-                    foreach (DataRow linha in dados.Rows)
+                    Cmd = new SqlCommand("SELECT table_name FROM information_schema.tables where table_name like '%filial';", clsapoio.conn);
+                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                    if (dr.HasRows)
                     {
-                        divTabelaEmpresa.Rows.Add(linha.ItemArray);
+                        dr.Close();
+
+                        DataTable dados = null;
+                        SqlDataAdapter adaptador = null;
+                        clsapoio.stringBDBD();
+                        dados = new DataTable();
+                        adaptador = new SqlDataAdapter(queryempresa, clsapoio.conn);
+                        adaptador.Fill(dados);
+                        foreach (DataRow linha in dados.Rows)
+                        {
+                            divTabelaEmpresa.Rows.Add(linha.ItemArray);
+                        }
+
+                        dados = new DataTable();
+                        adaptador = new SqlDataAdapter(queryfilial, clsapoio.conn);
+                        adaptador.Fill(dados);
+                        foreach (DataRow linha in dados.Rows)
+                        {
+                            divTabelaFilial.Rows.Add(linha.ItemArray);
+                        }
+
+                        dados = new DataTable();
+                        adaptador = new SqlDataAdapter(querytributo, clsapoio.conn);
+                        adaptador.Fill(dados);
+                        foreach (DataRow linha in dados.Rows)
+                        {
+                            divTabelaTributo.Rows.Add(linha.ItemArray);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Selecione o Banco com informaçao");
                     }
                 }
                 catch (Exception ex)
@@ -1450,50 +1529,8 @@ namespace bancozerado
                     clsapoio.desconectarBD();
 
                 }
-                try
-                {
-                    clsapoio.stringBDBD();
-                    DataTable dados = new DataTable();
-                    SqlDataAdapter adaptador = new SqlDataAdapter(queryfilial, clsapoio.conn);
-                    adaptador.Fill(dados);
-                    foreach (DataRow linha in dados.Rows)
-                    {
-                        divTabelaFilial.Rows.Add(linha.ItemArray);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-                finally
-                {
-                    clsapoio.desconectarBD();
 
-                }
-                try
-                {
-                    clsapoio.stringBDBD();
-                    DataTable dados = new DataTable();
-                    SqlDataAdapter adaptador = new SqlDataAdapter(querytributo, clsapoio.conn);
-                    adaptador.Fill(dados);
-                    foreach (DataRow linha in dados.Rows)
-                    {
-                        divTabelaTributo.Rows.Add(linha.ItemArray);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "FACILITA IMPLANTAÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-                finally
-                {
-                    clsapoio.desconectarBD();
-
-                }
             }
-
-
-
 
 
         }
@@ -1919,12 +1956,7 @@ namespace bancozerado
             //Depois criar uma classe para essa informação ficar menor
         }
 
-        public frmPrincipal(int valor)
-        {
-            InitializeComponent();
-             int rede = valor;
 
-        }
         private void mAjudaConsultaBanco_Click(object sender, EventArgs e)
         {
             //Aqui vou chamar a configuração dos formulario e trabalhar com muitas querry
@@ -1932,11 +1964,12 @@ namespace bancozerado
             clsapoio.nomeUsuario = txtUsuario.Text;
             clsapoio.nomeSenha = txtSenha.Text;
             clsapoio.Bdbanco = cmbBanco.Text;
-            
+
             if (cmbBanco.SelectedItem == null)
             {
                 MessageBox.Show("Campo Vazio !");
                 cmbBanco.Focus();
+
             }
             else
             {
@@ -1950,502 +1983,537 @@ namespace bancozerado
 
                 }
 
-                
 
-                
-                MessageBox.Show("Etapa 1");
-                clsapoio.auditoriaTextosubstituir("\n\n");
-                toolStripProgressBar.Value = 10;
-                clsapoio.auditoriaTexto("Qual Técnico fez o Encontro Inicial");
-                frm_perguntaRelatorio frm = new frm_perguntaRelatorio();
-                frm.ShowDialog();
-                toolStripProgressBar.Value = 20;
-                string rede = "";
-                
+
+
+
+
                 try
-                
+
                 {
                     SqlCommand Cmd = null;
                     SqlDataReader dr = null;
                     clsapoio.stringBDBD();
-                     Cmd = new SqlCommand("SELECT LEFT (EMP_RAZAO_SOCIAL,15),emp_codigo FROM EMPRESAS", clsapoio.conn);
-                     dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        int contador = 0;
-                        clsapoio.auditoriaTexto(" \n");
-                        while (dr.Read())
-                        {
-                            contador++;
-                            clsapoio.auditoriaTexto("Nome da Empresa? " + dr.GetString(0).ToString());
-                            //codigo empresa esta em tynit
-                            rede = dr.GetByte(1).ToString();
 
-                            
-
-                        }
-                        if (contador > 1)
-                        {
-                            frm_codigodarede frm_rede = new frm_codigodarede();
-                            frm_rede.InstanciaSql = txtInstancia.Text;
-                            frm_rede.UsuarioSql = txtUsuario.Text;
-                            frm_rede.SenhaSql = txtSenha.Text;
-                            frm_rede.BancoSql = cmbBanco.Text;
-                            frm_rede.ShowDialog();
-
-
-                            rede = frm_rede.redeSql;
-
-
-
-
-
-                        }
-                        clsapoio.auditoriaTexto(" \n");
-                        
-                    }
-                    
-
-                    dr.Close();
-                    toolStripProgressBar.Value = 30;
-                    MessageBox.Show("Etapa Empresa");
-
-                    Cmd = new SqlCommand("select fil_codigo,rtrim(fil_razao_social),fil_cgc from filial order by FIL_CODIGO", clsapoio.conn);
+                    Cmd = new SqlCommand("SELECT table_name FROM information_schema.tables where table_name like '%filial';", clsapoio.conn);
                     dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
                     if (dr.HasRows)
                     {
-                        clsapoio.auditoriaTexto("Quais Filiais estão cadastradas ?");
-                        while (dr.Read())
+                        dr.Close();
+
+                        MessageBox.Show("Etapa 1");
+                        clsapoio.auditoriaTextosubstituir("\n\n");
+                        toolStripProgressBar.Value = 10;
+                        clsapoio.auditoriaTexto("Qual Técnico fez o Encontro Inicial");
+                        frm_perguntaRelatorio frm = new frm_perguntaRelatorio();
+                        frm.ShowDialog();
+                        toolStripProgressBar.Value = 20;
+                        string rede = "";
+
+                        Cmd = new SqlCommand("SELECT LEFT (EMP_RAZAO_SOCIAL,15),emp_codigo FROM EMPRESAS", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
                         {
-                            //codigo filial esta em smalint
-                            clsapoio.auditoriaTexto("FILIAL:" + dr.GetInt16(0).ToString() + "                 NOME FANTASIA: " + dr.GetString(1) + "                   CNPJ OU CPF: " + dr.GetString(2));
+                            int contador = 0;
+                            clsapoio.auditoriaTexto(" \n");
+                            while (dr.Read())
+                            {
+                                contador++;
+                                clsapoio.auditoriaTexto("Nome da Empresa? " + dr.GetString(0).ToString());
+                                //codigo empresa esta em tynit
+                                rede = dr.GetByte(1).ToString();
+
+
+
+                            }
+                            if (contador > 1)
+                            {
+                                frm_codigodarede frm_rede = new frm_codigodarede();
+                                frm_rede.InstanciaSql = txtInstancia.Text;
+                                frm_rede.UsuarioSql = txtUsuario.Text;
+                                frm_rede.SenhaSql = txtSenha.Text;
+                                frm_rede.BancoSql = cmbBanco.Text;
+                                frm_rede.ShowDialog();
+
+
+                                rede = frm_rede.redeSql;
+
+
+
+
+
+                            }
+                            clsapoio.auditoriaTexto(" \n");
 
                         }
+
+
+                        dr.Close();
+                        toolStripProgressBar.Value = 30;
+                        MessageBox.Show("Etapa Empresa");
+
+                        Cmd = new SqlCommand("select fil_codigo,rtrim(fil_razao_social),fil_cgc from filial order by FIL_CODIGO", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            clsapoio.auditoriaTexto("Quais Filiais estão cadastradas ?");
+                            while (dr.Read())
+                            {
+                                //codigo filial esta em smalint
+                                clsapoio.auditoriaTexto("FILIAL:" + dr.GetInt16(0).ToString() + "                 NOME FANTASIA: " + dr.GetString(1) + "                   CNPJ OU CPF: " + dr.GetString(2));
+
+                            }
+                            clsapoio.auditoriaTexto("\n\n");
+
+                        }
+                        dr.Close();
+                        toolStripProgressBar.Value = 40;
+                        MessageBox.Show("Etapa Filial");
                         clsapoio.auditoriaTexto("\n\n");
 
-                    }
-                    dr.Close();
-                    toolStripProgressBar.Value = 40;
-                    MessageBox.Show("Etapa Filial");
-                    clsapoio.auditoriaTexto("\n\n");
-
-                    #region parametrizacaodeempresas
-                    clsapoio.auditoriaTexto("Parametrização da EMPRESA");
-                    clsapoio.auditoriaTexto("\n");
-                    Cmd = new SqlCommand("select   EMP_COMPOSICAO         from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
+                        #region parametrizacaodeempresas
+                        clsapoio.auditoriaTexto("Parametrização da EMPRESA");
+                        clsapoio.auditoriaTexto("\n");
+                        Cmd = new SqlCommand("select   EMP_COMPOSICAO         from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
                         {
-                            clsapoio.auditoriaTexto("Composição do Cadastro de Produto: " + dr.GetString(0));
+                            while (dr.Read())
+                            {
+                                clsapoio.auditoriaTexto("Composição do Cadastro de Produto: " + dr.GetString(0));
 
+                            }
                         }
-                    }
-                    dr.Close();
-                    Cmd = new SqlCommand("select   EMP_COMPOSICAO_BARRA   from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
+                        dr.Close();
+                        Cmd = new SqlCommand("select   EMP_COMPOSICAO_BARRA   from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
                         {
+                            while (dr.Read())
+                            {
 
-                            clsapoio.auditoriaTexto("Composição do Codigo de Barra apenas efetivo se o codigo de Barra não for Sequencial: " + dr.GetString(0));
+                                clsapoio.auditoriaTexto("Composição do Codigo de Barra apenas efetivo se o codigo de Barra não for Sequencial: " + dr.GetString(0));
 
+                            }
                         }
-                    }
-                    dr.Close();
-                    Cmd = new SqlCommand("select   EMP_TAMANHO            from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
+                        dr.Close();
+                        Cmd = new SqlCommand("select   EMP_TAMANHO            from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
                         {
+                            while (dr.Read())
+                            {
 
-                            clsapoio.auditoriaTexto("Tamanho da referencia: " + dr.GetByte(0).ToString());
+                                clsapoio.auditoriaTexto("Tamanho da referencia: " + dr.GetByte(0).ToString());
 
+                            }
                         }
-                    }
-                    dr.Close();
-                    Cmd = new SqlCommand("select   EMP_SEQ                from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
+                        dr.Close();
+                        Cmd = new SqlCommand("select   EMP_SEQ                from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
                         {
+                            while (dr.Read())
+                            {
 
-                            clsapoio.auditoriaTexto("Ultima referencia cadastrada no sistema para dar sequencia: " + dr.GetString(0));
+                                clsapoio.auditoriaTexto("Ultima referencia cadastrada no sistema para dar sequencia: " + dr.GetString(0));
 
+                            }
                         }
-                    }
-                    dr.Close();
-                    Cmd = new SqlCommand("select   EMP_TAMANHO_BARRA      from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
+                        dr.Close();
+                        Cmd = new SqlCommand("select   EMP_TAMANHO_BARRA      from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
                         {
+                            while (dr.Read())
+                            {
 
-                            clsapoio.auditoriaTexto("Tamanho do codigo de Barra: " + dr.GetByte(0).ToString());
+                                clsapoio.auditoriaTexto("Tamanho do codigo de Barra: " + dr.GetByte(0).ToString());
 
+                            }
                         }
-                    }
-                    dr.Close();
-                    Cmd = new SqlCommand("select   EMP_PRECO_DECIMAL      from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
+                        dr.Close();
+                        Cmd = new SqlCommand("select   EMP_PRECO_DECIMAL      from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
                         {
+                            while (dr.Read())
+                            {
 
-                            clsapoio.auditoriaTexto("Quantidade de decimal configurado: " + dr.GetByte(0).ToString());
+                                clsapoio.auditoriaTexto("Quantidade de decimal configurado: " + dr.GetByte(0).ToString());
 
+                            }
                         }
-                    }
-                    dr.Close();
-                    Cmd = new SqlCommand("select   EMP_QUANTIDADE_BALANCA from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
+                        dr.Close();
+                        Cmd = new SqlCommand("select   EMP_QUANTIDADE_BALANCA from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
                         {
+                            while (dr.Read())
+                            {
 
-                            clsapoio.auditoriaTexto("Quantidade de digitos para balança: " + dr.GetByte(0).ToString());
+                                clsapoio.auditoriaTexto("Quantidade de digitos para balança: " + dr.GetByte(0).ToString());
 
+                            }
                         }
-                    }
-                    dr.Close();
+                        dr.Close();
 
-                    Cmd = new SqlCommand("select CASE WHEN  EMP_COMPOSTA2 = 0 THEN 'Sistema configurado para não ultilizar a referencia composta' WHEN  EMP_COMPOSTA2 = 1 THEN 'Sistema configurado para ultilizar a referencia composta' END AS resut from empresas where emp_codigo = "+ rede +" and EMP_INATIVA = 0 union select CASE WHEN  EMP_UNICA2              = 0  THEN 'Configurado para trabalhar somente com uma unica Empresa' WHEN  EMP_UNICA2              = 1 THEN 'Configurado para trabalhar com mais do que uma unica Empresa' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0  union select CASE WHEN  EMP_ARREDONDA2 = 0 THEN 'Configurado para não arrendodar o preco no final da venda' WHEN  EMP_ARREDONDA2 = 1 THEN 'Configurado para arrendodar o preco no final da venda' END AS resut from empresas where emp_codigo = "+ rede +" and EMP_INATIVA = 0 union select CASE WHEN  EMP_PRECO2              = 0 THEN 'Verificar, mas acho que é qtd de preco' WHEN  EMP_PRECO2              = 1 THEN 'Verificar, mas acho que é qtd de preco' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_FORMATA2 = 0 THEN 'Configurado para formatar referencia, preencher zeros a esquerda' WHEN  EMP_FORMATA2 = 1 THEN 'Configurado para não formatar referencia, preencher zeros a esquerda' END AS resut from empresas where emp_codigo = "+ rede +" and EMP_INATIVA = 0 union select CASE WHEN  EMP_PROPRIA2            = 0 THEN 'Configurado para não trabalhar com referencia sempre propria, Quando o cliente pode incluir codigo secundario no final do cadastro e para alterar a referencia manualmente' WHEN  EMP_PROPRIA2            = 1 THEN 'Configurado para trabalhar com referencia sempre propria, Quando o cliente pode incluir codigo secundario no final do cadastro e para alterar a referencia manualmente' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_QTD = 0 THEN 'nao sei' WHEN  EMP_QTD >= 1 THEN 'nao sei' END AS resut from empresas where emp_codigo = "+ rede +" and EMP_INATIVA = 0 union select CASE WHEN  EMP_ATACADO             = 0 THEN 'Configurado para não trabalhar com o Modulo de faturamento' WHEN  EMP_ATACADO             = 1 THEN 'Configurado para trabalhar com o Modulo de faturamento' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_PEDIDO = 0 THEN 'Não enviar pedido para as lojas' WHEN  EMP_PEDIDO = 1 THEN 'Enviar pedido para as lojas' END AS resut from empresas where emp_codigo = "+ rede +" and EMP_INATIVA = 0 union select CASE WHEN  EMP_DISTRIBUICAO        = 0 THEN 'Configurado para não trabalhar com Distribuição' WHEN  EMP_DISTRIBUICAO        = 1 THEN 'Configurado para trabalhar com Distribuição' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_FIDELIDADE = 0 THEN 'Não trabalha com cartão fidelidade' WHEN  EMP_FIDELIDADE = 1 THEN 'Trabalha com cartão fidelidade' END AS resut from empresas where emp_codigo = "+ rede +" and EMP_INATIVA = 0 union select CASE WHEN  EMP_GRADE               = 0 THEN 'Não trabalha com grade não (indicado)' WHEN  EMP_GRADE               = 1 THEN 'Trabalha com grade' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_ULT_VENDEDOR = 0 THEN 'Não Grava o último vendedor no cliente' WHEN  EMP_ULT_VENDEDOR = 1 THEN 'Grava o último vendedor no cliente' END AS resut from empresas where emp_codigo = "+ rede +" and EMP_INATIVA = 0 union select CASE WHEN  EMP_ULT_FILIAL          = 0 THEN 'Não Grava a última loja no cliente' WHEN  EMP_ULT_FILIAL          = 1 THEN 'Grava a última loja no cliente' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_INVENTARIO = 0 THEN 'Configurado para não enviar o inventario para as lojas, sendo feito inventario pela Retaguarda' WHEN  EMP_INVENTARIO = 1 THEN 'Configurado para enviar inventario para as lojas(lembrando que no dia do inventario, só é possivel vender com o inventario processado' END AS resut from empresas where emp_codigo = "+ rede +" and EMP_INATIVA = 0 union select CASE WHEN  EMP_HISTORICO           = 0 THEN 'Não envia Histórico de preço para as lojas' WHEN  EMP_HISTORICO           = 1 THEN 'Envia Histórico de preço para as lojas' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_ESTOQUE_NEGATIVO = 0 THEN 'Retaguarda configurado para não trabalhar com estoque negativo' WHEN  EMP_ESTOQUE_NEGATIVO = 1 THEN 'Retaguarda configurado para trabalhar com estoque negativo' END AS resut from empresas where emp_codigo = "+ rede +" and EMP_INATIVA = 0 union  select CASE WHEN  EMP_HABILITA_QUANTIDADE = 0 THEN 'Não Configurado para alterar quantidade na venda(uso do F9)' WHEN  EMP_HABILITA_QUANTIDADE = 1 THEN 'Configurado para alterar quantidade na venda(uso do F9)' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_BLOQUEAR_PEDIDO = 0 THEN 'Pedido Web não habilitado(ferramenta sem informação)' WHEN  EMP_BLOQUEAR_PEDIDO = 1 THEN 'Pedido Web habilitado(ferramenta sem informação)' END AS resut from empresas where emp_codigo = "+ rede +" and EMP_INATIVA = 0", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
+                        Cmd = new SqlCommand("select CASE WHEN  EMP_COMPOSTA2 = 0 THEN 'Sistema configurado para não ultilizar a referencia composta' WHEN  EMP_COMPOSTA2 = 1 THEN 'Sistema configurado para ultilizar a referencia composta' END AS resut from empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_UNICA2              = 0  THEN 'Configurado para trabalhar somente com uma unica Empresa' WHEN  EMP_UNICA2              = 1 THEN 'Configurado para trabalhar com mais do que uma unica Empresa' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0  union select CASE WHEN  EMP_ARREDONDA2 = 0 THEN 'Configurado para não arrendodar o preco no final da venda' WHEN  EMP_ARREDONDA2 = 1 THEN 'Configurado para arrendodar o preco no final da venda' END AS resut from empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_PRECO2              = 0 THEN 'Verificar, mas acho que é qtd de preco' WHEN  EMP_PRECO2              = 1 THEN 'Verificar, mas acho que é qtd de preco' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_FORMATA2 = 0 THEN 'Configurado para formatar referencia, preencher zeros a esquerda' WHEN  EMP_FORMATA2 = 1 THEN 'Configurado para não formatar referencia, preencher zeros a esquerda' END AS resut from empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_PROPRIA2            = 0 THEN 'Configurado para não trabalhar com referencia sempre propria, Quando o cliente pode incluir codigo secundario no final do cadastro e para alterar a referencia manualmente' WHEN  EMP_PROPRIA2            = 1 THEN 'Configurado para trabalhar com referencia sempre propria, Quando o cliente pode incluir codigo secundario no final do cadastro e para alterar a referencia manualmente' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_QTD = 0 THEN 'nao sei' WHEN  EMP_QTD >= 1 THEN 'nao sei' END AS resut from empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_ATACADO             = 0 THEN 'Configurado para não trabalhar com o Modulo de faturamento' WHEN  EMP_ATACADO             = 1 THEN 'Configurado para trabalhar com o Modulo de faturamento' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_PEDIDO = 0 THEN 'Não enviar pedido para as lojas' WHEN  EMP_PEDIDO = 1 THEN 'Enviar pedido para as lojas' END AS resut from empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_DISTRIBUICAO        = 0 THEN 'Configurado para não trabalhar com Distribuição' WHEN  EMP_DISTRIBUICAO        = 1 THEN 'Configurado para trabalhar com Distribuição' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_FIDELIDADE = 0 THEN 'Não trabalha com cartão fidelidade' WHEN  EMP_FIDELIDADE = 1 THEN 'Trabalha com cartão fidelidade' END AS resut from empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_GRADE               = 0 THEN 'Não trabalha com grade não (indicado)' WHEN  EMP_GRADE               = 1 THEN 'Trabalha com grade' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_ULT_VENDEDOR = 0 THEN 'Não Grava o último vendedor no cliente' WHEN  EMP_ULT_VENDEDOR = 1 THEN 'Grava o último vendedor no cliente' END AS resut from empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_ULT_FILIAL          = 0 THEN 'Não Grava a última loja no cliente' WHEN  EMP_ULT_FILIAL          = 1 THEN 'Grava a última loja no cliente' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_INVENTARIO = 0 THEN 'Configurado para não enviar o inventario para as lojas, sendo feito inventario pela Retaguarda' WHEN  EMP_INVENTARIO = 1 THEN 'Configurado para enviar inventario para as lojas(lembrando que no dia do inventario, só é possivel vender com o inventario processado' END AS resut from empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_HISTORICO           = 0 THEN 'Não envia Histórico de preço para as lojas' WHEN  EMP_HISTORICO           = 1 THEN 'Envia Histórico de preço para as lojas' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_ESTOQUE_NEGATIVO = 0 THEN 'Retaguarda configurado para não trabalhar com estoque negativo' WHEN  EMP_ESTOQUE_NEGATIVO = 1 THEN 'Retaguarda configurado para trabalhar com estoque negativo' END AS resut from empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union  select CASE WHEN  EMP_HABILITA_QUANTIDADE = 0 THEN 'Não Configurado para alterar quantidade na venda(uso do F9)' WHEN  EMP_HABILITA_QUANTIDADE = 1 THEN 'Configurado para alterar quantidade na venda(uso do F9)' END AS resut from  empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0 union select CASE WHEN  EMP_BLOQUEAR_PEDIDO = 0 THEN 'Pedido Web não habilitado(ferramenta sem informação)' WHEN  EMP_BLOQUEAR_PEDIDO = 1 THEN 'Pedido Web habilitado(ferramenta sem informação)' END AS resut from empresas where emp_codigo = " + rede + " and EMP_INATIVA = 0", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
                         {
+                            while (dr.Read())
+                            {
 
-                            clsapoio.auditoriaTexto(dr.GetString(0));
+                                clsapoio.auditoriaTexto(dr.GetString(0));
 
+                            }
                         }
-                    }
 
-                    dr.Close();
-
-
-                    #endregion
-
-                    MessageBox.Show("Etapa Entrada de notas /n Etapa Pedido de compra");
-                    toolStripProgressBar.Value = 50;
-                    clsapoio.auditoriaTexto("\n\n");
+                        dr.Close();
 
 
-                    Cmd = new SqlCommand("SELECT (reg_codigo) as CODIGO, REG_DESCRICAO ,CASE WHEN REG_STATUS = 0 THEN 'VAZIO' WHEN REG_STATUS = 1 THEN 'NAO ATIVA' WHEN REG_STATUS = 2 THEN 'ALERTAR' WHEN REG_STATUS = 4 THEN 'REGRA ATIVA' END FROM REGRAS  WHERE REG_STATUS = 4 ORDER BY REG_CODIGO", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        clsapoio.auditoriaTexto("REGRAS ATIVAS");
-                        while (dr.Read())
-                        {
+                        #endregion
 
-                            clsapoio.auditoriaTexto("Codigo: " + dr.GetInt16(0).ToString() + "   Descricao:  " + dr.GetString(1));
-
-                        }
+                        MessageBox.Show("Etapa Entrada de notas /n Etapa Pedido de compra");
+                        toolStripProgressBar.Value = 50;
                         clsapoio.auditoriaTexto("\n\n");
-                    }
-
-                    dr.Close();
-                    MessageBox.Show("Etapa Regras");
-                    toolStripProgressBar.Value = 60;
-                    clsapoio.auditoriaTexto("\n\n");
-
-                    clsapoio.auditoriaTexto("Configuracoes das Lojas");
-                    #region configuracoesdaslojas
 
 
-                    dr.Close();
-                    Cmd = new SqlCommand("SELECT CASE WHEN CON_EXIBE_ESTOQUE2 = '0'THEN 'As quantidades em estoque nao serao exibidas nas lojas.' WHEN CON_EXIBE_ESTOQUE2 = '1' AND CON_EXIBE_QTD2 = '1'	THEN 'As quantidades em estoque dos produtos serao exibidas em quantidade.'		            ELSE 'As quantidades em estoque dos produtos serao exibidas com: (Sim/nao).'    END as Resutado      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + "group by CON_EXIBE_ESTOQUE2, CON_EXIBE_QTD2", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
+                        Cmd = new SqlCommand("SELECT (reg_codigo) as CODIGO, REG_DESCRICAO ,CASE WHEN REG_STATUS = 0 THEN 'VAZIO' WHEN REG_STATUS = 1 THEN 'NAO ATIVA' WHEN REG_STATUS = 2 THEN 'ALERTAR' WHEN REG_STATUS = 4 THEN 'REGRA ATIVA' END FROM REGRAS  WHERE REG_STATUS = 4 ORDER BY REG_CODIGO", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
                         {
+                            clsapoio.auditoriaTexto("REGRAS ATIVAS");
+                            while (dr.Read())
+                            {
 
-                            clsapoio.auditoriaTexto(dr.GetString(0));
+                                clsapoio.auditoriaTexto("Codigo: " + dr.GetInt16(0).ToString() + "   Descricao:  " + dr.GetString(1));
 
+                            }
+                            clsapoio.auditoriaTexto("\n\n");
                         }
-                    }
 
-                    dr.Close();
-                    Cmd = new SqlCommand("SELECT CASE WHEN CON_MOVIMENTO2 = '0'             THEN 'Nao consegue alterar nenhum registro em data anterior da data do movimento em aberto.'                                 ELSE 'Consegue alterar registros de datas anteriores.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_MOVIMENTO2", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
-                        {
-
-                            clsapoio.auditoriaTexto(dr.GetString(0));
-
-                        }
-                    }
-
-                    dr.Close();
-                    Cmd = new SqlCommand("SELECT CASE WHEN CON_CONSULTA_MOVIMENTO = '0'             THEN 'Nao consegue consultar registros realizados em datas anteriores ao do movimento em aberto.'                                 ELSE 'Consegue consultar registros realizados em datas anteriores ao do movimento em aberto.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_CONSULTA_MOVIMENTO", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
-                        {
-
-                            clsapoio.auditoriaTexto(dr.GetString(0));
-
-                        }
-                    }
-
-                    dr.Close();
-                    Cmd = new SqlCommand("SELECT CASE WHEN CON_ALTERAR_PRECO2 = '0'             THEN 'Nao habilitado para alterar o preco dos produtos durante a venda.'                                   when CON_ALTERAR_PRECO2 = '1' and CON_SENHA_PRECO2 = '1'            then 'Sistema habilitado para alterar o preco dos produtos durante a venda mediante autorizacao por senha.'                    ELSE 'Sistema habilitado para alterar o preco dos produtos durante a venda sem precisar de autorizacao por senha.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_ALTERAR_PRECO2,CON_SENHA_PRECO2", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
-                        {
-
-                            clsapoio.auditoriaTexto(dr.GetString(0));
-
-                        }
-                    }
-
-                    dr.Close();
-                    Cmd = new SqlCommand("SELECT CASE WHEN CON_SENHA_DESCONTO2 = '0'             THEN 'Configurado para aplicar desconto sem autorizacao por senha.'                                 ELSE 'O desconto só poderá ser aplicado mediante autorizacao por senha.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_SENHA_DESCONTO2", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
-                        {
-
-                            clsapoio.auditoriaTexto(dr.GetString(0));
-
-                        }
-                    }
-
-                    dr.Close();
-                    Cmd = new SqlCommand("SELECT CASE WHEN CON_PLANO2 = '1'             THEN 'Configurado para trabalhar com condições de pagamento para cheque.'                                 ELSE ''    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_PLANO2", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
-                        {
-
-                            clsapoio.auditoriaTexto(dr.GetString(0));
-
-                        }
-                    }
-
-                    dr.Close();
-                    Cmd = new SqlCommand("SELECT CASE WHEN CON_cpf = '0'             THEN 'Obrigatorio cadastro de CPF no cadastro de clientes.'                                 ELSE 'Nao obrigatorio o cadastro de CPF no cadastro de clientes.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_CPF", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
-                        {
-
-                            clsapoio.auditoriaTexto(dr.GetString(0));
-
-                        }
-                    }
-
-                    dr.Close();
-                    
-                    Cmd = new SqlCommand("SELECT CASE WHEN CON_AGUARDAR = '1'             THEN 'Habilitado a opcao de aguardar confirmacao de preco no pontos de venda(ECF), deixando livre a digitacao do preco.'                                 ELSE ''    END as result      FROM CONFIGURACOES where CON_FILIAL = 99 and CON_REDE = " + rede + " group by CON_AGUARDAR", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
-                        {
-
-                            clsapoio.auditoriaTexto(dr.GetString(0));
-
-                        }
-                    }
-
-                    dr.Close();
-                    Cmd = new SqlCommand("SELECT CASE WHEN CON_SENHA_CANCELAMENTO = '1'             THEN 'Habilitado para cancelar produtos na tela de venda mediante autorizacao por senha.'                                 ELSE 'Habilitado para cancelar produtos na tela de venda sem autorizacao por senha.'     END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_SENHA_CANCELAMENTO", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
-                        {
-
-                            clsapoio.auditoriaTexto(dr.GetString(0));
-
-                        }
-                    }
-
-                    dr.Close();
-                    Cmd = new SqlCommand("SELECT CASE WHEN EMP_HABILITA_QUANTIDADE = '0'  THEN 'Função que permite inserir quantidades nos produtos na tela Ponto de venda está desabilitada.'  ELSE 'Função que permite inserir quantidades nos produtos na tela Ponto de venda está habilitada.'  END as result  FROM EMPRESAS where EMP_CODIGO = " + rede + " group by EMP_HABILITA_QUANTIDADE union SELECT   CASE WHEN CON_DIAS_MAXIMO_CHEQUE = 0  THEN '' ELSE 'Prazo máximo de dias entre cheques será de ' + ltrim(rtrim(CAST (CON_DIAS_MAXIMO_CHEQUE AS NCHAR))) + ' dias.' END as result  FROM CONFIGURACOES where  CON_REDE = " + rede + " group by CON_DIAS_MAXIMO_CHEQUE", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
-                        {
-
-                            clsapoio.auditoriaTexto(dr.GetString(0));
-
-                        }
-                    }
-
-                    dr.Close();
-                    Cmd = new SqlCommand("SELECT CASE WHEN CON_ENVIA_VALE = 0    THEN 'Configurado para não enviar Vale entre lojas.'     ELSE 'Configurado para enviar vale entre lojas.'   END as result  FROM CONFIGURACOES where   CON_REDE = " + rede + " group by CON_ENVIA_VALE", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
-                        {
-
-                            clsapoio.auditoriaTexto(dr.GetString(0));
-
-                        }
-                    }
-
-                    dr.Close();
-                    Cmd = new SqlCommand("SELECT CASE WHEN CON_VIAS_PREVENDA  = 0 THEN 'Não existe numero de vias de pré - venda a imprimir'  WHEN CON_VIAS_PREVENDA  = 1 THEN 'Foi configurado 1 via de pré - venda a imprimir'          WHEN CON_VIAS_PREVENDA  = 2 THEN          'Foi configurado 2 vias de pré - venda a imprimir'          WHEN CON_VIAS_PREVENDA  = 3 THEN          'Foi configurado 3 vias de pré - venda a imprimir'          ELSE 'Foi configurado numero de vias de pré - venda a imprimir'        END AS result FROM   configuracoes WHERE  CON_REDE = " + rede + " GROUP  BY CON_VIAS_PREVENDA", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
-                        {
-
-                            clsapoio.auditoriaTexto(dr.GetString(0));
-
-                        }
-                    }
-
-                    dr.Close();
-                    Cmd = new SqlCommand("SELECT CASE WHEN CON_FECHAR_PREVENDA_DIAS  = 0 THEN          'Pre - venda configurada para ficar em aberto ate ser finalizada'          WHEN CON_FECHAR_PREVENDA_DIAS  = 1 THEN          'Pre - venda configurada para fechar em 1 dia'          WHEN CON_FECHAR_PREVENDA_DIAS  = 2 THEN          'Pre - venda configurada para fechar em 2 dias'          WHEN CON_FECHAR_PREVENDA_DIAS  = 3 THEN          'Pre - venda configurada para fechar em 3 dias'          ELSE 'Pre - venda configurada para fechar com muitos dias'        END AS result FROM   configuracoes WHERE  CON_REDE = " + rede + " GROUP  BY CON_FECHAR_PREVENDA_DIAS ", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
-                        {
-
-                            clsapoio.auditoriaTexto(dr.GetString(0));
-
-                        }
-                    }
-
-                    dr.Close();
-                    clsapoio.auditoriaTexto("\n");
-                    clsapoio.auditoriaTexto("Configuracoes do clientes:");
-                    Cmd = new SqlCommand("SELECT  case  WHEN CON_CPF = 0     THEN 'No cadastro de clientes o CPF é obrigatório (não recomendado).'         ELSE 'No cadastro de clientes o CPF é obrigatório.'        END as result  FROM CONFIGURACOES where   CON_REDE = " + rede + " group by CON_CPF    union      SELECT  case  WHEN CON_EXIGE_CLIENTE2 = 0     THEN 'Não obrigatório o cadastro de clientes nas vendas em cheque.'         ELSE 'Obrigatório o cadastro de clientes nas vendas em cheque.'        END as result  FROM CONFIGURACOES where   CON_REDE = " + rede + " group by CON_EXIGE_CLIENTE2           union      SELECT  case  WHEN CON_CLIENTE_PARCIAL = 0     THEN 'Não aceita cadastro parcial de cliente. Obrigatório os campos Nome, Telefone, Endereço, Sexo, Loja e Vendedor.'         ELSE 'Aceita cadastro parcial de clientes somente durante a venda.'       END as result  FROM CONFIGURACOES where   CON_REDE = " + rede + " group by CON_CLIENTE_PARCIAL   union      SELECT  case  WHEN EMP_FIDELIDADE = 0     THEN ''      WHEN (SELECT CON_FIDELIDADE_LOJA FROM CONFIGURACOES WHERE CON_REDE = " + rede + " group by CON_FIDELIDADE_LOJA) = 0      THEN 'Trabalha com cartão fidelidade e o cadastro somente pode ser realizado na Retaguarda.'     ELSE 'Trabalha com cartão fidelidade e o cadastro pode ser feito na loja.'       END as result  FROM EMPRESAS where   EMP_CODIGO = " + rede + " group by EMP_FIDELIDADE union SELECT  case  WHEN EMP_ULT_VENDEDOR = 0     THEN 'Ao cadastrar um cliente, o vendedor registrado na primeira vez, será sempre o vendedor do cliente mesmo que outro o atenda posteriomente. Alteração é permitida de forma manual.'       ELSE 'Ao vincular o cliente durante durante uma nova venda, o vendedor selecionado será atualizado em seu cadastro e passará a ser o vendedor do cliente.'       END as result  FROM EMPRESAS where   EMP_CODIGO = " + rede + " group by EMP_ULT_VENDEDOR       union         SELECT  case  WHEN EMP_ULT_FILIAL = 0     THEN 'Ao cadastrar um cliente, a loja registrada na primeira vez, será sempre a loja do cliente mesmo que ele compre em outra loja. Alteração é permitida de forma manual.'       ELSE 'Ao vincular o cliente durante durante uma nova venda, a loja visitada será atualizada em seu cadastro e passará a ser a loja do cliente.'       END as result  FROM EMPRESAS where   EMP_CODIGO = " + rede + " group by EMP_ULT_FILIAL", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        while (dr.Read())
-                        {
-
-                            clsapoio.auditoriaTexto(dr.GetString(0));
-
-                        }
-                    }
-                    dr.Close();
-                    clsapoio.auditoriaTexto("\n\n");
-                    MessageBox.Show("Etapa Configuracoes das lojas");
-                    #endregion
-                    
-
-                    Cmd = new SqlCommand("SELECT US_ABREVIADO AS USUARIO, LEFT (FIL_RAZAO_SOCIAL,15) AS LOJA,  LEFT  (REPLACE (REPLACE(US_GERAL2,'0','NAO') ,'1','SIM') ,3) AS GERAL FROM USUARIOS INNER JOIN FILIAL ON (FIL_CODIGO = US_FILIAL)WHERE FIL_ATIVA <> 'M' ORDER BY LOJA", clsapoio.conn);
-                    dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                    if (dr.HasRows)
-                    {
-                        clsapoio.auditoriaTexto("Cadastro de Usuarios: ");
-                        clsapoio.auditoriaTexto("Atenção: O cadastro de usuários só pode ser realizado através do sistema Retaguarda");
-                        clsapoio.auditoriaTexto("E as senhas devem ser informadas ao usuários para que possam alterar a mesma caso tenham permissão");
-                        while (dr.Read())
-                        {
-
-                            clsapoio.auditoriaTexto("Nome: " + dr.GetString(0) + "              Filial:  " + dr.GetString(1) + "             Geral:  " + dr.GetString(2));
-
-                        }
+                        dr.Close();
+                        MessageBox.Show("Etapa Regras");
+                        toolStripProgressBar.Value = 60;
                         clsapoio.auditoriaTexto("\n\n");
+
+                        clsapoio.auditoriaTexto("Configuracoes das Lojas");
+                        #region configuracoesdaslojas
+
+
+                        dr.Close();
+                        Cmd = new SqlCommand("SELECT CASE WHEN CON_EXIBE_ESTOQUE2 = '0'THEN 'As quantidades em estoque nao serao exibidas nas lojas.' WHEN CON_EXIBE_ESTOQUE2 = '1' AND CON_EXIBE_QTD2 = '1'	THEN 'As quantidades em estoque dos produtos serao exibidas em quantidade.'		            ELSE 'As quantidades em estoque dos produtos serao exibidas com: (Sim/nao).'    END as Resutado      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + "group by CON_EXIBE_ESTOQUE2, CON_EXIBE_QTD2", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto(dr.GetString(0));
+
+                            }
+                        }
+
+                        dr.Close();
+                        Cmd = new SqlCommand("SELECT CASE WHEN CON_MOVIMENTO2 = '0'             THEN 'Nao consegue alterar nenhum registro em data anterior da data do movimento em aberto.'                                 ELSE 'Consegue alterar registros de datas anteriores.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_MOVIMENTO2", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto(dr.GetString(0));
+
+                            }
+                        }
+
+                        dr.Close();
+                        Cmd = new SqlCommand("SELECT CASE WHEN CON_CONSULTA_MOVIMENTO = '0'             THEN 'Nao consegue consultar registros realizados em datas anteriores ao do movimento em aberto.'                                 ELSE 'Consegue consultar registros realizados em datas anteriores ao do movimento em aberto.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_CONSULTA_MOVIMENTO", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto(dr.GetString(0));
+
+                            }
+                        }
+
+                        dr.Close();
+                        Cmd = new SqlCommand("SELECT CASE WHEN CON_ALTERAR_PRECO2 = '0'             THEN 'Nao habilitado para alterar o preco dos produtos durante a venda.'                                   when CON_ALTERAR_PRECO2 = '1' and CON_SENHA_PRECO2 = '1'            then 'Sistema habilitado para alterar o preco dos produtos durante a venda mediante autorizacao por senha.'                    ELSE 'Sistema habilitado para alterar o preco dos produtos durante a venda sem precisar de autorizacao por senha.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_ALTERAR_PRECO2,CON_SENHA_PRECO2", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto(dr.GetString(0));
+
+                            }
+                        }
+
+                        dr.Close();
+                        Cmd = new SqlCommand("SELECT CASE WHEN CON_SENHA_DESCONTO2 = '0'             THEN 'Configurado para aplicar desconto sem autorizacao por senha.'                                 ELSE 'O desconto só poderá ser aplicado mediante autorizacao por senha.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_SENHA_DESCONTO2", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto(dr.GetString(0));
+
+                            }
+                        }
+
+                        dr.Close();
+                        Cmd = new SqlCommand("SELECT CASE WHEN CON_PLANO2 = '1'             THEN 'Configurado para trabalhar com condições de pagamento para cheque.'                                 ELSE ''    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_PLANO2", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto(dr.GetString(0));
+
+                            }
+                        }
+
+                        dr.Close();
+                        Cmd = new SqlCommand("SELECT CASE WHEN CON_cpf = '0'             THEN 'Obrigatorio cadastro de CPF no cadastro de clientes.'                                 ELSE 'Nao obrigatorio o cadastro de CPF no cadastro de clientes.'    END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_CPF", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto(dr.GetString(0));
+
+                            }
+                        }
+
+                        dr.Close();
+
+                        Cmd = new SqlCommand("SELECT CASE WHEN CON_AGUARDAR = '1'             THEN 'Habilitado a opcao de aguardar confirmacao de preco no pontos de venda(ECF), deixando livre a digitacao do preco.'                                 ELSE ''    END as result      FROM CONFIGURACOES where CON_FILIAL = 99 and CON_REDE = " + rede + " group by CON_AGUARDAR", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto(dr.GetString(0));
+
+                            }
+                        }
+
+                        dr.Close();
+                        Cmd = new SqlCommand("SELECT CASE WHEN CON_SENHA_CANCELAMENTO = '1'             THEN 'Habilitado para cancelar produtos na tela de venda mediante autorizacao por senha.'                                 ELSE 'Habilitado para cancelar produtos na tela de venda sem autorizacao por senha.'     END as result      FROM CONFIGURACOES where CON_FILIAL =99 and CON_REDE = " + rede + " group by CON_SENHA_CANCELAMENTO", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto(dr.GetString(0));
+
+                            }
+                        }
+
+                        dr.Close();
+                        Cmd = new SqlCommand("SELECT CASE WHEN EMP_HABILITA_QUANTIDADE = '0'  THEN 'Função que permite inserir quantidades nos produtos na tela Ponto de venda está desabilitada.'  ELSE 'Função que permite inserir quantidades nos produtos na tela Ponto de venda está habilitada.'  END as result  FROM EMPRESAS where EMP_CODIGO = " + rede + " group by EMP_HABILITA_QUANTIDADE union SELECT   CASE WHEN CON_DIAS_MAXIMO_CHEQUE = 0  THEN '' ELSE 'Prazo máximo de dias entre cheques será de ' + ltrim(rtrim(CAST (CON_DIAS_MAXIMO_CHEQUE AS NCHAR))) + ' dias.' END as result  FROM CONFIGURACOES where  CON_REDE = " + rede + " group by CON_DIAS_MAXIMO_CHEQUE", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto(dr.GetString(0));
+
+                            }
+                        }
+
+                        dr.Close();
+                        Cmd = new SqlCommand("SELECT CASE WHEN CON_ENVIA_VALE = 0    THEN 'Configurado para não enviar Vale entre lojas.'     ELSE 'Configurado para enviar vale entre lojas.'   END as result  FROM CONFIGURACOES where   CON_REDE = " + rede + " group by CON_ENVIA_VALE", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto(dr.GetString(0));
+
+                            }
+                        }
+
+                        dr.Close();
+                        Cmd = new SqlCommand("SELECT CASE WHEN CON_VIAS_PREVENDA  = 0 THEN 'Não existe numero de vias de pré - venda a imprimir'  WHEN CON_VIAS_PREVENDA  = 1 THEN 'Foi configurado 1 via de pré - venda a imprimir'          WHEN CON_VIAS_PREVENDA  = 2 THEN          'Foi configurado 2 vias de pré - venda a imprimir'          WHEN CON_VIAS_PREVENDA  = 3 THEN          'Foi configurado 3 vias de pré - venda a imprimir'          ELSE 'Foi configurado numero de vias de pré - venda a imprimir'        END AS result FROM   configuracoes WHERE  CON_REDE = " + rede + " GROUP  BY CON_VIAS_PREVENDA", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto(dr.GetString(0));
+
+                            }
+                        }
+
+                        dr.Close();
+                        Cmd = new SqlCommand("SELECT CASE WHEN CON_FECHAR_PREVENDA_DIAS  = 0 THEN          'Pre - venda configurada para ficar em aberto ate ser finalizada'          WHEN CON_FECHAR_PREVENDA_DIAS  = 1 THEN          'Pre - venda configurada para fechar em 1 dia'          WHEN CON_FECHAR_PREVENDA_DIAS  = 2 THEN          'Pre - venda configurada para fechar em 2 dias'          WHEN CON_FECHAR_PREVENDA_DIAS  = 3 THEN          'Pre - venda configurada para fechar em 3 dias'          ELSE 'Pre - venda configurada para fechar com muitos dias'        END AS result FROM   configuracoes WHERE  CON_REDE = " + rede + " GROUP  BY CON_FECHAR_PREVENDA_DIAS ", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto(dr.GetString(0));
+
+                            }
+                        }
+
+                        dr.Close();
+                        clsapoio.auditoriaTexto("\n");
+                        clsapoio.auditoriaTexto("Configuracoes do clientes:");
+                        Cmd = new SqlCommand("SELECT  case  WHEN CON_CPF = 0     THEN 'No cadastro de clientes o CPF é obrigatório (não recomendado).'         ELSE 'No cadastro de clientes o CPF é obrigatório.'        END as result  FROM CONFIGURACOES where   CON_REDE = " + rede + " group by CON_CPF    union      SELECT  case  WHEN CON_EXIGE_CLIENTE2 = 0     THEN 'Não obrigatório o cadastro de clientes nas vendas em cheque.'         ELSE 'Obrigatório o cadastro de clientes nas vendas em cheque.'        END as result  FROM CONFIGURACOES where   CON_REDE = " + rede + " group by CON_EXIGE_CLIENTE2           union      SELECT  case  WHEN CON_CLIENTE_PARCIAL = 0     THEN 'Não aceita cadastro parcial de cliente. Obrigatório os campos Nome, Telefone, Endereço, Sexo, Loja e Vendedor.'         ELSE 'Aceita cadastro parcial de clientes somente durante a venda.'       END as result  FROM CONFIGURACOES where   CON_REDE = " + rede + " group by CON_CLIENTE_PARCIAL   union      SELECT  case  WHEN EMP_FIDELIDADE = 0     THEN ''      WHEN (SELECT CON_FIDELIDADE_LOJA FROM CONFIGURACOES WHERE CON_REDE = " + rede + " group by CON_FIDELIDADE_LOJA) = 0      THEN 'Trabalha com cartão fidelidade e o cadastro somente pode ser realizado na Retaguarda.'     ELSE 'Trabalha com cartão fidelidade e o cadastro pode ser feito na loja.'       END as result  FROM EMPRESAS where   EMP_CODIGO = " + rede + " group by EMP_FIDELIDADE union SELECT  case  WHEN EMP_ULT_VENDEDOR = 0     THEN 'Ao cadastrar um cliente, o vendedor registrado na primeira vez, será sempre o vendedor do cliente mesmo que outro o atenda posteriomente. Alteração é permitida de forma manual.'       ELSE 'Ao vincular o cliente durante durante uma nova venda, o vendedor selecionado será atualizado em seu cadastro e passará a ser o vendedor do cliente.'       END as result  FROM EMPRESAS where   EMP_CODIGO = " + rede + " group by EMP_ULT_VENDEDOR       union         SELECT  case  WHEN EMP_ULT_FILIAL = 0     THEN 'Ao cadastrar um cliente, a loja registrada na primeira vez, será sempre a loja do cliente mesmo que ele compre em outra loja. Alteração é permitida de forma manual.'       ELSE 'Ao vincular o cliente durante durante uma nova venda, a loja visitada será atualizada em seu cadastro e passará a ser a loja do cliente.'       END as result  FROM EMPRESAS where   EMP_CODIGO = " + rede + " group by EMP_ULT_FILIAL", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto(dr.GetString(0));
+
+                            }
+                        }
+                        dr.Close();
+                        clsapoio.auditoriaTexto("\n\n");
+                        MessageBox.Show("Etapa Configuracoes das lojas");
+                        #endregion
+
+
+                        Cmd = new SqlCommand("SELECT US_ABREVIADO AS USUARIO, LEFT (FIL_RAZAO_SOCIAL,15) AS LOJA,  LEFT  (REPLACE (REPLACE(US_GERAL2,'0','NAO') ,'1','SIM') ,3) AS GERAL FROM USUARIOS INNER JOIN FILIAL ON (FIL_CODIGO = US_FILIAL)WHERE FIL_ATIVA <> 'M' ORDER BY LOJA", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            clsapoio.auditoriaTexto("Cadastro de Usuarios: ");
+                            clsapoio.auditoriaTexto("Atenção: O cadastro de usuários só pode ser realizado através do sistema Retaguarda");
+                            clsapoio.auditoriaTexto("E as senhas devem ser informadas ao usuários para que possam alterar a mesma caso tenham permissão");
+                            while (dr.Read())
+                            {
+
+                                clsapoio.auditoriaTexto("Nome: " + dr.GetString(0) + "              Filial:  " + dr.GetString(1) + "             Geral:  " + dr.GetString(2));
+
+                            }
+                            clsapoio.auditoriaTexto("\n\n");
+                        }
+                        dr.Close();
+
+                        clsapoio.auditoriaTexto("\n\n");
+                        MessageBox.Show("Etapa Usuarios");
+                        clsapoio.auditoriaTexto("\n\n");
+                        toolStripProgressBar.Value = 70;
+                        #region informacoesdecomputador
+                        clsapoio.auditoriaTexto("REQUISITOS MINIMOS PARA FUNCIONAR O SISTEMA PDVNET");
+                        clsapoio.auditoriaTexto("Windows 10 ou Superior.");
+                        clsapoio.auditoriaTexto("Net Framework 4.5.2");
+                        clsapoio.auditoriaTexto("Internet funcionando.");
+                        clsapoio.auditoriaTexto("Usuário e senha com direito de administrador.");
+                        clsapoio.auditoriaTexto("O Certificado Digital deve estar instalado. ");
+                        clsapoio.auditoriaTexto("Todas as impressoras de etiqueta, fiscal ou não fiscal devem estar instaladas e testadas. ");
+                        clsapoio.auditoriaTexto("Processador – Dual Core ou superior. ");
+                        clsapoio.auditoriaTexto("HD - 120 GB livres.");
+                        clsapoio.auditoriaTexto("Memória - 8 GB.  ");
+                        clsapoio.auditoriaTexto("Resolução de Vídeo - igual ou superior a 1024x768(Não suporta netbook).  ");
+                        clsapoio.auditoriaTexto("Porta de comunicação e USBs testadas.");
+                        clsapoio.auditoriaTexto("\n");
+
+                        clsapoio.auditoriaTexto("REQUISITOS MÍNIMOS PARA NFe / NFCe / Sistema");
+                        clsapoio.auditoriaTexto("Certificado Digital tipo A1 ou A3 já instalados e testados no computador  (No certificado A3 a senha não fica gravada e sempre será solicitada). ");
+                        clsapoio.auditoriaTexto("Estar credenciado para emissão de NFe junto a SEFAZ. ");
+                        clsapoio.auditoriaTexto("Disponibilizar informações tributárias, Regime, Tributações (PIS e Cofins), CSOSN, CNAE, CSC, CFOP, Substituição tributária, etc. ");
+                        clsapoio.auditoriaTexto("\n");
+
+                        clsapoio.auditoriaTexto("DICAS IMPORTANTES");
+                        clsapoio.auditoriaTexto("Atenção: Verifique sempre na Nota fiscal de compra se os produtos possuem substituição tributária e configure essa tributação no cadastro do produto. Mantendo a tributação correta no cadastro do produto, não acarretará encargos tributários desnecessários. Consulte sua contabilidade!  ");
+                        clsapoio.auditoriaTexto("Atenção: Não deixe de fazer notas fiscais eletrônicas das mercadorias devolvidas pelos clientes para não acarretar encargos tributários desnecessários. Consulte sua contabilidade!");
+                        clsapoio.auditoriaTexto("Não se esqueça de fazer sempre o Backup do sistema em mídia externa para garantir a disponibilidade dos seus dados.");
+                        clsapoio.auditoriaTexto("Zele pelos equipamentos, fazendo uma manutenção preventiva contra vírus. ");
+                        clsapoio.auditoriaTexto("Se precisar tirar alguma dúvida ou resolver algum problema, ligue para o Suporte (21) 2159-0606. ");
+
+                        clsapoio.auditoriaTexto("Confira sempre se os requisitos mínimos estão atendendo antes de instalar o sistema nas lojas");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        clsapoio.auditoriaTexto("");
+                        toolStripProgressBar.Value = 80;
+
+                        clsapoio.auditoriaTexto("INFORMAÇÕES TÉCNICAS DO SERVIDOR");
+                        clsapoio.auditoriaTexto("Nunca deixe de executar e conferir se o backup do banco de dados está sendo realizado com sucesso, ele não é de autoria da PDV NET Sistemas.");
+                        clsapoio.auditoriaTexto("Em caso de dúvidas de como fazer o backup, entre em contato com o nosso Suporte para esclarecimentos.");
+                        clsapoio.auditoriaTexto("Informacoes relacionadas ao Nome do Computador : " + Environment.MachineName);
+                        clsapoio.auditoriaTexto("Informacoes relacionadas ao Processador: " + Environment.ProcessorCount + "N de nucleo");
+                        clsapoio.auditoriaTexto("Informacoes relacionadas ao Hard Disk");
+                        string Consulta = "SELECT MaxCapacity FROM Win32_PhysicalMemoryArray";
+                        int memoriaRam = 0;
+                        ManagementObjectSearcher objetoPesquisado = new ManagementObjectSearcher(Consulta);
+                        foreach (ManagementObject WniPART in objetoPesquisado.Get())
+                        {
+                            UInt32 tamanhoKB = Convert.ToUInt32(WniPART.Properties["MaxCapacity"].Value);
+                            UInt32 tamanhoMB = tamanhoKB / 1024;
+                            memoriaRam += Convert.ToInt32(tamanhoMB);
+                            clsapoio.auditoriaTexto("Informacoes relacionadas a memoria Ram " + tamanhoMB + "Mb");
+                        }
+
+                        clsapoio.auditoriaTexto("\n\n");
+                        toolStripProgressBar.Value = 90;
+                        MessageBox.Show("Etapa Info Hadware");
+
+                        clsapoio.auditoriaTexto("PDV NET LOCACAO DE SISTEMAS DE INFORMATICA LTDA - EPP");
+                        clsapoio.auditoriaTexto(@"CNPJ: 06.910.563/0001-01");
+                        clsapoio.auditoriaTexto("Endereço: Av. Rio Branco, 251/11º andar - Centro - Rio de Janeiro.");
+                        clsapoio.auditoriaTexto("CEP: 20040-009");
+                        clsapoio.auditoriaTexto("Tel: (21) 2159-0606");
+                        clsapoio.auditoriaTexto("\n");
+                        clsapoio.auditoriaTexto("Supervisor de Implantação: Evandro Barroso ");
+                        clsapoio.auditoriaTexto("Email: implantacao@pdvnet.com.br");
+                        clsapoio.auditoriaTexto("Tel: (21) 96775-4275 (Vivo) \n");
+                        toolStripProgressBar.Value = 100;
+
+                        #region LerArquivo
+                        try
+                        {
+
+                            clsapoio.lerauditoriaTexto(txtConteudo);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
+                        }
+                        finally
+                        {
+                            MessageBox.Show("Arquivo concluido");
+                        }
+
+                        #endregion
+
+
                     }
-                    dr.Close();
-                    
-                    clsapoio.auditoriaTexto("\n\n");
-                    MessageBox.Show("Etapa Usuarios");
-                    clsapoio.auditoriaTexto("\n\n");
-                    toolStripProgressBar.Value = 70;
-                    #region informacoesdecomputador
-                    clsapoio.auditoriaTexto("REQUISITOS MINIMOS PARA FUNCIONAR O SISTEMA PDVNET");
-                    clsapoio.auditoriaTexto("Windows 10 ou Superior.");
-                    clsapoio.auditoriaTexto("Net Framework 4.5.2");
-                    clsapoio.auditoriaTexto("Internet funcionando.");
-                    clsapoio.auditoriaTexto("Usuário e senha com direito de administrador.");
-                    clsapoio.auditoriaTexto("O Certificado Digital deve estar instalado. ");
-                    clsapoio.auditoriaTexto("Todas as impressoras de etiqueta, fiscal ou não fiscal devem estar instaladas e testadas. ");
-                    clsapoio.auditoriaTexto("Processador – Dual Core ou superior. ");
-                    clsapoio.auditoriaTexto("HD - 120 GB livres.");
-                    clsapoio.auditoriaTexto("Memória - 8 GB.  ");
-                    clsapoio.auditoriaTexto("Resolução de Vídeo - igual ou superior a 1024x768(Não suporta netbook).  ");
-                    clsapoio.auditoriaTexto("Porta de comunicação e USBs testadas.");
-                    clsapoio.auditoriaTexto("\n");
-
-                    clsapoio.auditoriaTexto("REQUISITOS MÍNIMOS PARA NFe / NFCe / Sistema");
-                    clsapoio.auditoriaTexto("Certificado Digital tipo A1 ou A3 já instalados e testados no computador  (No certificado A3 a senha não fica gravada e sempre será solicitada). ");
-                    clsapoio.auditoriaTexto("Estar credenciado para emissão de NFe junto a SEFAZ. ");
-                    clsapoio.auditoriaTexto("Disponibilizar informações tributárias, Regime, Tributações (PIS e Cofins), CSOSN, CNAE, CSC, CFOP, Substituição tributária, etc. ");
-                    clsapoio.auditoriaTexto("\n");
-
-                    clsapoio.auditoriaTexto("DICAS IMPORTANTES");
-                    clsapoio.auditoriaTexto("Atenção: Verifique sempre na Nota fiscal de compra se os produtos possuem substituição tributária e configure essa tributação no cadastro do produto. Mantendo a tributação correta no cadastro do produto, não acarretará encargos tributários desnecessários. Consulte sua contabilidade!  ");
-                    clsapoio.auditoriaTexto("Atenção: Não deixe de fazer notas fiscais eletrônicas das mercadorias devolvidas pelos clientes para não acarretar encargos tributários desnecessários. Consulte sua contabilidade!");
-                    clsapoio.auditoriaTexto("Não se esqueça de fazer sempre o Backup do sistema em mídia externa para garantir a disponibilidade dos seus dados.");
-                    clsapoio.auditoriaTexto("Zele pelos equipamentos, fazendo uma manutenção preventiva contra vírus. ");
-                    clsapoio.auditoriaTexto("Se precisar tirar alguma dúvida ou resolver algum problema, ligue para o Suporte (21) 2159-0606. ");
-
-                    clsapoio.auditoriaTexto("Confira sempre se os requisitos mínimos estão atendendo antes de instalar o sistema nas lojas");
-                    clsapoio.auditoriaTexto("");
-                    clsapoio.auditoriaTexto("");
-                    clsapoio.auditoriaTexto("");
-                    clsapoio.auditoriaTexto("");
-                    clsapoio.auditoriaTexto("");
-
-                    clsapoio.auditoriaTexto("");
-                    clsapoio.auditoriaTexto("");
-                    clsapoio.auditoriaTexto("");
-                    clsapoio.auditoriaTexto("");
-                    clsapoio.auditoriaTexto("");
-                    clsapoio.auditoriaTexto("");
-                    toolStripProgressBar.Value = 80;
-
-                    clsapoio.auditoriaTexto("INFORMAÇÕES TÉCNICAS DO SERVIDOR");
-                    clsapoio.auditoriaTexto("Nunca deixe de executar e conferir se o backup do banco de dados está sendo realizado com sucesso, ele não é de autoria da PDV NET Sistemas.");
-                    clsapoio.auditoriaTexto("Em caso de dúvidas de como fazer o backup, entre em contato com o nosso Suporte para esclarecimentos.");
-                    clsapoio.auditoriaTexto("Informacoes relacionadas ao Nome do Computador : " + Environment.MachineName);
-                    clsapoio.auditoriaTexto("Informacoes relacionadas ao Processador: " + Environment.ProcessorCount + "N de nucleo");
-                    clsapoio.auditoriaTexto("Informacoes relacionadas ao Hard Disk");
-                    string Consulta = "SELECT MaxCapacity FROM Win32_PhysicalMemoryArray";
-                    int memoriaRam = 0;
-                    ManagementObjectSearcher objetoPesquisado = new ManagementObjectSearcher(Consulta);
-                    foreach (ManagementObject WniPART in objetoPesquisado.Get())
+                    else
                     {
-                        UInt32 tamanhoKB = Convert.ToUInt32(WniPART.Properties["MaxCapacity"].Value);
-                        UInt32 tamanhoMB = tamanhoKB / 1024;
-                        memoriaRam += Convert.ToInt32(tamanhoMB);
-                        clsapoio.auditoriaTexto("Informacoes relacionadas a memoria Ram " + tamanhoMB + "Mb");
+                        MessageBox.Show("Selecione o Banco com informaçao");
                     }
 
-                    clsapoio.auditoriaTexto("\n\n");
-                    toolStripProgressBar.Value = 90;
-                    MessageBox.Show("Etapa Info Hadware");
-
-                    clsapoio.auditoriaTexto("PDV NET LOCACAO DE SISTEMAS DE INFORMATICA LTDA - EPP");
-                    clsapoio.auditoriaTexto(@"CNPJ: 06.910.563/0001-01");
-                    clsapoio.auditoriaTexto("Endereço: Av. Rio Branco, 251/11º andar - Centro - Rio de Janeiro.");
-                    clsapoio.auditoriaTexto("CEP: 20040-009");
-                    clsapoio.auditoriaTexto("Tel: (21) 2159-0606");
-                    clsapoio.auditoriaTexto("\n");
-                    clsapoio.auditoriaTexto("Supervisor de Implantação: Evandro Barroso ");
-                    clsapoio.auditoriaTexto("Email: implantacao@pdvnet.com.br");
-                    clsapoio.auditoriaTexto("Tel: (21) 96775-4275 (Vivo) \n");
-                    toolStripProgressBar.Value = 100;
 
                     #endregion
 
@@ -2460,25 +2528,9 @@ namespace bancozerado
                     MessageBox.Show("Criado Arquivo");
 
                 }
-                    
 
-                #region LerArquivo
-                try
-                {
 
-                    clsapoio.lerauditoriaTexto(txtConteudo);
 
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Erro ao Abrir Arquivo: \n" + ex.Message);
-                }
-                finally
-                {
-                    MessageBox.Show("Arquivo concluido");
-                }
-
-                #endregion
 
 
 
@@ -2488,9 +2540,8 @@ namespace bancozerado
 
 
 
+
         #endregion
-
-
     }
 }
 
