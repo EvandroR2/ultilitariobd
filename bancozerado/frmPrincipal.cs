@@ -18,7 +18,6 @@ namespace bancozerado
     public partial class frmPrincipal : Form
     {
         clsapoio clsapoio = new clsapoio();
-        classSql sqlapoio = new classSql();
 
         public frmPrincipal()
         {
@@ -63,7 +62,7 @@ namespace bancozerado
         //Mensagem sobre versao
         private void sobreToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Desenvolvedor: Evandro  \n" + "Contato: Implantacao  \n" + "Versão 2.0");
+            MessageBox.Show("Desenvolvedor: Evandro  \nContato: Implantacao  \nVersão 2.0  \nRestaurar backup \nAnexar Mdf\nFazer backup \nConsulta Banco de Dados hospedado \nEditor de texto \nGerador de informação do banco de dados   ");
         }
 
         //BUSCANDO INFORMAÇÕES DO BANCO DE DADOS
@@ -215,6 +214,218 @@ namespace bancozerado
 
         #endregion
 
+        #region BotaoEnterTelaRestaurarBD
+        private void txtInstancia_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtUsuario.Focus();
+                
+            }
+        }
+
+        private void txtUsuario_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtSenha.Focus();
+            }
+        }
+
+        private void txtSenha_KeyPress_1(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                cmbBanco.Focus();
+            }
+        }
+
+        private void cmbBanco_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtDiretorioBuscar.Focus();
+            }
+        }
+
+        private void txtDiretorioBuscar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtDiretorio.Focus();
+            }
+        }
+
+        private void txtDiretorio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtArquivo.Focus();
+            }
+        }
+
+        private void txtArquivo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtArquivoAux.Focus();
+            }
+        }
+
+        private void txtArquivoAux_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtnomedoBancoZero.Focus();
+            }
+        }
+
+        private void txtnomedoBancoZero_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                btnRestaurar.Focus();
+            }
+        }
+
+        private void btnRestaurar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                btnDeletar.Focus();
+            }
+        }
+
+        private void btnDeletar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                rbtnPontoBak.Focus();
+            }
+        }
+
+        private void rbtnPontoBak_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                rbtnPontoMdf.Focus();
+            }
+        }
+
+        private void rbtnPontoMdf_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtDiretorioBkp.Focus();
+            }
+        }
+
+        private void txtDiretorioBkp_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                btnBackup.Focus();
+            }
+        }
+
+        private void btnBackup_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                checkBoxInstZeroousembackup.Focus();
+            }
+        }
+
+        private void checkBoxInstZeroousembackup_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                checkBoxFranquia.Focus();
+            }
+        }
+
+        private void checkBoxFranquia_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtcodigoRomaneio.Focus();
+            }
+        }
+
+        private void txtcodigoRomaneio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtCodigoEmpresa.Focus();
+            }
+        }
+
+        private void txtCodigoEmpresa_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtNomeEmpresa.Focus();
+            }
+        }
+
+        private void txtNomeEmpresa_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtCodigoFilial.Focus();
+            }
+        }
+
+        private void txtCodigoFilial_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                if (checkBoxFranquia.Checked)
+                {
+                    txtCodigoMatrizFranquia.Focus();
+                }
+                else
+                {
+                    btnQuerry.Focus();
+                }
+                
+            }
+        }
+
+        private void txtCodigoMatrizFranquia_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtCodTabTributo.Focus();
+            }
+        }
+
+        private void txtCodTabTributo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtDescTabTributo.Focus();
+            }
+        }
+
+        private void txtDescTabTributo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                txtTriPercTabTributo.Focus();
+            }
+        }
+
+        private void txtTriPercTabTributo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                btnQuerry.Focus();
+            }
+        }
+
+        #endregion
+
         #region page_restaurarbd
 
 
@@ -273,11 +484,20 @@ namespace bancozerado
                             string queryprincipal = @"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"] FROM  DISK = N'" + pathBuscar + @"\" + file + @"' WITH  FILE = 1,  MOVE N'" + sCampo + "' TO N'" + path + @"\" + nomedobancoZero + @".mdf',  MOVE N'" + sCampo2 + "' TO N'" + path + @"\" + nomedobancoZero + @"_1.ldf',  NOUNLOAD,  STATS = 5";
 
                             cmd = new SqlCommand(queryprincipal, clsapoio.conn);
+                            cmd.CommandTimeout = 180;
                             clsapoio.auditoriaTexto(queryprincipal);
                             dr = cmd.ExecuteReader();
 
                             dr.Close();
+
+                            if ((txtArquivoAux.Text == "") && (txtArquivo.Text != ""))
+                            {
+                                MessageBox.Show("Banco de dados restaurado " + nomedobancoZero);
+                                
+                            }
                         }
+
+                        
 
 
                         catch (Exception ex)
@@ -326,12 +546,20 @@ namespace bancozerado
 
                             string queryauxiliar = @"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"_AUXILIAR] FROM  DISK = N'" + pathBuscar + @"\" + fileAux + @"' WITH  FILE = 1,  MOVE N'" + sCampo + "' TO N'" + path + @"\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.mdf',  MOVE N'" + sCampo2 + "' TO N'" + path + @"\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.ldf',  NOUNLOAD,  STATS = 5";
                             cmd = new SqlCommand(queryauxiliar, clsapoio.conn);
-                            clsapoio.auditoriaTexto(queryauxiliar);
+                            cmd.CommandTimeout = 180;
                             dr = cmd.ExecuteReader();
 
                             dr.Close();
 
-                            MessageBox.Show("Banco de dados restaurado " + nomedobancoZero + "\n" + "Banco de dados restaurado " + nomedobancoZero + "_Auxiliar");
+                            if ((txtArquivoAux.Text != "") && (txtArquivo.Text == ""))
+                            {
+                                MessageBox.Show("Banco de dados restaurado " + nomedobancoZero + "_Auxiliar");
+
+                            }
+                            if ((txtArquivoAux.Text != "") && (txtArquivo.Text != ""))
+                            {
+                                MessageBox.Show("Banco de dados restaurado " + nomedobancoZero + "\nBanco de dados restaurado " + nomedobancoZero + "_Auxiliar");
+                            }
 
                         }
 
@@ -346,6 +574,8 @@ namespace bancozerado
                         }
                         txtnomedoBancoZero.Text = "";
                     }
+
+                    
                 }
                 else
                 {
@@ -362,6 +592,11 @@ namespace bancozerado
                             clsapoio.stringBD();
                             SqlCommand cmd = new SqlCommand(@"USE [master] CREATE DATABASE [" + nomedobancoZero + @"] ON ( FILENAME = N'" + path + @"\" + file + @".mdf'),( FILENAME = N'" + path + @"\" + file + @"_1.ldf' ) FOR ATTACH", clsapoio.conn);
                             SqlDataReader dr = cmd.ExecuteReader();
+
+                            if ((txtArquivoAux.Text == "") && (txtArquivo.Text != ""))
+                            {
+                                MessageBox.Show("Banco de dados anexado " + nomedobancoZero);
+                            }
 
                         }
 
@@ -382,7 +617,16 @@ namespace bancozerado
                             SqlCommand cmd = new SqlCommand(@"USE [master] CREATE DATABASE [" + nomedobancoZero + @"_AUXILIAR] ON ( FILENAME = N'" + path + @"\" + fileAux + @".mdf'),( FILENAME = N'" + path + @"\" + fileAux + @".ldf' ) FOR ATTACH", clsapoio.conn);
                             SqlDataReader dr = cmd.ExecuteReader();
 
-                            MessageBox.Show("Banco de dados anexado " + nomedobancoZero + "\n" + "Banco de dados anexado " + nomedobancoZero + "_Auxiliar");
+
+                            if ((txtArquivoAux.Text != "") && (txtArquivo.Text == ""))
+                            {
+                                MessageBox.Show("Banco de dados anexado " + nomedobancoZero + "_Auxiliar");
+
+                            }
+                            if ((txtArquivoAux.Text != "") && (txtArquivo.Text != ""))
+                            {
+                                MessageBox.Show("Banco de dados anexado " + nomedobancoZero + "\nBanco de dados anexado " + nomedobancoZero + "_Auxiliar");
+                            }
 
                         }
 
@@ -396,9 +640,12 @@ namespace bancozerado
 
                         }
                         txtnomedoBancoZero.Text = "";
+                        
                     }
+                    
                 }
 
+                cmbBanco_Click(cmbBanco, e);
 
             }
 
@@ -411,7 +658,7 @@ namespace bancozerado
             clsapoio.nomeUsuario = txtUsuario.Text;
             clsapoio.nomeSenha = txtSenha.Text;
             string nomedobancoZero = cmbBanco.Text;
-            var result = MessageBox.Show("Tem certeza que voce vai deletar o banco de dados?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var result = MessageBox.Show("Tem certeza que voce deseja fazer isso no banco de dados?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 if (cmbBanco.SelectedItem == null)
@@ -475,6 +722,7 @@ namespace bancozerado
 
                         }
                     }
+                    cmbBanco_Click(cmbBanco, e);
 
                 }
 
@@ -1486,11 +1734,11 @@ namespace bancozerado
                     dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
                     if (dr.HasRows)
                     {
+                     
                         dr.Close();
 
                         DataTable dados = null;
                         SqlDataAdapter adaptador = null;
-                        clsapoio.stringBDBD();
                         dados = new DataTable();
                         adaptador = new SqlDataAdapter(queryempresa, clsapoio.conn);
                         adaptador.Fill(dados);
@@ -2001,7 +2249,7 @@ namespace bancozerado
                     {
                         dr.Close();
 
-                        MessageBox.Show("Etapa 1");
+                        //MessageBox.Show("Etapa 1");
                         clsapoio.auditoriaTextosubstituir("\n\n");
                         toolStripProgressBar.Value = 10;
                         clsapoio.auditoriaTexto("Qual Técnico fez o Encontro Inicial");
@@ -2022,9 +2270,6 @@ namespace bancozerado
                                 clsapoio.auditoriaTexto("Nome da Empresa? " + dr.GetString(0).ToString());
                                 //codigo empresa esta em tynit
                                 rede = dr.GetByte(1).ToString();
-
-
-
                             }
                             if (contador > 1)
                             {
@@ -2034,42 +2279,12 @@ namespace bancozerado
                                 frm_rede.SenhaSql = txtSenha.Text;
                                 frm_rede.BancoSql = cmbBanco.Text;
                                 frm_rede.ShowDialog();
-
-
                                 rede = frm_rede.redeSql;
-
-
-
-
-
                             }
                             clsapoio.auditoriaTexto(" \n");
 
                         }
-
-
                         dr.Close();
-                        toolStripProgressBar.Value = 30;
-                        MessageBox.Show("Etapa Empresa");
-
-                        Cmd = new SqlCommand("select fil_codigo,rtrim(fil_razao_social),fil_cgc from filial order by FIL_CODIGO", clsapoio.conn);
-                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
-                        if (dr.HasRows)
-                        {
-                            clsapoio.auditoriaTexto("Quais Filiais estão cadastradas ?");
-                            while (dr.Read())
-                            {
-                                //codigo filial esta em smalint
-                                clsapoio.auditoriaTexto("FILIAL:" + dr.GetInt16(0).ToString() + "                 NOME FANTASIA: " + dr.GetString(1) + "                   CNPJ OU CPF: " + dr.GetString(2));
-
-                            }
-                            clsapoio.auditoriaTexto("\n\n");
-
-                        }
-                        dr.Close();
-                        toolStripProgressBar.Value = 40;
-                        MessageBox.Show("Etapa Filial");
-                        clsapoio.auditoriaTexto("\n\n");
 
                         #region parametrizacaodeempresas
                         clsapoio.auditoriaTexto("Parametrização da EMPRESA");
@@ -2175,7 +2390,65 @@ namespace bancozerado
 
                         #endregion
 
-                        MessageBox.Show("Etapa Entrada de notas /n Etapa Pedido de compra");
+                        clsapoio.auditoriaTexto("\n\n");
+                        toolStripProgressBar.Value = 30;
+                        //MessageBox.Show("Etapa Empresa");
+
+                        Cmd = new SqlCommand("select fil_codigo,rtrim(fil_razao_social),fil_cgc from filial order by FIL_CODIGO", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            clsapoio.auditoriaTexto("Quais Filiais estão cadastradas ?");
+                            while (dr.Read())
+                            {
+                                //codigo filial esta em smalint
+                                clsapoio.auditoriaTexto("FILIAL:" + dr.GetInt16(0).ToString() + "                 NOME FANTASIA: " + dr.GetString(1) + "                   CNPJ OU CPF: " + dr.GetString(2));
+
+                            }
+                            clsapoio.auditoriaTexto("\n\n");
+
+                        }
+                        dr.Close();
+                        toolStripProgressBar.Value = 40;
+                        //MessageBox.Show("Etapa Filial");
+                        clsapoio.auditoriaTexto("\n\n");
+
+                        Cmd = new SqlCommand("select rtrim(cartao.car_descricao), rtrim(fil_razao_social), case when cartao.CAR_TIPO2 = 0 then 'DEBITO' when cartao.CAR_TIPO2 = 1 then 'CREDITO' END AS TIPO, CARTAOCONTA.CAR_P_ROTATIVO as ROTATIVO,CARTAOCONTA.CAR_P_PARCELADO as PARCELADO  from cartao inner join cartaoconta on  CARTAOCONTA.car_cartao = cartao.car_codigo inner join CARTAOTAXA on  CARTAOTAXA.CTX_REDE = cartao.CAR_REDE inner join filial on fil_codigo = cartaoconta.car_filial group by cartao.car_descricao, fil_razao_social, cartao.CAR_TIPO2,CARTAOCONTA.CAR_P_ROTATIVO,CARTAOCONTA.CAR_P_PARCELADO", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            clsapoio.auditoriaTexto("Cartões Cadastrados: ");
+                            while (dr.Read())
+                            {
+                                //codigo filial esta em smalint
+                                clsapoio.auditoriaTexto("Bandeira:" + dr.GetString(0) + "      Filial: " + dr.GetString(1) + "      Tipo: " + dr.GetString(2) + "      Rotativo: " + dr.GetInt16(3) + "      Parcelado: " + dr.GetInt16(4));
+
+                            }
+                            clsapoio.auditoriaTexto("\n\n");
+
+                        }
+                        dr.Close();
+
+                        toolStripProgressBar.Value = 50;
+                        clsapoio.auditoriaTexto("\n\n");
+
+
+                        Cmd = new SqlCommand("select rtrim(CON_DESCRICAO), case when CON_CREDIARIO= 1 then 'Habilitado para crediario' when CON_CREDIARIO = 0 then 'Não habilitado para crediario' end as Crediario, case when CON_FATURAMENTO = 1 then 'Habilitado para Faturamento' when CON_CREDIARIO = 0 then 'Não habilitado para Faturamento' end as Faturamento, case when CON_LOJA2 = 1 then 'Habilitado para loja' when CON_LOJA2 = 0 then 'Não habilitado para loja' end as Loja from CONDICOES_PAGAMENTO where CON_VISIVEL = 1 and CON_EXCLUIDA = 0 order by CON_CODIGO", clsapoio.conn);
+                        dr = Cmd.ExecuteReader(); //executa a consulta e le os registros..
+                        if (dr.HasRows)
+                        {
+                            clsapoio.auditoriaTexto("Formas de Pagamento Cadastradas: ");
+                            while (dr.Read())
+                            {
+                                //codigo filial esta em smalint
+                                clsapoio.auditoriaTexto("Descrição: " + dr.GetString(0) +  "       " + dr.GetString(1) + "       " + dr.GetString(2) + "       " + dr.GetString(3));
+
+                            }
+                            clsapoio.auditoriaTexto("\n\n");
+
+                        }
+                        dr.Close();
+
                         toolStripProgressBar.Value = 50;
                         clsapoio.auditoriaTexto("\n\n");
 
@@ -2195,7 +2468,7 @@ namespace bancozerado
                         }
 
                         dr.Close();
-                        MessageBox.Show("Etapa Regras");
+                        ////MessageBox.Show("Etapa Regras");
                         toolStripProgressBar.Value = 60;
                         clsapoio.auditoriaTexto("\n\n");
 
@@ -2411,7 +2684,7 @@ namespace bancozerado
                         dr.Close();
 
                         clsapoio.auditoriaTexto("\n\n");
-                        MessageBox.Show("Etapa Usuarios");
+                        //MessageBox.Show("Etapa Usuarios");
                         clsapoio.auditoriaTexto("\n\n");
                         toolStripProgressBar.Value = 70;
                         #region informacoesdecomputador
@@ -2476,7 +2749,7 @@ namespace bancozerado
 
                         clsapoio.auditoriaTexto("\n\n");
                         toolStripProgressBar.Value = 90;
-                        MessageBox.Show("Etapa Info Hadware");
+                        //MessageBox.Show("Etapa Info Hadware");
 
                         clsapoio.auditoriaTexto("PDV NET LOCACAO DE SISTEMAS DE INFORMATICA LTDA - EPP");
                         clsapoio.auditoriaTexto(@"CNPJ: 06.910.563/0001-01");
@@ -2542,6 +2815,9 @@ namespace bancozerado
 
 
         #endregion
+
+
+        
     }
 }
 

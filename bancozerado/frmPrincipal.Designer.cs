@@ -243,8 +243,9 @@ namespace bancozerado
             this.cmbBanco.Location = new System.Drawing.Point(448, 89);
             this.cmbBanco.Name = "cmbBanco";
             this.cmbBanco.Size = new System.Drawing.Size(179, 21);
-            this.cmbBanco.TabIndex = 60;
+            this.cmbBanco.TabIndex = 4;
             this.cmbBanco.Click += new System.EventHandler(this.cmbBanco_Click);
+            this.cmbBanco.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbBanco_KeyPress);
             this.cmbBanco.MouseMove += new System.Windows.Forms.MouseEventHandler(this.cmbBanco_MouseMove);
             // 
             // lblNomeBanco
@@ -289,24 +290,27 @@ namespace bancozerado
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = '*';
             this.txtSenha.Size = new System.Drawing.Size(100, 20);
-            this.txtSenha.TabIndex = 55;
+            this.txtSenha.TabIndex = 3;
             this.txtSenha.Text = "inter#system";
+            this.txtSenha.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSenha_KeyPress_1);
             // 
             // txtUsuario
             // 
             this.txtUsuario.Location = new System.Drawing.Point(234, 91);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(100, 20);
-            this.txtUsuario.TabIndex = 54;
+            this.txtUsuario.TabIndex = 2;
             this.txtUsuario.Text = "sa";
+            this.txtUsuario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUsuario_KeyPress);
             // 
             // txtInstancia
             // 
             this.txtInstancia.Location = new System.Drawing.Point(14, 91);
             this.txtInstancia.Name = "txtInstancia";
             this.txtInstancia.Size = new System.Drawing.Size(213, 20);
-            this.txtInstancia.TabIndex = 53;
+            this.txtInstancia.TabIndex = 1;
             this.txtInstancia.Text = ".\\pdvnet";
+            this.txtInstancia.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtInstancia_KeyPress);
             // 
             // lblMsg
             // 
@@ -396,8 +400,9 @@ namespace bancozerado
             this.txtDiretorioBuscar.Location = new System.Drawing.Point(14, 44);
             this.txtDiretorioBuscar.Name = "txtDiretorioBuscar";
             this.txtDiretorioBuscar.Size = new System.Drawing.Size(290, 26);
-            this.txtDiretorioBuscar.TabIndex = 105;
+            this.txtDiretorioBuscar.TabIndex = 5;
             this.txtDiretorioBuscar.Text = "C:\\BaseSQL";
+            this.txtDiretorioBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDiretorioBuscar_KeyPress);
             this.txtDiretorioBuscar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtDiretorioBuscar_MouseMove);
             // 
             // groupBox2
@@ -407,7 +412,7 @@ namespace bancozerado
             this.groupBox2.Location = new System.Drawing.Point(511, 163);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(158, 40);
-            this.groupBox2.TabIndex = 63;
+            this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             // 
             // rbtnPontoMdf
@@ -420,6 +425,7 @@ namespace bancozerado
             this.rbtnPontoMdf.Text = "\".mdf\"";
             this.rbtnPontoMdf.UseVisualStyleBackColor = true;
             this.rbtnPontoMdf.CheckedChanged += new System.EventHandler(this.rbtnPontoMdf_CheckedChanged);
+            this.rbtnPontoMdf.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtnPontoMdf_KeyPress);
             // 
             // rbtnPontoBak
             // 
@@ -433,6 +439,7 @@ namespace bancozerado
             this.rbtnPontoBak.Text = "\".bak\"";
             this.rbtnPontoBak.UseVisualStyleBackColor = true;
             this.rbtnPontoBak.CheckedChanged += new System.EventHandler(this.rbtnPontoBak_CheckedChanged);
+            this.rbtnPontoBak.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rbtnPontoBak_KeyPress);
             // 
             // lblCaminhoBak
             // 
@@ -481,10 +488,11 @@ namespace bancozerado
             this.checkBoxInstZeroousembackup.Location = new System.Drawing.Point(472, 226);
             this.checkBoxInstZeroousembackup.Name = "checkBoxInstZeroousembackup";
             this.checkBoxInstZeroousembackup.Size = new System.Drawing.Size(197, 19);
-            this.checkBoxInstZeroousembackup.TabIndex = 102;
+            this.checkBoxInstZeroousembackup.TabIndex = 15;
             this.checkBoxInstZeroousembackup.Text = "Instalacao zero ou sem Backup";
             this.checkBoxInstZeroousembackup.UseVisualStyleBackColor = true;
             this.checkBoxInstZeroousembackup.CheckedChanged += new System.EventHandler(this.checkBoxInstZeroousembackup_CheckedChanged);
+            this.checkBoxInstZeroousembackup.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.checkBoxInstZeroousembackup_KeyPress);
             this.checkBoxInstZeroousembackup.MouseMove += new System.Windows.Forms.MouseEventHandler(this.checkBoxInstZeroousembackup_MouseMove);
             // 
             // groupBoxInstBancoZero
@@ -523,10 +531,11 @@ namespace bancozerado
             this.checkBoxFranquia.Location = new System.Drawing.Point(6, 19);
             this.checkBoxFranquia.Name = "checkBoxFranquia";
             this.checkBoxFranquia.Size = new System.Drawing.Size(75, 19);
-            this.checkBoxFranquia.TabIndex = 65;
+            this.checkBoxFranquia.TabIndex = 16;
             this.checkBoxFranquia.Text = "Franquia";
             this.checkBoxFranquia.UseVisualStyleBackColor = true;
             this.checkBoxFranquia.CheckedChanged += new System.EventHandler(this.checkBoxFranquia_CheckedChanged);
+            this.checkBoxFranquia.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.checkBoxFranquia_KeyPress);
             this.checkBoxFranquia.MouseMove += new System.Windows.Forms.MouseEventHandler(this.checkBoxFranquia_MouseMove);
             // 
             // txtTriPercTabTributo
@@ -536,8 +545,9 @@ namespace bancozerado
             this.txtTriPercTabTributo.Location = new System.Drawing.Point(531, 96);
             this.txtTriPercTabTributo.Name = "txtTriPercTabTributo";
             this.txtTriPercTabTributo.Size = new System.Drawing.Size(85, 21);
-            this.txtTriPercTabTributo.TabIndex = 101;
+            this.txtTriPercTabTributo.TabIndex = 24;
             this.txtTriPercTabTributo.Visible = false;
+            this.txtTriPercTabTributo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTriPercTabTributo_KeyPress);
             this.txtTriPercTabTributo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtTriPercTabTributo_MouseMove);
             // 
             // txtDescTabTributo
@@ -547,8 +557,9 @@ namespace bancozerado
             this.txtDescTabTributo.Location = new System.Drawing.Point(531, 69);
             this.txtDescTabTributo.Name = "txtDescTabTributo";
             this.txtDescTabTributo.Size = new System.Drawing.Size(85, 21);
-            this.txtDescTabTributo.TabIndex = 100;
+            this.txtDescTabTributo.TabIndex = 23;
             this.txtDescTabTributo.Visible = false;
+            this.txtDescTabTributo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDescTabTributo_KeyPress);
             this.txtDescTabTributo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtDescTabTributo_MouseMove);
             // 
             // label3
@@ -633,7 +644,8 @@ namespace bancozerado
             this.txtNomeEmpresa.Location = new System.Drawing.Point(178, 96);
             this.txtNomeEmpresa.Name = "txtNomeEmpresa";
             this.txtNomeEmpresa.Size = new System.Drawing.Size(197, 21);
-            this.txtNomeEmpresa.TabIndex = 73;
+            this.txtNomeEmpresa.TabIndex = 19;
+            this.txtNomeEmpresa.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNomeEmpresa_KeyPress);
             this.txtNomeEmpresa.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtNomeEmpresa_MouseMove);
             // 
             // lblCodTabTributo
@@ -654,7 +666,8 @@ namespace bancozerado
             this.txtCodigoEmpresa.Location = new System.Drawing.Point(178, 69);
             this.txtCodigoEmpresa.Name = "txtCodigoEmpresa";
             this.txtCodigoEmpresa.Size = new System.Drawing.Size(197, 21);
-            this.txtCodigoEmpresa.TabIndex = 71;
+            this.txtCodigoEmpresa.TabIndex = 18;
+            this.txtCodigoEmpresa.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigoEmpresa_KeyPress);
             this.txtCodigoEmpresa.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtCodigoEmpresa_MouseMove);
             // 
             // txtCodigoFilial
@@ -663,7 +676,8 @@ namespace bancozerado
             this.txtCodigoFilial.Location = new System.Drawing.Point(178, 123);
             this.txtCodigoFilial.Name = "txtCodigoFilial";
             this.txtCodigoFilial.Size = new System.Drawing.Size(197, 21);
-            this.txtCodigoFilial.TabIndex = 75;
+            this.txtCodigoFilial.TabIndex = 20;
+            this.txtCodigoFilial.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigoFilial_KeyPress);
             this.txtCodigoFilial.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtCodigoFilial_MouseMove);
             // 
             // txtCodTabTributo
@@ -673,8 +687,9 @@ namespace bancozerado
             this.txtCodTabTributo.Location = new System.Drawing.Point(531, 41);
             this.txtCodTabTributo.Name = "txtCodTabTributo";
             this.txtCodTabTributo.Size = new System.Drawing.Size(85, 21);
-            this.txtCodTabTributo.TabIndex = 95;
+            this.txtCodTabTributo.TabIndex = 22;
             this.txtCodTabTributo.Visible = false;
+            this.txtCodTabTributo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodTabTributo_KeyPress);
             this.txtCodTabTributo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtCodTabTributo_MouseMove);
             // 
             // txtcodigoRomaneio
@@ -684,8 +699,9 @@ namespace bancozerado
             this.txtcodigoRomaneio.Mask = "000000";
             this.txtcodigoRomaneio.Name = "txtcodigoRomaneio";
             this.txtcodigoRomaneio.Size = new System.Drawing.Size(99, 21);
-            this.txtcodigoRomaneio.TabIndex = 70;
+            this.txtcodigoRomaneio.TabIndex = 17;
             this.txtcodigoRomaneio.Text = "000000";
+            this.txtcodigoRomaneio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtcodigoRomaneio_KeyPress);
             // 
             // txtCodigoMatrizFranquia
             // 
@@ -694,8 +710,9 @@ namespace bancozerado
             this.txtCodigoMatrizFranquia.Location = new System.Drawing.Point(178, 150);
             this.txtCodigoMatrizFranquia.Name = "txtCodigoMatrizFranquia";
             this.txtCodigoMatrizFranquia.Size = new System.Drawing.Size(197, 21);
-            this.txtCodigoMatrizFranquia.TabIndex = 77;
+            this.txtCodigoMatrizFranquia.TabIndex = 21;
             this.txtCodigoMatrizFranquia.Visible = false;
+            this.txtCodigoMatrizFranquia.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigoMatrizFranquia_KeyPress);
             this.txtCodigoMatrizFranquia.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtCodigoMatrizFranquia_MouseMove);
             // 
             // lblInfTabTributo
@@ -716,7 +733,7 @@ namespace bancozerado
             this.btnQuerry.Location = new System.Drawing.Point(289, 177);
             this.btnQuerry.Name = "btnQuerry";
             this.btnQuerry.Size = new System.Drawing.Size(86, 26);
-            this.btnQuerry.TabIndex = 69;
+            this.btnQuerry.TabIndex = 26;
             this.btnQuerry.Text = "Executar";
             this.btnQuerry.UseVisualStyleBackColor = true;
             this.btnQuerry.Click += new System.EventHandler(this.btnQuerry_Click);
@@ -737,13 +754,14 @@ namespace bancozerado
             this.txtDiretorioBkp.Location = new System.Drawing.Point(14, 221);
             this.txtDiretorioBkp.Name = "txtDiretorioBkp";
             this.txtDiretorioBkp.Size = new System.Drawing.Size(293, 26);
-            this.txtDiretorioBkp.TabIndex = 92;
+            this.txtDiretorioBkp.TabIndex = 13;
             this.txtDiretorioBkp.Text = "C:\\BaseSQL";
+            this.txtDiretorioBkp.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDiretorioBkp_KeyPress);
             this.txtDiretorioBkp.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtDiretorioBkp_MouseMove);
             // 
             // btnDiretorioBkp
             // 
-            this.btnDiretorioBkp.Location = new System.Drawing.Point(304, 221);
+            this.btnDiretorioBkp.Location = new System.Drawing.Point(321, 221);
             this.btnDiretorioBkp.Name = "btnDiretorioBkp";
             this.btnDiretorioBkp.Size = new System.Drawing.Size(27, 26);
             this.btnDiretorioBkp.TabIndex = 93;
@@ -757,8 +775,9 @@ namespace bancozerado
             this.txtArquivoAux.Location = new System.Drawing.Point(350, 110);
             this.txtArquivoAux.Name = "txtArquivoAux";
             this.txtArquivoAux.Size = new System.Drawing.Size(287, 26);
-            this.txtArquivoAux.TabIndex = 89;
+            this.txtArquivoAux.TabIndex = 8;
             this.txtArquivoAux.Text = "V1005_AUXILIAR.bak";
+            this.txtArquivoAux.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtArquivoAux_KeyPress);
             this.txtArquivoAux.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtArquivoAux_MouseMove);
             // 
             // lblInformeAux
@@ -777,8 +796,9 @@ namespace bancozerado
             this.txtDiretorio.Location = new System.Drawing.Point(346, 44);
             this.txtDiretorio.Name = "txtDiretorio";
             this.txtDiretorio.Size = new System.Drawing.Size(290, 26);
-            this.txtDiretorio.TabIndex = 82;
+            this.txtDiretorio.TabIndex = 6;
             this.txtDiretorio.Text = "C:\\BaseSQL";
+            this.txtDiretorio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDiretorio_KeyPress);
             this.txtDiretorio.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtDiretorio_MouseMove);
             // 
             // txtArquivo
@@ -787,8 +807,9 @@ namespace bancozerado
             this.txtArquivo.Location = new System.Drawing.Point(14, 110);
             this.txtArquivo.Name = "txtArquivo";
             this.txtArquivo.Size = new System.Drawing.Size(287, 26);
-            this.txtArquivo.TabIndex = 84;
+            this.txtArquivo.TabIndex = 7;
             this.txtArquivo.Text = "Loja_ZeroV1005.bak";
+            this.txtArquivo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtArquivo_KeyPress);
             this.txtArquivo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtArquivo_MouseMove);
             // 
             // lblInforme
@@ -824,13 +845,14 @@ namespace bancozerado
             // btnBackup
             // 
             this.btnBackup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBackup.Location = new System.Drawing.Point(337, 221);
+            this.btnBackup.Location = new System.Drawing.Point(361, 221);
             this.btnBackup.Name = "btnBackup";
             this.btnBackup.Size = new System.Drawing.Size(86, 26);
-            this.btnBackup.TabIndex = 80;
+            this.btnBackup.TabIndex = 14;
             this.btnBackup.Text = "BACKUP";
             this.btnBackup.UseVisualStyleBackColor = true;
             this.btnBackup.Click += new System.EventHandler(this.btnBackup_Click);
+            this.btnBackup.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.btnBackup_KeyPress);
             // 
             // btnDeletar
             // 
@@ -838,10 +860,11 @@ namespace bancozerado
             this.btnDeletar.Location = new System.Drawing.Point(391, 169);
             this.btnDeletar.Name = "btnDeletar";
             this.btnDeletar.Size = new System.Drawing.Size(114, 26);
-            this.btnDeletar.TabIndex = 79;
+            this.btnDeletar.TabIndex = 11;
             this.btnDeletar.Text = "DELETAR";
             this.btnDeletar.UseVisualStyleBackColor = true;
             this.btnDeletar.Click += new System.EventHandler(this.btnDeletar_Click);
+            this.btnDeletar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.btnDeletar_KeyPress);
             // 
             // btnRestaurar
             // 
@@ -849,10 +872,11 @@ namespace bancozerado
             this.btnRestaurar.Location = new System.Drawing.Point(264, 169);
             this.btnRestaurar.Name = "btnRestaurar";
             this.btnRestaurar.Size = new System.Drawing.Size(114, 26);
-            this.btnRestaurar.TabIndex = 69;
+            this.btnRestaurar.TabIndex = 10;
             this.btnRestaurar.Text = "RESTAURAR";
             this.btnRestaurar.UseVisualStyleBackColor = true;
             this.btnRestaurar.Click += new System.EventHandler(this.btnRestaurar_Click);
+            this.btnRestaurar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.btnRestaurar_KeyPress);
             // 
             // label1
             // 
@@ -870,7 +894,8 @@ namespace bancozerado
             this.txtnomedoBancoZero.Location = new System.Drawing.Point(14, 169);
             this.txtnomedoBancoZero.Name = "txtnomedoBancoZero";
             this.txtnomedoBancoZero.Size = new System.Drawing.Size(240, 26);
-            this.txtnomedoBancoZero.TabIndex = 66;
+            this.txtnomedoBancoZero.TabIndex = 9;
+            this.txtnomedoBancoZero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtnomedoBancoZero_KeyPress);
             // 
             // tabPage2
             // 
