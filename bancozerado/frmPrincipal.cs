@@ -175,8 +175,11 @@ namespace bancozerado
             txtInstancia.Text = @".\pdvnet";
             txtUsuario.Text = "sa";
             txtSenha.Text = @"inter#system";
-            carregaBanco();
+            cmbBanco_Click(cmbBanco, e);
             cmbBanco.Enabled = true;
+            txtInstancia.Enabled = false;
+            txtUsuario.Enabled = false;
+            txtSenha.Enabled = false;
         }
 
         private void rbtnAzure1_CheckedChanged(object sender, EventArgs e)
@@ -185,8 +188,11 @@ namespace bancozerado
             txtInstancia.Text = "azure1.pdvnet.com.br";
             txtUsuario.Text = "implantacao.relatorio";
             txtSenha.Text = @"2nbUrWD)rb}D";
-            carregaBanco();
+            cmbBanco_Click(cmbBanco, e);
             cmbBanco.Enabled = true;
+            txtInstancia.Enabled = false;
+            txtUsuario.Enabled = false;
+            txtSenha.Enabled = false;
         }
 
         private void rbtnAzure2_CheckedChanged(object sender, EventArgs e)
@@ -195,8 +201,11 @@ namespace bancozerado
             txtInstancia.Text = "azure2.pdvnet.com.br";
             txtUsuario.Text = "implantacao.relatorio";
             txtSenha.Text = @"2nbUrWD)rb}D";
-            carregaBanco();
+            cmbBanco_Click(cmbBanco, e);
             cmbBanco.Enabled = true;
+            txtInstancia.Enabled = false;
+            txtUsuario.Enabled = false;
+            txtSenha.Enabled = false;
         }
 
         private void rbtnUolHost_CheckedChanged(object sender, EventArgs e)
@@ -205,8 +214,11 @@ namespace bancozerado
             txtInstancia.Text = "servidor1.pdvnet.com.br";
             txtUsuario.Text = "implantacao.relatorio";
             txtSenha.Text = @"2nbUrWD)rb}D";
-            carregaBanco();
+            cmbBanco_Click(cmbBanco, e);
             cmbBanco.Enabled = true;
+            txtInstancia.Enabled = false;
+            txtUsuario.Enabled = false;
+            txtSenha.Enabled = false;
         }
 
 
