@@ -134,6 +134,22 @@ namespace bancozerado
             writer.WriteLine(c);
             writer.Close();
         }
+        public void escreverauditoriaServico(TextBox diretorioX,TextBox nomeCliente ,string c)
+        {
+            //string path = @"C:\curso\sistemas\sistemaemc\file.txt";
+            string path = diretorioX.Text;
+            bool res = Directory.Exists(path);
+            DateTime dta = DateTime.Now;
+            string dtaStr = dta.ToString("dd" + "MM" + "yyyy" + "HH"); //data formatada to string
+            if (!res)
+            {
+                Directory.CreateDirectory(path);
+            }
+            string path1 = path + "\\"+ nomeCliente.Text + dtaStr + ".txt";
+            StreamWriter writer = new StreamWriter(path1, true, Encoding.UTF8);
+            writer.WriteLine(c);
+            writer.Close();
+        }
         public void lerauditoriaTexto(RichTextBox x)
         {
             string path = @"C:\PDV\Audit_app\audit.txt";

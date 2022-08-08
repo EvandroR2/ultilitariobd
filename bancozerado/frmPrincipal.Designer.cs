@@ -114,6 +114,10 @@ namespace bancozerado
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RAZAO_SOCIAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBoxRelatoriodeServico = new System.Windows.Forms.GroupBox();
+            this.lblSelecioneRelatorio = new System.Windows.Forms.Label();
+            this.btnSelecioneRelatorio = new System.Windows.Forms.Button();
+            this.cmbRelatorioServico = new System.Windows.Forms.ComboBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.statusBarLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -151,6 +155,7 @@ namespace bancozerado
             this.mAjudaSobre = new System.Windows.Forms.ToolStripMenuItem();
             this.mAjudaLerConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.mAjudaConsultaBanco = new System.Windows.Forms.ToolStripMenuItem();
+            this.servicoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkBoxBancoAuxiliar = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.menuArquivo.SuspendLayout();
@@ -163,6 +168,8 @@ namespace bancozerado
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaTributo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaFilial)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaEmpresa)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            this.groupBoxRelatoriodeServico.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.menuBar.SuspendLayout();
@@ -345,10 +352,10 @@ namespace bancozerado
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Location = new System.Drawing.Point(10, 117);
+            this.tabControl1.Location = new System.Drawing.Point(9, 117);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(760, 621);
+            this.tabControl1.Size = new System.Drawing.Size(760, 527);
             this.tabControl1.TabIndex = 70;
             // 
             // tabPage1
@@ -357,7 +364,7 @@ namespace bancozerado
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(752, 595);
+            this.tabPage1.Size = new System.Drawing.Size(752, 501);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Restaurar BD";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -910,7 +917,7 @@ namespace bancozerado
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(752, 595);
+            this.tabPage2.Size = new System.Drawing.Size(752, 501);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Consulta Filial";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1061,12 +1068,56 @@ namespace bancozerado
             // 
             // tabPage3
             // 
+            this.tabPage3.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage3.Controls.Add(this.groupBoxRelatoriodeServico);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(752, 595);
+            this.tabPage3.Size = new System.Drawing.Size(752, 501);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Troca Cnpj";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabPage3.Text = "Relatorios";
+            // 
+            // groupBoxRelatoriodeServico
+            // 
+            this.groupBoxRelatoriodeServico.BackColor = System.Drawing.Color.LightGray;
+            this.groupBoxRelatoriodeServico.Controls.Add(this.lblSelecioneRelatorio);
+            this.groupBoxRelatoriodeServico.Controls.Add(this.btnSelecioneRelatorio);
+            this.groupBoxRelatoriodeServico.Controls.Add(this.cmbRelatorioServico);
+            this.groupBoxRelatoriodeServico.Location = new System.Drawing.Point(4, 4);
+            this.groupBoxRelatoriodeServico.Name = "groupBoxRelatoriodeServico";
+            this.groupBoxRelatoriodeServico.Size = new System.Drawing.Size(359, 184);
+            this.groupBoxRelatoriodeServico.TabIndex = 6;
+            this.groupBoxRelatoriodeServico.TabStop = false;
+            this.groupBoxRelatoriodeServico.Text = "Relatorios de Serviço";
+            // 
+            // lblSelecioneRelatorio
+            // 
+            this.lblSelecioneRelatorio.AutoSize = true;
+            this.lblSelecioneRelatorio.Location = new System.Drawing.Point(6, 26);
+            this.lblSelecioneRelatorio.Name = "lblSelecioneRelatorio";
+            this.lblSelecioneRelatorio.Size = new System.Drawing.Size(108, 13);
+            this.lblSelecioneRelatorio.TabIndex = 4;
+            this.lblSelecioneRelatorio.Text = "Selecione o Relatorio";
+            // 
+            // btnSelecioneRelatorio
+            // 
+            this.btnSelecioneRelatorio.Location = new System.Drawing.Point(236, 134);
+            this.btnSelecioneRelatorio.Name = "btnSelecioneRelatorio";
+            this.btnSelecioneRelatorio.Size = new System.Drawing.Size(103, 34);
+            this.btnSelecioneRelatorio.TabIndex = 5;
+            this.btnSelecioneRelatorio.Text = "Confirmar";
+            this.btnSelecioneRelatorio.UseVisualStyleBackColor = true;
+            this.btnSelecioneRelatorio.Click += new System.EventHandler(this.btnSelecioneRelatorio_Click);
+            // 
+            // cmbRelatorioServico
+            // 
+            this.cmbRelatorioServico.FormattingEnabled = true;
+            this.cmbRelatorioServico.Items.AddRange(new object[] {
+            "Reinstalação"});
+            this.cmbRelatorioServico.Location = new System.Drawing.Point(6, 51);
+            this.cmbRelatorioServico.Name = "cmbRelatorioServico";
+            this.cmbRelatorioServico.Size = new System.Drawing.Size(333, 21);
+            this.cmbRelatorioServico.TabIndex = 3;
+            this.cmbRelatorioServico.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbRelatorioServico_KeyPress);
             // 
             // tabPage4
             // 
@@ -1076,7 +1127,7 @@ namespace bancozerado
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(752, 595);
+            this.tabPage4.Size = new System.Drawing.Size(752, 501);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Encontro Inicial";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1086,7 +1137,7 @@ namespace bancozerado
             this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusBarLabel,
             this.toolStripProgressBar});
-            this.statusBar.Location = new System.Drawing.Point(3, 570);
+            this.statusBar.Location = new System.Drawing.Point(3, 476);
             this.statusBar.Name = "statusBar";
             this.statusBar.Size = new System.Drawing.Size(746, 22);
             this.statusBar.TabIndex = 4;
@@ -1108,7 +1159,7 @@ namespace bancozerado
             this.txtConteudo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtConteudo.Location = new System.Drawing.Point(3, 32);
             this.txtConteudo.Name = "txtConteudo";
-            this.txtConteudo.Size = new System.Drawing.Size(746, 560);
+            this.txtConteudo.Size = new System.Drawing.Size(746, 466);
             this.txtConteudo.TabIndex = 3;
             this.txtConteudo.Text = "";
             this.txtConteudo.WordWrap = false;
@@ -1333,7 +1384,8 @@ namespace bancozerado
             this.mAjudaExibir,
             this.mAjudaSobre,
             this.mAjudaLerConfig,
-            this.mAjudaConsultaBanco});
+            this.mAjudaConsultaBanco,
+            this.servicoToolStripMenuItem});
             this.mAjuda.Name = "mAjuda";
             this.mAjuda.Size = new System.Drawing.Size(67, 25);
             this.mAjuda.Text = "Ajuda";
@@ -1366,6 +1418,13 @@ namespace bancozerado
             this.mAjudaConsultaBanco.Text = "Fazer Consulta no Banco";
             this.mAjudaConsultaBanco.Click += new System.EventHandler(this.mAjudaConsultaBanco_Click);
             // 
+            // servicoToolStripMenuItem
+            // 
+            this.servicoToolStripMenuItem.Name = "servicoToolStripMenuItem";
+            this.servicoToolStripMenuItem.Size = new System.Drawing.Size(266, 26);
+            this.servicoToolStripMenuItem.Text = "Servico";
+            this.servicoToolStripMenuItem.Click += new System.EventHandler(this.servicoToolStripMenuItem_Click);
+            // 
             // checkBoxBancoAuxiliar
             // 
             this.checkBoxBancoAuxiliar.AutoSize = true;
@@ -1381,7 +1440,7 @@ namespace bancozerado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(782, 741);
+            this.ClientSize = new System.Drawing.Size(782, 649);
             this.Controls.Add(this.checkBoxBancoAuxiliar);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnSair);
@@ -1419,6 +1478,9 @@ namespace bancozerado
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaTributo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaFilial)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.divTabelaEmpresa)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.groupBoxRelatoriodeServico.ResumeLayout(false);
+            this.groupBoxRelatoriodeServico.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.statusBar.ResumeLayout(false);
@@ -1554,6 +1616,11 @@ namespace bancozerado
         private System.Windows.Forms.ToolStripMenuItem mExibirZoomRestaurar;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
         private System.Windows.Forms.CheckBox checkBoxBancoAuxiliar;
+        private System.Windows.Forms.ToolStripMenuItem servicoToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBoxRelatoriodeServico;
+        private System.Windows.Forms.Label lblSelecioneRelatorio;
+        private System.Windows.Forms.Button btnSelecioneRelatorio;
+        private System.Windows.Forms.ComboBox cmbRelatorioServico;
     }
 }
 

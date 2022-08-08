@@ -22,3 +22,21 @@ C:\Users\SRV-EVANDROR2\source\repos\EvandroR2\bancozerado\bancozerado\obj\Debug\
 C:\Users\SRV-EVANDROR2\source\repos\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.pdb
 C:\Users\SRV-EVANDROR2\source\repos\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.frm_perguntaRelatorio.resources
 C:\Users\SRV-EVANDROR2\source\repos\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.frm_codigodarede.resources
+C:\Users\SRV-EVANDROR2\source\repos\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.frm_relatorioservico_reinstalacao.resources
+C:\Users\SRV-EVANDROR2\source\repos\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.frm_relatorioservico.resources
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\bin\Debug\bancozerado.exe.config
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\bin\Debug\bancozerado.exe
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\bin\Debug\bancozerado.pdb
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.csproj.AssemblyReference.cache
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.csproj.SuggestedBindingRedirects.cache
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.frmLogin.resources
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.frmPrincipal.resources
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.frm_codigodarede.resources
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.frm_perguntaRelatorio.resources
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.frm_relatorioservico.resources
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.frm_relatorioservico_reinstalacao.resources
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.Properties.Resources.resources
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.csproj.GenerateResource.cache
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.csproj.CoreCompileInputs.cache
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.exe
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.pdb

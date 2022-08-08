@@ -496,7 +496,7 @@ namespace bancozerado
                             string queryprincipal = @"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"] FROM  DISK = N'" + pathBuscar + @"\" + file + @"' WITH  FILE = 1,  MOVE N'" + sCampo + "' TO N'" + path + @"\" + nomedobancoZero + @".mdf',  MOVE N'" + sCampo2 + "' TO N'" + path + @"\" + nomedobancoZero + @"_1.ldf',  NOUNLOAD,  STATS = 5";
 
                             cmd = new SqlCommand(queryprincipal, clsapoio.conn);
-                            cmd.CommandTimeout = 180;
+                            cmd.CommandTimeout = 330;
                             clsapoio.auditoriaTexto(queryprincipal);
                             dr = cmd.ExecuteReader();
 
@@ -558,7 +558,7 @@ namespace bancozerado
 
                             string queryauxiliar = @"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"_AUXILIAR] FROM  DISK = N'" + pathBuscar + @"\" + fileAux + @"' WITH  FILE = 1,  MOVE N'" + sCampo + "' TO N'" + path + @"\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.mdf',  MOVE N'" + sCampo2 + "' TO N'" + path + @"\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.ldf',  NOUNLOAD,  STATS = 5";
                             cmd = new SqlCommand(queryauxiliar, clsapoio.conn);
-                            cmd.CommandTimeout = 180;
+                            cmd.CommandTimeout = 330;
                             dr = cmd.ExecuteReader();
 
                             dr.Close();
@@ -694,6 +694,7 @@ namespace bancozerado
                                 clsapoio.stringBD();
 
                                 SqlCommand cmd1 = new SqlCommand(@"EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'" + nomedobancoZero + "' USE [master] DROP DATABASE [" + nomedobancoZero + "]", clsapoio.conn);
+                                cmd1.CommandTimeout = 330;
                                 SqlDataReader dr1 = cmd1.ExecuteReader();
 
                                 MessageBox.Show("Banco de dados Deletado " + nomedobancoZero);
@@ -776,7 +777,9 @@ namespace bancozerado
                         clsapoio.stringBD();
 
                         SqlCommand cmd1 = new SqlCommand(@"USE [master]; BACKUP DATABASE [" + nomedobancoZero + @"] TO DISK = N'" + pathBackup + @"\" + nomedobancoZero + dtaStr + @".bak' WITH NOFORMAT, NOINIT, NAME = N'" + nomedobancoZero + @" - Full Database Backup', SKIP, NOREWIND, NOUNLOAD, STATS = 10;", clsapoio.conn);
+                        cmd1.CommandTimeout = 330;
                         SqlDataReader dr1 = cmd1.ExecuteReader();
+                        
 
                         MessageBox.Show("Feito Backup do Banco de dados " + nomedobancoZero + "\n" + "Diretorio " + pathBackup + @"\" + nomedobancoZero + dtaStr + @".bak");
 
@@ -854,7 +857,7 @@ namespace bancozerado
             if (resultado == DialogResult.OK)
             {
                 //Exibe a pasta selecionada
-                txtDiretorio.Text = fbd1.SelectedPath;
+                txtDiretorioBkp.Text = fbd1.SelectedPath;
             }
         }
         private void btnArquivo_Click(object sender, EventArgs e)
@@ -2826,10 +2829,39 @@ namespace bancozerado
 
 
 
+
+
         #endregion
 
+        #region frmRelatoriodeServico
+        private void servicoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frm_relatorioservico f = new frm_relatorioservico();
+            f.Show();
+        }
 
-        
+        private void cmbRelatorioServico_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                if (cmbRelatorioServico.SelectedIndex == 0)
+                {
+                    frm_relatorioservico_reinstalacao f = new frm_relatorioservico_reinstalacao();
+                    f.Show();
+                }
+            }
+        }
+
+        private void btnSelecioneRelatorio_Click(object sender, EventArgs e)
+        {
+            if (cmbRelatorioServico.SelectedIndex == 0)
+            {
+                frm_relatorioservico_reinstalacao f = new frm_relatorioservico_reinstalacao();
+                f.Show();
+            }
+        }
+
+        #endregion
     }
 }
 

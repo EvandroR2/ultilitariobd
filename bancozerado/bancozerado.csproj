@@ -77,6 +77,18 @@
     <Compile Include="frm_perguntaRelatorio.Designer.cs">
       <DependentUpon>frm_perguntaRelatorio.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_relatorioservico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_relatorioservico.Designer.cs">
+      <DependentUpon>frm_relatorioservico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_relatorioservico_reinstalacao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_relatorioservico_reinstalacao.Designer.cs">
+      <DependentUpon>frm_relatorioservico_reinstalacao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gerenciador.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -92,6 +104,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frm_perguntaRelatorio.resx">
       <DependentUpon>frm_perguntaRelatorio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_relatorioservico.resx">
+      <DependentUpon>frm_relatorioservico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_relatorioservico_reinstalacao.resx">
+      <DependentUpon>frm_relatorioservico_reinstalacao.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
