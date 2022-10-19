@@ -40,3 +40,7 @@ D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj
 D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.csproj.CoreCompileInputs.cache
 D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.exe
 D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.pdb
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\bin\Debug\DotNetZip.dll
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\bin\Debug\DotNetZip.pdb
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\bin\Debug\DotNetZip.xml
+D:\C#- projetos\projetocomputador 01082022\EvandroR2\bancozerado\bancozerado\obj\Debug\bancozerado.csproj.CopyComplete

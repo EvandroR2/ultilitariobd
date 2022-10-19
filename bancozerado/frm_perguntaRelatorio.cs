@@ -210,6 +210,8 @@ namespace bancozerado
                 btnOkfrmRelatorio.Focus();
             }
         }
+
+
         private void btnOkfrmRelatorio_Click(object sender, EventArgs e)
         {
             if ((txtTecnico.Text != "") && (txtParticipantes.Text != "") && (txtRamodeAtuacao.Text != ""))

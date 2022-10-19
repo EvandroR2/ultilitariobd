@@ -12,6 +12,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Management;
 using System.Management.Instrumentation;
+using Ionic.Zip;
 
 namespace bancozerado
 {
@@ -496,7 +497,7 @@ namespace bancozerado
                             string queryprincipal = @"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"] FROM  DISK = N'" + pathBuscar + @"\" + file + @"' WITH  FILE = 1,  MOVE N'" + sCampo + "' TO N'" + path + @"\" + nomedobancoZero + @".mdf',  MOVE N'" + sCampo2 + "' TO N'" + path + @"\" + nomedobancoZero + @"_1.ldf',  NOUNLOAD,  STATS = 5";
 
                             cmd = new SqlCommand(queryprincipal, clsapoio.conn);
-                            cmd.CommandTimeout = 330;
+                            cmd.CommandTimeout = 600;
                             clsapoio.auditoriaTexto(queryprincipal);
                             dr = cmd.ExecuteReader();
 
@@ -505,6 +506,8 @@ namespace bancozerado
                             if ((txtArquivoAux.Text == "") && (txtArquivo.Text != ""))
                             {
                                 MessageBox.Show("Banco de dados restaurado " + nomedobancoZero);
+
+
                                 
                             }
                         }
@@ -558,7 +561,7 @@ namespace bancozerado
 
                             string queryauxiliar = @"USE [master] RESTORE DATABASE [" + nomedobancoZero + @"_AUXILIAR] FROM  DISK = N'" + pathBuscar + @"\" + fileAux + @"' WITH  FILE = 1,  MOVE N'" + sCampo + "' TO N'" + path + @"\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.mdf',  MOVE N'" + sCampo2 + "' TO N'" + path + @"\IMPLANTACAO5PDVNET_" + nomedobancoZero + @"_AUXILIAR.ldf',  NOUNLOAD,  STATS = 5";
                             cmd = new SqlCommand(queryauxiliar, clsapoio.conn);
-                            cmd.CommandTimeout = 330;
+                            cmd.CommandTimeout = 600;
                             dr = cmd.ExecuteReader();
 
                             dr.Close();
@@ -694,7 +697,7 @@ namespace bancozerado
                                 clsapoio.stringBD();
 
                                 SqlCommand cmd1 = new SqlCommand(@"EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'" + nomedobancoZero + "' USE [master] DROP DATABASE [" + nomedobancoZero + "]", clsapoio.conn);
-                                cmd1.CommandTimeout = 330;
+                                cmd1.CommandTimeout = 600;
                                 SqlDataReader dr1 = cmd1.ExecuteReader();
 
                                 MessageBox.Show("Banco de dados Deletado " + nomedobancoZero);
@@ -777,11 +780,13 @@ namespace bancozerado
                         clsapoio.stringBD();
 
                         SqlCommand cmd1 = new SqlCommand(@"USE [master]; BACKUP DATABASE [" + nomedobancoZero + @"] TO DISK = N'" + pathBackup + @"\" + nomedobancoZero + dtaStr + @".bak' WITH NOFORMAT, NOINIT, NAME = N'" + nomedobancoZero + @" - Full Database Backup', SKIP, NOREWIND, NOUNLOAD, STATS = 10;", clsapoio.conn);
-                        cmd1.CommandTimeout = 330;
+                        cmd1.CommandTimeout = 600;
                         SqlDataReader dr1 = cmd1.ExecuteReader();
                         
 
                         MessageBox.Show("Feito Backup do Banco de dados " + nomedobancoZero + "\n" + "Diretorio " + pathBackup + @"\" + nomedobancoZero + dtaStr + @".bak");
+                        
+                        
 
                     }
 
@@ -793,6 +798,38 @@ namespace bancozerado
                     {
                         clsapoio.desconectarBD();
 
+                    }
+                    var result = MessageBox.Show("Deseja Zipar o arquivo ?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        string ArquivoBak = nomedobancoZero + dtaStr + @".bak";
+                        string ArquivoZip = nomedobancoZero + dtaStr + @".Zip";
+
+                        using (ZipFile zip = new ZipFile())
+                        {
+                            if (File.Exists(@"C:\PDV\ETI.MDB"))
+                            {
+                                zip.AddFile(pathBackup + @"\" + ArquivoBak);
+                                zip.AddFile(@"C:\PDV\ETI.MDB");
+
+
+                                zip.Save(pathBackup + @"\" + ArquivoZip);
+                            }
+                            else
+                            {
+                                zip.AddFile(pathBackup + @"\" + ArquivoBak);
+
+                                zip.Save(pathBackup + @"\" + ArquivoZip);
+                            }
+                            
+
+                            
+
+                            File.Delete(pathBackup + @"\" + ArquivoBak);
+
+                            MessageBox.Show("Arquivo Zipado \n Diretorio " + pathBackup + @"\" + ArquivoZip);
+
+                        }
                     }
                 }
             }
@@ -869,6 +906,7 @@ namespace bancozerado
                 OpenFileDialog dialog = new OpenFileDialog();
                 dialog.Title = "Abrir Arquivo BAK ...";
                 dialog.Filter = "text file|*.bak";
+                
                 DialogResult result = dialog.ShowDialog();
 
 
@@ -1181,8 +1219,11 @@ namespace bancozerado
                         try
                             {
                                 clsapoio.stringBDBD();
+                            string querryFilial = "insert into filial  (FIL_CODIGO,FIL_RAZAO_SOCIAL,FIL_ATIVA,FIL_EMPRESA,FIL_RAZAO,FIL_FRANQUIA,FIL_CODIGO_FRANQUIA,FIL_INATIVA,FIL_DIVERSOS,FIL_CLIENTES,FIL_SALDOS) values ('" + codigoFilial + "','" + cmbBanco.Text + "','S','" + codigoEmpresa + "','" + cmbBanco.Text + "',0,0,0,1,1,1)";
+                            //ComandoAntigo
+                            //string querryFilial2 = @"insert into filial values ('" + codigoFilial + "','" + cmbBanco.Text + "','ISENTO','','N','',0,'" + codigoEmpresa + "','','.','',0,0,'" + cmbBanco.Text + "',0,0,0,NULL,1,0,1,0,'','','',1,1,1,0,0,1,1,'',1,0,1,0,'',1,2,3,0,1,1,0,0,1,1,1,0,0,0,'','',0,0,0,0,0,0,0,'4132',0,'-1',0,0,'0000000000000002',3,1,'20-05-2022',1,1,0,1,0,0,0,1,'00987654',0,0,0,0,0,1,0,0,'',0,0,0,'',0,0)"
 
-                                SqlCommand cmd1 = new SqlCommand(@"insert into filial values ('" + codigoFilial + "','" + cmbBanco.Text + "','ISENTO','','N','',0,'" + codigoEmpresa + "','','.','',0,0,'" + cmbBanco.Text + "',0,0,0,NULL,1,0,1,0,'','','',1,1,1,0,0,1,1,'',1,0,1,0,'',1,2,3,0,1,1,0,0,1,1,1,0,0,0,'','',0,0,0,0,0,0,0,'4132',0,'-1',0,0,'0000000000000002',3,1,'20-05-2022',1,1,0,1,0,0,0,1,'00987654',0,0,0,0,0,1,0,0,'',0,0,0,'',0,0)", clsapoio.conn);
+                                SqlCommand cmd1 = new SqlCommand(querryFilial, clsapoio.conn);
                                 SqlDataReader dr1 = cmd1.ExecuteReader();
 
 
@@ -1366,8 +1407,11 @@ namespace bancozerado
                         try
                             {
                                 clsapoio.stringBDBD();
+                            string querryFilial = "insert into filial  (FIL_CODIGO,FIL_RAZAO_SOCIAL,FIL_ATIVA,FIL_EMPRESA,FIL_RAZAO,FIL_FRANQUIA,FIL_CODIGO_FRANQUIA,FIL_INATIVA,FIL_DIVERSOS,FIL_CLIENTES,FIL_SALDOS) values ('" + codigoFilial + "','" + cmbBanco.Text + "','S','" + codigoEmpresa + "','" + cmbBanco.Text + "','1','" + codigoMatrizFranquia + "',0,1,1,1)";
+                            //codigoAntigo
+                            //string querryFilial2 = @"insert into filial values ('" + codigoFilial + "','" + cmbBanco.Text + "','ISENTO','','N','',0,'" + codigoEmpresa + "','','.','',0,0,'" + cmbBanco.Text + "',0,1," + codigoMatrizFranquia + ",NULL,1,0,1,0,'','','',1,1,1,0,0,1,1,'',1,0,1,0,'',1,2,3,0,1,1,0,0,1,1,1,0,0,0,'','',0,0,0,0,0,0,0,'4132',0,'-1',0,0,'0000000000000002',3,1,'20-05-2022',1,1,0,1,0,0,0,1,'00987654',0,0,0,0,0,1,0,0,'',0,0,0,'',0,0)";
 
-                                SqlCommand cmd1 = new SqlCommand(@"insert into filial values ('" + codigoFilial + "','" + cmbBanco.Text + "','ISENTO','','N','',0,'" + codigoEmpresa + "','','.','',0,0,'" + cmbBanco.Text + "',0,1," + codigoMatrizFranquia + ",NULL,1,0,1,0,'','','',1,1,1,0,0,1,1,'',1,0,1,0,'',1,2,3,0,1,1,0,0,1,1,1,0,0,0,'','',0,0,0,0,0,0,0,'4132',0,'-1',0,0,'0000000000000002',3,1,'20-05-2022',1,1,0,1,0,0,0,1,'00987654',0,0,0,0,0,1,0,0,'',0,0,0,'',0,0)", clsapoio.conn);
+                                SqlCommand cmd1 = new SqlCommand(querryFilial, clsapoio.conn);
                                 SqlDataReader dr1 = cmd1.ExecuteReader();
 
 
@@ -1727,7 +1771,7 @@ namespace bancozerado
             divTabelaFilial.Rows.Clear();
             divTabelaTributo.Rows.Clear();
             string queryempresa = "select emp_codigo,emp_razao_social from empresas";
-            string queryfilial = "select fil_codigo,fil_razao_social,fil_franquia,fil_codigo_franquia,FIL_TRIBUTACAO from filial";
+            string queryfilial = "select fil_codigo as CODIGO,fil_razao_social as NOME_FANTASIA,fil_franquia FRANQUIA,fil_codigo_franquia CODIGO_DA_FRANQUIA,FIL_TRIBUTACAO TRIBUTACAO from filial";
             string querytributo = "select tat_codigo,tat_descricao,tat_valor from tabelatributo";
 
             if (cmbBanco.SelectedItem == null)

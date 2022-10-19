@@ -106,10 +106,10 @@ namespace bancozerado
             this.PERCENTUAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.divTabelaFilial = new System.Windows.Forms.DataGridView();
             this.FILIAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.COD_TRIBUTO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NOME_FANTASIA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FIL_FRANQUIA = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FIL_CODIGO_FRANQUIA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.COD_TRIBUTO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.divTabelaEmpresa = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RAZAO_SOCIAL = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -177,6 +177,7 @@ namespace bancozerado
             // 
             // btnSair
             // 
+            this.btnSair.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSair.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSair.Location = new System.Drawing.Point(653, 27);
             this.btnSair.Name = "btnSair";
@@ -331,11 +332,12 @@ namespace bancozerado
             // 
             // menuArquivo
             // 
+            this.menuArquivo.Dock = System.Windows.Forms.DockStyle.None;
             this.menuArquivo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sobreToolStripMenuItem});
             this.menuArquivo.Location = new System.Drawing.Point(0, 0);
             this.menuArquivo.Name = "menuArquivo";
-            this.menuArquivo.Size = new System.Drawing.Size(782, 24);
+            this.menuArquivo.Size = new System.Drawing.Size(57, 24);
             this.menuArquivo.TabIndex = 69;
             this.menuArquivo.Text = "menuStrip1";
             // 
@@ -348,14 +350,16 @@ namespace bancozerado
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Location = new System.Drawing.Point(9, 117);
+            this.tabControl1.Location = new System.Drawing.Point(10, 117);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(760, 527);
+            this.tabControl1.Size = new System.Drawing.Size(760, 532);
             this.tabControl1.TabIndex = 70;
             // 
             // tabPage1
@@ -364,7 +368,7 @@ namespace bancozerado
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(752, 501);
+            this.tabPage1.Size = new System.Drawing.Size(752, 506);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Restaurar BD";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -917,7 +921,7 @@ namespace bancozerado
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(752, 501);
+            this.tabPage2.Size = new System.Drawing.Size(752, 506);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Consulta Filial";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -994,7 +998,7 @@ namespace bancozerado
             // 
             this.DESCRICAO.HeaderText = "DESCRICAO";
             this.DESCRICAO.Name = "DESCRICAO";
-            this.DESCRICAO.Width = 150;
+            this.DESCRICAO.Width = 200;
             // 
             // PERCENTUAL
             // 
@@ -1006,10 +1010,10 @@ namespace bancozerado
             this.divTabelaFilial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.divTabelaFilial.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.FILIAL,
-            this.COD_TRIBUTO,
             this.NOME_FANTASIA,
             this.FIL_FRANQUIA,
-            this.FIL_CODIGO_FRANQUIA});
+            this.FIL_CODIGO_FRANQUIA,
+            this.COD_TRIBUTO});
             this.divTabelaFilial.Location = new System.Drawing.Point(7, 194);
             this.divTabelaFilial.Name = "divTabelaFilial";
             this.divTabelaFilial.Size = new System.Drawing.Size(739, 161);
@@ -1019,12 +1023,7 @@ namespace bancozerado
             // 
             this.FILIAL.HeaderText = "FILIAL";
             this.FILIAL.Name = "FILIAL";
-            this.FILIAL.Width = 40;
-            // 
-            // COD_TRIBUTO
-            // 
-            this.COD_TRIBUTO.HeaderText = "COD TRIBUTO";
-            this.COD_TRIBUTO.Name = "COD_TRIBUTO";
+            this.FILIAL.Width = 50;
             // 
             // NOME_FANTASIA
             // 
@@ -1034,7 +1033,7 @@ namespace bancozerado
             // 
             // FIL_FRANQUIA
             // 
-            this.FIL_FRANQUIA.HeaderText = "FRANQUIA";
+            this.FIL_FRANQUIA.HeaderText = "FRANQUIA SIM OU NAO";
             this.FIL_FRANQUIA.Name = "FIL_FRANQUIA";
             this.FIL_FRANQUIA.Width = 80;
             // 
@@ -1042,6 +1041,12 @@ namespace bancozerado
             // 
             this.FIL_CODIGO_FRANQUIA.HeaderText = "CODIGO FRANQUIA";
             this.FIL_CODIGO_FRANQUIA.Name = "FIL_CODIGO_FRANQUIA";
+            // 
+            // COD_TRIBUTO
+            // 
+            this.COD_TRIBUTO.HeaderText = "COD TRIBUTO";
+            this.COD_TRIBUTO.Name = "COD_TRIBUTO";
+            this.COD_TRIBUTO.Width = 150;
             // 
             // divTabelaEmpresa
             // 
@@ -1072,7 +1077,7 @@ namespace bancozerado
             this.tabPage3.Controls.Add(this.groupBoxRelatoriodeServico);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(752, 501);
+            this.tabPage3.Size = new System.Drawing.Size(752, 506);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Relatorios";
             // 
@@ -1127,7 +1132,7 @@ namespace bancozerado
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(752, 501);
+            this.tabPage4.Size = new System.Drawing.Size(752, 506);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Encontro Inicial";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1137,7 +1142,7 @@ namespace bancozerado
             this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusBarLabel,
             this.toolStripProgressBar});
-            this.statusBar.Location = new System.Drawing.Point(3, 476);
+            this.statusBar.Location = new System.Drawing.Point(3, 481);
             this.statusBar.Name = "statusBar";
             this.statusBar.Size = new System.Drawing.Size(746, 22);
             this.statusBar.TabIndex = 4;
@@ -1159,7 +1164,7 @@ namespace bancozerado
             this.txtConteudo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtConteudo.Location = new System.Drawing.Point(3, 32);
             this.txtConteudo.Name = "txtConteudo";
-            this.txtConteudo.Size = new System.Drawing.Size(746, 466);
+            this.txtConteudo.Size = new System.Drawing.Size(746, 471);
             this.txtConteudo.TabIndex = 3;
             this.txtConteudo.Text = "";
             this.txtConteudo.WordWrap = false;
@@ -1250,59 +1255,59 @@ namespace bancozerado
             // mEditarDesfazer
             // 
             this.mEditarDesfazer.Name = "mEditarDesfazer";
-            this.mEditarDesfazer.Size = new System.Drawing.Size(170, 26);
+            this.mEditarDesfazer.Size = new System.Drawing.Size(180, 26);
             this.mEditarDesfazer.Text = "Desfazer";
             this.mEditarDesfazer.Click += new System.EventHandler(this.mEditarDesfazer_Click);
             // 
             // mEditarRefazer
             // 
             this.mEditarRefazer.Name = "mEditarRefazer";
-            this.mEditarRefazer.Size = new System.Drawing.Size(170, 26);
+            this.mEditarRefazer.Size = new System.Drawing.Size(180, 26);
             this.mEditarRefazer.Text = "Refazer";
             this.mEditarRefazer.Click += new System.EventHandler(this.mEditarRefazer_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // mEditarRecortar
             // 
             this.mEditarRecortar.Name = "mEditarRecortar";
-            this.mEditarRecortar.Size = new System.Drawing.Size(170, 26);
+            this.mEditarRecortar.Size = new System.Drawing.Size(180, 26);
             this.mEditarRecortar.Text = "Recortar";
             this.mEditarRecortar.Click += new System.EventHandler(this.mEditarRecortar_Click);
             // 
             // mEditarCopiar
             // 
             this.mEditarCopiar.Name = "mEditarCopiar";
-            this.mEditarCopiar.Size = new System.Drawing.Size(170, 26);
+            this.mEditarCopiar.Size = new System.Drawing.Size(180, 26);
             this.mEditarCopiar.Text = "Copiar";
             this.mEditarCopiar.Click += new System.EventHandler(this.mEditarCopiar_Click);
             // 
             // mEditarColar
             // 
             this.mEditarColar.Name = "mEditarColar";
-            this.mEditarColar.Size = new System.Drawing.Size(170, 26);
+            this.mEditarColar.Size = new System.Drawing.Size(180, 26);
             this.mEditarColar.Text = "Colar";
             this.mEditarColar.Click += new System.EventHandler(this.mEditarColar_Click);
             // 
             // mEditarExcluir
             // 
             this.mEditarExcluir.Name = "mEditarExcluir";
-            this.mEditarExcluir.Size = new System.Drawing.Size(170, 26);
+            this.mEditarExcluir.Size = new System.Drawing.Size(180, 26);
             this.mEditarExcluir.Text = "Excluir";
             this.mEditarExcluir.Click += new System.EventHandler(this.mEditarExcluir_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
             // mEditarDataeHora
             // 
             this.mEditarDataeHora.Name = "mEditarDataeHora";
-            this.mEditarDataeHora.Size = new System.Drawing.Size(170, 26);
+            this.mEditarDataeHora.Size = new System.Drawing.Size(180, 26);
             this.mEditarDataeHora.Text = "Data e Hora";
             this.mEditarDataeHora.Click += new System.EventHandler(this.mEditarDataeHora_Click);
             // 
@@ -1317,7 +1322,9 @@ namespace bancozerado
             // 
             // mFormatarQuebra
             // 
+            this.mFormatarQuebra.Checked = true;
             this.mFormatarQuebra.CheckOnClick = true;
+            this.mFormatarQuebra.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mFormatarQuebra.Name = "mFormatarQuebra";
             this.mFormatarQuebra.Size = new System.Drawing.Size(293, 26);
             this.mFormatarQuebra.Text = "Quebra automática de linha";
@@ -1352,21 +1359,21 @@ namespace bancozerado
             // mExibirZoomApliar
             // 
             this.mExibirZoomApliar.Name = "mExibirZoomApliar";
-            this.mExibirZoomApliar.Size = new System.Drawing.Size(152, 26);
+            this.mExibirZoomApliar.Size = new System.Drawing.Size(180, 26);
             this.mExibirZoomApliar.Text = "Ampliar";
             this.mExibirZoomApliar.Click += new System.EventHandler(this.mExibirZoomApliar_Click);
             // 
             // mExibirZoomReduzir
             // 
             this.mExibirZoomReduzir.Name = "mExibirZoomReduzir";
-            this.mExibirZoomReduzir.Size = new System.Drawing.Size(152, 26);
+            this.mExibirZoomReduzir.Size = new System.Drawing.Size(180, 26);
             this.mExibirZoomReduzir.Text = "Reduzir";
             this.mExibirZoomReduzir.Click += new System.EventHandler(this.mExibirZoomReduzir_Click);
             // 
             // mExibirZoomRestaurar
             // 
             this.mExibirZoomRestaurar.Name = "mExibirZoomRestaurar";
-            this.mExibirZoomRestaurar.Size = new System.Drawing.Size(152, 26);
+            this.mExibirZoomRestaurar.Size = new System.Drawing.Size(180, 26);
             this.mExibirZoomRestaurar.Text = "Restaurar";
             this.mExibirZoomRestaurar.Click += new System.EventHandler(this.mExibirZoomRestaurar_Click);
             // 
@@ -1457,7 +1464,6 @@ namespace bancozerado
             this.Controls.Add(this.menuArquivo);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuArquivo;
-            this.MaximizeBox = false;
             this.Name = "frmPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.frmPrincipal_Load);
@@ -1567,14 +1573,6 @@ namespace bancozerado
         private System.Windows.Forms.Button btnConsultarTabela;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn RAZAO_SOCIAL;
-        private System.Windows.Forms.DataGridViewTextBoxColumn COD;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DESCRICAO;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PERCENTUAL;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FILIAL;
-        private System.Windows.Forms.DataGridViewTextBoxColumn COD_TRIBUTO;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NOME_FANTASIA;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FIL_FRANQUIA;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FIL_CODIGO_FRANQUIA;
         private System.Windows.Forms.TextBox txtDiretorioBuscar;
         private System.Windows.Forms.Label lblCaminhoBak;
         private System.Windows.Forms.Button btnDiretorioBuscar;
@@ -1621,6 +1619,14 @@ namespace bancozerado
         private System.Windows.Forms.Label lblSelecioneRelatorio;
         private System.Windows.Forms.Button btnSelecioneRelatorio;
         private System.Windows.Forms.ComboBox cmbRelatorioServico;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FILIAL;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NOME_FANTASIA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FIL_FRANQUIA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FIL_CODIGO_FRANQUIA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn COD_TRIBUTO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn COD;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DESCRICAO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PERCENTUAL;
     }
 }
 
